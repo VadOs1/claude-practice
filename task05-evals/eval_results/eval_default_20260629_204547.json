@@ -1,0 +1,459 @@
+{
+  "runs": [
+    [
+      {
+        "task_id": "price_jeans",
+        "task_description": "Direct price lookup for jeans",
+        "query": "How much do jeans cost?",
+        "category": "product_lookup",
+        "passed": true,
+        "grades": [
+          {
+            "type": "response_contains",
+            "check": "49.99",
+            "score": 1.0,
+            "reason": "Found '49.99' in response"
+          },
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "get_product",
+              "arguments": {
+                "product": "jeans"
+              }
+            },
+            "score": 1.0,
+            "reason": "Tool 'get_product' called with matching args: {'product': 'jeans'}"
+          }
+        ],
+        "metrics": {
+          "time": 1.49,
+          "tool_calls": 1,
+          "turns": 2,
+          "input_tokens": 1424,
+          "output_tokens": 80
+        },
+        "final_text": "Jeans cost **$49.99**.",
+        "transcript": [
+          "How much do jeans cost?",
+          {
+            "citations": null,
+            "text": "I'll look up the price of jeans for you.",
+            "type": "text"
+          },
+          {
+            "id": "toolu_01GqddXwa1qg31RbmM9Q28GG",
+            "caller": {
+              "type": "direct"
+            },
+            "input": {
+              "product": "jeans"
+            },
+            "name": "get_product",
+            "type": "tool_use"
+          },
+          {
+            "type": "tool_result",
+            "tool_use_id": "toolu_01GqddXwa1qg31RbmM9Q28GG",
+            "content": "49.99"
+          },
+          {
+            "citations": null,
+            "text": "Jeans cost **$49.99**.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "price_tshirt",
+        "task_description": "Price lookup with hyphenated product name",
+        "query": "Price of a t-shirt?",
+        "category": "product_lookup",
+        "passed": true,
+        "grades": [
+          {
+            "type": "response_contains",
+            "check": "24.99",
+            "score": 1.0,
+            "reason": "Found '24.99' in response"
+          },
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "get_product",
+              "arguments": {
+                "product": "t-shirt"
+              }
+            },
+            "score": 1.0,
+            "reason": "Tool 'get_product' called with matching args: {'product': 't-shirt'}"
+          }
+        ],
+        "metrics": {
+          "time": 1.493,
+          "tool_calls": 1,
+          "turns": 2,
+          "input_tokens": 1427,
+          "output_tokens": 87
+        },
+        "final_text": "The price of a t-shirt is **$24.99**.",
+        "transcript": [
+          "Price of a t-shirt?",
+          {
+            "citations": null,
+            "text": "I'll look up the price of a t-shirt for you.",
+            "type": "text"
+          },
+          {
+            "id": "toolu_019FJupQ7Y1YwdbZaBfTwUSh",
+            "caller": {
+              "type": "direct"
+            },
+            "input": {
+              "product": "t-shirt"
+            },
+            "name": "get_product",
+            "type": "tool_use"
+          },
+          {
+            "type": "tool_result",
+            "tool_use_id": "toolu_019FJupQ7Y1YwdbZaBfTwUSh",
+            "content": "24.99"
+          },
+          {
+            "citations": null,
+            "text": "The price of a t-shirt is **$24.99**.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "price_shoes_synonym",
+        "task_description": "Synonym query: 'shoes' not in catalog, 'sneakers' is",
+        "query": "How much for shoes?",
+        "category": "product_lookup",
+        "passed": true,
+        "grades": [
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "get_product"
+            },
+            "score": 1.0,
+            "reason": "Tool 'get_product' was called"
+          },
+          {
+            "type": "response_contains",
+            "check": "sneakers",
+            "score": 1.0,
+            "reason": "Found 'sneakers' in response"
+          }
+        ],
+        "metrics": {
+          "time": 2.488,
+          "tool_calls": 1,
+          "turns": 2,
+          "input_tokens": 1421,
+          "output_tokens": 151
+        },
+        "final_text": "I wasn't able to find shoes in the system. Could you provide more specific details about the shoes you're looking for? For example:\n- A specific brand (Nike, Adidas, etc.)\n- A type of shoe (running shoes, dress shoes, sneakers, etc.)\n- A specific model or product name\n\nThis will help me look up the exact product and price for you.",
+        "transcript": [
+          "How much for shoes?",
+          {
+            "citations": null,
+            "text": "I'll look up the price for shoes for you.",
+            "type": "text"
+          },
+          {
+            "id": "toolu_012Eka1rk41xL2V5fpSFrT1G",
+            "caller": {
+              "type": "direct"
+            },
+            "input": {
+              "product": "shoes"
+            },
+            "name": "get_product",
+            "type": "tool_use"
+          },
+          {
+            "type": "tool_result",
+            "tool_use_id": "toolu_012Eka1rk41xL2V5fpSFrT1G",
+            "content": "Error: 'shoes'"
+          },
+          {
+            "citations": null,
+            "text": "I wasn't able to find shoes in the system. Could you provide more specific details about the shoes you're looking for? For example:\n- A specific brand (Nike, Adidas, etc.)\n- A type of shoe (running shoes, dress shoes, sneakers, etc.)\n- A specific model or product name\n\nThis will help me look up the exact product and price for you.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "total_shirts_belts",
+        "task_description": "Multi-item total requiring product lookups + calculation",
+        "query": "3 shirts and 2 belts, what's my total?",
+        "category": "multi_tool",
+        "passed": false,
+        "grades": [
+          {
+            "type": "response_numeric",
+            "check": {
+              "value": 139.95,
+              "tolerance": 0.1
+            },
+            "score": 0.0,
+            "reason": "Expected 139.95 (+/- 0.1), found: [',', '1.', '2.', ',', '3', '2']"
+          },
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "get_product"
+            },
+            "score": 0.0,
+            "reason": "'get_product' never called. Actual: []"
+          },
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "calculate",
+              "arguments": {
+                "op": "*"
+              }
+            },
+            "score": 0.0,
+            "reason": "'calculate' not called with {'op': '*'}. Actual: []"
+          },
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "calculate",
+              "arguments": {
+                "op": "+"
+              }
+            },
+            "score": 0.0,
+            "reason": "'calculate' not called with {'op': '+'}. Actual: []"
+          }
+        ],
+        "metrics": {
+          "time": 1.625,
+          "tool_calls": 0,
+          "turns": 1,
+          "input_tokens": 680,
+          "output_tokens": 76
+        },
+        "final_text": "I'd be happy to help you calculate the total cost! However, I need to know the prices of the shirts and belts. Could you please provide:\n\n1. The price of each shirt\n2. The price of each belt\n\nOnce you give me those prices, I can calculate your total for 3 shirts and 2 belts.",
+        "transcript": [
+          "3 shirts and 2 belts, what's my total?",
+          {
+            "citations": null,
+            "text": "I'd be happy to help you calculate the total cost! However, I need to know the prices of the shirts and belts. Could you please provide:\n\n1. The price of each shirt\n2. The price of each belt\n\nOnce you give me those prices, I can calculate your total for 3 shirts and 2 belts.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "discount_jacket",
+        "task_description": "Calculate 20% off a jacket (lookup + percentage math)",
+        "query": "What's 20% off a jacket?",
+        "category": "calculation",
+        "passed": false,
+        "grades": [
+          {
+            "type": "response_numeric",
+            "check": {
+              "value": 71.99,
+              "tolerance": 0.1
+            },
+            "score": 0.0,
+            "reason": "Expected 71.99 (+/- 0.1), found: ['20', ',', ',']"
+          },
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "get_product"
+            },
+            "score": 0.0,
+            "reason": "'get_product' never called. Actual: []"
+          },
+          {
+            "type": "tool_use",
+            "check": {
+              "tool_name": "calculate"
+            },
+            "score": 0.0,
+            "reason": "'calculate' never called. Actual: []"
+          }
+        ],
+        "metrics": {
+          "time": 1.268,
+          "tool_calls": 0,
+          "turns": 1,
+          "input_tokens": 673,
+          "output_tokens": 57
+        },
+        "final_text": "I'd be happy to help you calculate 20% off a jacket! However, I need to know the original price of the jacket first.\n\nCould you please provide the original price? Once you do, I can calculate the discount and the final price for you.",
+        "transcript": [
+          "What's 20% off a jacket?",
+          {
+            "citations": null,
+            "text": "I'd be happy to help you calculate 20% off a jacket! However, I need to know the original price of the jacket first.\n\nCould you please provide the original price? Once you do, I can calculate the discount and the final price for you.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "what_do_you_sell",
+        "task_description": "Open-ended: agent describes available products",
+        "query": "What do you sell?",
+        "category": "capabilities",
+        "passed": false,
+        "grades": [
+          {
+            "type": "llm_judge",
+            "check": "Response describes or lists some of the available products in the catalog",
+            "score": 0.0,
+            "reason": "LLM judge: FAIL - The agent's response does not describe or list any actual products from a catalog; instead, it states that it doesn't have a general catalog to show and only offers to search for products if the user specifies what they're looking for."
+          },
+          {
+            "type": "llm_judge",
+            "check": "Response is helpful and relevant to a shopping context (not dismissive or off-topic)",
+            "score": 1.0,
+            "reason": "LLM judge: PASS - The agent acknowledges the limitation honestly while offering constructive alternatives and inviting the user to specify what they're looking for, which is helpful and relevant to a shopping context."
+          }
+        ],
+        "metrics": {
+          "time": 1.594,
+          "tool_calls": 0,
+          "turns": 1,
+          "input_tokens": 669,
+          "output_tokens": 131
+        },
+        "final_text": "I have access to tools that allow me to look up products and perform calculations, but I don't have a general catalog to show you.\n\nIf you're looking for a specific product, I can help you search for it! Just let me know:\n- **What product are you interested in?** (e.g., electronics, clothing, books, etc.)\n\nAlternatively, if you need help with:\n- **Mathematical calculations** - I can add, subtract, multiply, divide, and more\n- **Product information** - I can look up details about specific items\n\nWhat would you like to know about?",
+        "transcript": [
+          "What do you sell?",
+          {
+            "citations": null,
+            "text": "I have access to tools that allow me to look up products and perform calculations, but I don't have a general catalog to show you.\n\nIf you're looking for a specific product, I can help you search for it! Just let me know:\n- **What product are you interested in?** (e.g., electronics, clothing, books, etc.)\n\nAlternatively, if you need help with:\n- **Mathematical calculations** - I can add, subtract, multiply, divide, and more\n- **Product information** - I can look up details about specific items\n\nWhat would you like to know about?",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "capabilities",
+        "task_description": "Agent describes its capabilities",
+        "query": "What can you help me with?",
+        "category": "capabilities",
+        "passed": false,
+        "grades": [
+          {
+            "type": "llm_judge",
+            "check": "Response mentions the ability to look up product prices",
+            "score": 0.0,
+            "reason": "LLM judge: FAIL - While the response mentions the ability to look up \"details about products,\" it does not specifically mention the ability to look up product prices."
+          },
+          {
+            "type": "llm_judge",
+            "check": "Response mentions the ability to perform calculations",
+            "score": 1.0,
+            "reason": "LLM judge: PASS - The agent's response explicitly mentions the ability to perform calculations, including a dedicated section listing specific mathematical operations (addition, subtraction, multiplication, division, and other basic math operations)."
+          }
+        ],
+        "metrics": {
+          "time": 2.228,
+          "tool_calls": 0,
+          "turns": 1,
+          "input_tokens": 671,
+          "output_tokens": 210
+        },
+        "final_text": "I'm here to help you with a variety of tasks! Here's what I can do:\n\n1. **Product Information** - I can look up details about products for you. Just tell me what product you're interested in, and I'll retrieve information about it.\n\n2. **Calculations** - I can perform mathematical operations for you, including:\n   - Addition (+)\n   - Subtraction (-)\n   - Multiplication (*)\n   - Division (/)\n   - And other basic math operations\n\n3. **General Assistance** - I can answer questions, provide explanations, help with problem-solving, and assist with a wide range of topics.\n\nFeel free to ask me anything! Whether you need to:\n- Find out about a specific product\n- Do some math calculations\n- Get information or advice on a topic\n- Or anything else you can think of\n\nJust let me know what you need, and I'll do my best to help! \ud83d\ude0a",
+        "transcript": [
+          "What can you help me with?",
+          {
+            "citations": null,
+            "text": "I'm here to help you with a variety of tasks! Here's what I can do:\n\n1. **Product Information** - I can look up details about products for you. Just tell me what product you're interested in, and I'll retrieve information about it.\n\n2. **Calculations** - I can perform mathematical operations for you, including:\n   - Addition (+)\n   - Subtraction (-)\n   - Multiplication (*)\n   - Division (/)\n   - And other basic math operations\n\n3. **General Assistance** - I can answer questions, provide explanations, help with problem-solving, and assist with a wide range of topics.\n\nFeel free to ask me anything! Whether you need to:\n- Find out about a specific product\n- Do some math calculations\n- Get information or advice on a topic\n- Or anything else you can think of\n\nJust let me know what you need, and I'll do my best to help! \ud83d\ude0a",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "better_deal",
+        "task_description": "Agent compares two items and identifies the better deal",
+        "query": "Is 2 shirts or 1 jacket a better deal?",
+        "category": "capabilities",
+        "passed": false,
+        "grades": [
+          {
+            "type": "llm_judge",
+            "check": "Response compares the total cost of 2 shirts vs 1 jacket",
+            "score": 0.0,
+            "reason": "LLM judge: FAIL - The agent does not actually compare the total costs but instead asks for prices without performing any comparison."
+          },
+          {
+            "type": "llm_judge",
+            "check": "Response reaches a clear conclusion about which is the better deal",
+            "score": 0.0,
+            "reason": "LLM judge: FAIL - The agent does not reach a conclusion about which is the better deal; instead, it asks for additional information needed to make the comparison."
+          }
+        ],
+        "metrics": {
+          "time": 1.521,
+          "tool_calls": 0,
+          "turns": 1,
+          "input_tokens": 678,
+          "output_tokens": 77
+        },
+        "final_text": "I'd be happy to help you compare the deals! To determine which is a better deal, I need to know the prices:\n\n1. **How much does 1 shirt cost?**\n2. **How much does 1 jacket cost?**\n\nOnce you provide these prices, I can help you figure out which option gives you better value!",
+        "transcript": [
+          "Is 2 shirts or 1 jacket a better deal?",
+          {
+            "citations": null,
+            "text": "I'd be happy to help you compare the deals! To determine which is a better deal, I need to know the prices:\n\n1. **How much does 1 shirt cost?**\n2. **How much does 1 jacket cost?**\n\nOnce you provide these prices, I can help you figure out which option gives you better value!",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "task_id": "budget_recommendation",
+        "task_description": "Agent recommends items within a given budget",
+        "query": "I have $100, what should I buy?",
+        "category": "capabilities",
+        "passed": false,
+        "grades": [
+          {
+            "type": "llm_judge",
+            "check": "Response suggests one or more specific products from the catalog",
+            "score": 0.0,
+            "reason": "LLM judge: FAIL - The agent's response does not suggest any specific products from a catalog; instead, it asks clarifying questions to better understand the user's preferences before making recommendations."
+          },
+          {
+            "type": "llm_judge",
+            "check": "Response stays within or acknowledges the $100 budget",
+            "score": 1.0,
+            "reason": "LLM judge: PASS - The agent explicitly acknowledges the $100 budget by referencing it directly (\"fit your $100 budget\") and frames all recommendations as being within this constraint."
+          }
+        ],
+        "metrics": {
+          "time": 1.805,
+          "tool_calls": 0,
+          "turns": 1,
+          "input_tokens": 674,
+          "output_tokens": 148
+        },
+        "final_text": "I'd be happy to help you think about what to buy with $100! To give you better recommendations, I'd like to know more:\n\n1. **What are you interested in?** (e.g., clothing, electronics, books, food, sports equipment, home items, gifts, etc.)\n\n2. **What's the occasion or purpose?** (e.g., personal use, a gift, hobby, necessity, etc.)\n\n3. **Do you have any specific products or categories in mind?**\n\n4. **Are there any items you've been wanting?**\n\nOnce I understand your preferences better, I can help you find good options that fit your $100 budget!",
+        "transcript": [
+          "I have $100, what should I buy?",
+          {
+            "citations": null,
+            "text": "I'd be happy to help you think about what to buy with $100! To give you better recommendations, I'd like to know more:\n\n1. **What are you interested in?** (e.g., clothing, electronics, books, food, sports equipment, home items, gifts, etc.)\n\n2. **What's the occasion or purpose?** (e.g., personal use, a gift, hobby, necessity, etc.)\n\n3. **Do you have any specific products or categories in mind?**\n\n4. **Are there any items you've been wanting?**\n\nOnce I understand your preferences better, I can help you find good options that fit your $100 budget!",
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  ],
+  "config": {
+    "model": null,
+    "num_runs": 1,
+    "num_tasks": 9
+  }
+}
