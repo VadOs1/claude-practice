@@ -1,37 +1,59 @@
 {
-  "total_cost_usd": 1.20713065,
+  "total_cost_usd": 1.8366508000000001,
   "usage": {
-    "input_tokens": 4,
-    "cache_creation_input_tokens": 2258,
-    "cache_read_input_tokens": 81189,
-    "output_tokens": 706,
+    "input_tokens": 19,
+    "cache_creation_input_tokens": 55911,
+    "cache_read_input_tokens": 837607,
+    "output_tokens": 44403,
     "server_tool_use": {
       "web_search_requests": 0,
       "web_fetch_requests": 0
     },
     "service_tier": "standard",
     "cache_creation": {
-      "ephemeral_1h_input_tokens": 2258,
-      "ephemeral_5m_input_tokens": 0
+      "ephemeral_1h_input_tokens": 43868,
+      "ephemeral_5m_input_tokens": 12043
     },
     "inference_geo": "not_available",
     "iterations": [
       {
         "input_tokens": 1,
-        "output_tokens": 531,
-        "cache_read_input_tokens": 41575,
-        "cache_creation_input_tokens": 297,
+        "output_tokens": 415,
+        "cache_read_input_tokens": 91079,
+        "cache_creation_input_tokens": 319,
         "cache_creation": {
-          "ephemeral_5m_input_tokens": 0,
-          "ephemeral_1h_input_tokens": 297
+          "ephemeral_5m_input_tokens": 319,
+          "ephemeral_1h_input_tokens": 0
         },
         "type": "message"
       }
     ],
     "speed": "standard"
   },
-  "num_turns": 2,
-  "duration_ms": 20127,
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 779,
+      "outputTokens": 3368,
+      "cacheReadInputTokens": 47141,
+      "cacheCreationInputTokens": 13891,
+      "webSearchRequests": 0,
+      "costUSD": 0.039696850000000006,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-4-6": {
+      "inputTokens": 48,
+      "outputTokens": 56468,
+      "cacheReadInputTokens": 1034904,
+      "cacheCreationInputTokens": 122872,
+      "webSearchRequests": 0,
+      "costUSD": 1.79695395,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "num_turns": 16,
+  "duration_ms": 824645,
   "is_error": false,
-  "result": "Both deliverables confirmed. Here's the full swarm run summary:\n\n---\n\n## \u2705 Swarm Run Complete\n\n**Deliverables written to `outputs/runs/swarm/`:**\n- `proposal.docx` \u2014 20 KB customer-facing branded proposal\n- `risk-assessment.html` \u2014 40 KB interactive internal risk dashboard\n\n---\n\n### How the swarm ran\n\n**Phase 1 \u2014 Four specialists in parallel:**\n\n| Specialist | Finding |\n|---|---|\n| \ud83d\udcb0 **Pricing** | Open at **22% off** ($561,600/yr); hard ceiling 25%. Acme's 35% demand refused. MFN is a walk-away. Net 90 \u2192 counter Net 60. 5-yr price lock \u2192 counter 3-yr fixed + capped escalator on renewal. |\n| \u2696\ufe0f **Legal** | **5 BLOCKERS** (\u00a74.1\u20134.5): uncapped liability, unannounced audits, 99.99% SLA + instant termination, all-IP vest, subprocessor veto. 2 NEGOTIABLE (MFN, 30-day termination notice). |\n| \ud83d\udd27 **Technical Fit** | **HIGH** \u2014 all functional requirements met; 3\u00d7 headroom on IoT ingest; 99.99% SLA requires $95K/yr active-active add-on. No outright capability gaps. |\n| \ud83c\udfaf **Competitive** | **Most dangerous: Microsoft Fabric** (Azure incumbent, E5 bundle, native Power BI). Win themes: proven scale/stability vs. Fabric's 18-month maturity, true TCO model vs. Databricks compute ramp, multi-cloud optionality. |\n\n**Phase 2 \u2014 Proposal synthesis:** All four findings integrated into a 7-section branded proposal (Executive Summary \u2192 Technical \u2192 Commercial \u2192 Contractual Positions \u2192 Implementation \u2192 References \u2192 Win Themes).\n\n**Phase 3 \u2014 Risk dashboard:** Three-step framework produced **net risk 8.0%** (gross 18.0% before counter-positions), revenue opportunity 100/100 \u2192 **decision: ESCALATE TO VP**. Interactive HTML with live clause toggles, arc gauge, and revenue upside breakdown."
+  "result": "Both deliverables confirmed. \u2705\n\n---\n\n**\u2705 Swarm complete. Two files written:**\n\n- `outputs/runs/swarm/proposal.docx` \u2014 24 KB branded customer-facing proposal\n- `outputs/runs/swarm/risk-assessment.html` \u2014 33 KB interactive internal risk dashboard\n\n---\n\n**Swarm execution summary:**\n\n| Agent | Finding | Status |\n|---|---|---|\n| \ud83d\udcb0 **Pricing** | Open at $576K/yr (20% off $720K list); floor $540K (25% with ref agreement); hard NO on MFN and Net 90; CPI+2% escalator mandatory | \u2705 Done |\n| \u2696\ufe0f **Legal** | 5 BLOCKERS (uncapped liability, no-notice audit, any-miss SLA termination, IP assignment, subprocessor veto); 2 negotiable; 1 acceptable | \u2705 Done |\n| \ud83d\udd27 **Technical Fit** | Score: **HIGH** \u2014 all non-negotiables met; 99.99% SLA resolved via add-on; 24-week programme; Teradata connector is key differentiator | \u2705 Done |\n| \ud83c\udfaf **Competitive** | Most dangerous: Microsoft Fabric (home field + E5 \"free\" narrative). Lead with honest 5-year TCO. Win theme: predictable cost + migration maturity | \u2705 Done |\n| \ud83d\udccb **Risk Assessment** | Gross risk 18.0% \u2192 Net risk **7.75%** (after counters); Revenue score 100/100 \u2192 **Escalate to VP** (not No-Bid); dashboard is interactive with live clause toggles | \u2705 Done |"
 }

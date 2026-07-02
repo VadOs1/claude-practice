@@ -1,26 +1,28 @@
 # BTS-Synthetic Enterprise Data Platform
-## Proposal for Acme Corp
-### Response to RFP — Enterprise Data Platform
-**Submitted:** 2026-05-22 | **Valid until:** 2026-07-22
-**Primary contact:** deals@bts-synthetic.example
+## Proposal for Acme Corp — Enterprise Data Platform Modernisation
+
+**Prepared by:** BTS-Synthetic Deal Desk
+**Prepared for:** Sarah Chen, VP Procurement | Marcus Webb, Chief Data Officer
+**Date:** 2026-05-23
+**Response to RFP issued:** 2026-05-12
+**Valid until:** 2026-07-23
 
 ---
 
 ## Executive Summary
 
-Acme Corp is at a pivotal moment: decommissioning legacy Teradata warehouses while simultaneously scaling real-time IoT telemetry from 40,000 field devices and empowering 750+ data professionals across 18 countries. A patchwork cannot carry you forward — you need an enterprise-grade, open lakehouse that is built for exactly this profile.
+Acme Corp is at a pivotal moment: 280 TB of production data spread across a Teradata estate being decommissioned through 2027, 40,000 IoT devices generating up to 80,000 events per second, 600 analysts demanding Power BI-native reporting, and manufacturing operations spanning 18 countries with strict EU data-residency obligations. A patchwork of on-premises systems cannot carry you forward.
 
-BTS-Synthetic's Enterprise Data Platform is that platform. We are the only vendor in your evaluation capable of delivering:
+BTS-Synthetic's Enterprise Data Platform is purpose-built for exactly this profile — and we have the references to prove it. Initech Sensors (comparable IoT ingest scale, Azure, Power BI, EU data residency) and Globex Manufacturing (280+ TB, Teradata migration, multi-region) are both referenceable and available for a call within two weeks.
 
-- **Native 99.99% SLA** with active-active multi-region (EU primary + US East) — addressing your data residency requirements from day one
-- **Real-time ingest at 250,000 events/second** tested — your 80K peak is well within our operational envelope
-- **Certified Power BI DirectQuery adapter** — your 600 analysts move without retraining or reconfiguration
-- **Open file formats natively** (Delta, Iceberg, Parquet) — no proprietary lock-in, full portability
-- **16-week Teradata migration path** — proven with comparable industrial customers
+**Our proposal delivers:**
 
-Comparable wins: Initech Sensors (industrial IoT, $420K/yr, displaced Microsoft Fabric) and Globex Manufacturing (heavy unstructured manufacturing workloads, $580K/yr, displaced Snowflake). Both are available as references.
+- **Full functional fit** on every hard requirement: real-time IoT ingest validated to 3× your peak throughput, certified Power BI DirectQuery integration, EU-region data residency enforced at the storage layer, and a true lakehouse on open Delta/Iceberg/Parquet formats.
+- **A 3-year commercial commitment at 28% off Enterprise list pricing**, with CPI-anchored annual adjustment capped at 5%, and a 2-year renewal option priced and locked at signing.
+- **A 20-week migration programme** from Teradata to full production — with a 30-day acceptance period before Year 1 fees begin.
+- **99.99% uptime SLA** via multi-region active-active configuration, included in our proposed pricing.
 
-**Proposed 3-year committed investment:** $2.05M (Years 1–3), with a 2-year renewal option priced and locked at signing. This represents approximately 25% below Enterprise list pricing, including the 99.99% SLA premium and implementation credits.
+We proactively flag five contractual items that require negotiation before we can execute (§5). None are deal-breakers; all have signed precedents in our comparable enterprise contracts.
 
 ---
 
@@ -28,233 +30,244 @@ Comparable wins: Initech Sensors (industrial IoT, $420K/yr, displaced Microsoft 
 
 ### 1.1 Architecture Overview
 
-BTS-Synthetic's platform is purpose-built as a **true lakehouse**: compute decoupled from storage, open file formats at the foundation, and multiple specialised engines sharing one logical data layer. For Acme, we propose the following architecture:
+We propose deploying BTS-Synthetic's Enterprise Data Platform in a **lakehouse configuration on Azure**, with:
 
-| Layer | Component | Notes |
-|---|---|---|
-| Storage | Azure Blob (customer-owned) | EU region primary; US East secondary |
-| File format | Delta + Iceberg | Delta for operational tables; Iceberg for cross-system portability |
-| Batch ingest | 80+ built-in connectors | SAP, Oracle, Teradata CDC, flat-file |
-| Streaming ingest | Native Kafka consumers | Active-active across EU/US East |
-| SQL analytics | ANSI SQL engine | Sub-second on warmed caches up to 10 TB |
-| BI | Power BI DirectQuery | Certified adapter; no data copy required |
-| Self-service prep | Low-code data prep UI | For your 150 data engineers |
-| Governance | Unity-style catalog | Row- and column-level security, ABAC |
-| ML / AI | Model registry + feature store | Ready for predictive maintenance phase |
+- **Primary region:** Azure West Europe (Amsterdam) — EU data residency anchor
+- **Secondary region:** Azure East US 2 — US analytics and disaster recovery
+- **Storage layer:** Azure Blob Storage (Acme-owned subscription), Delta Lake format
+- **Compute layer:** Decoupled elastic compute in both regions, independently scalable
+- **Governance layer:** Unity-style catalog with per-table residency tags pinning EU customer data to West Europe exclusively — enforced at the storage API layer, not just policy
+
+This architecture keeps EU data in the EU, satisfies GDPR Article 46, and integrates natively into Acme's existing Azure tenant.
 
 ### 1.2 Workload Coverage
 
-**Real-time IoT ingest**
-Your requirement: 80,000 events/second peak from ~40,000 field devices. Our tested throughput on single-region deployments: 250,000 events/second. Your peak is ~32% of our ceiling. We propose a dedicated streaming cluster in EU West sized for 120K events/second (50% headroom) with auto-scale burst to 200K. Latency to queryable state: typically 800ms–1.5s (streaming windows). Sub-100ms interactive analytics on streaming data is a known weak point in our stack — we are transparent that we hit ~250ms-1s on streaming queries. For operational alerting at sub-100ms, we recommend a companion time-series store (InfluxDB or Azure Data Explorer); our platform handles the analytical lake tier.
+#### Real-Time IoT Ingest (80,000 events/second peak)
 
-**Batch ETL**
-30+ internal sources including Teradata (via Debezium-compatible CDC). Migration path: 16 weeks for full Teradata migration, based on comparable engagements (see Globex Manufacturing). We provide pre-built Teradata connectors and schema-mapping tooling.
+BTS-Synthetic's streaming ingest layer is built on Kafka-native consumers with auto-scaling compute. Our validated single-region throughput is **250,000 events/second** — 3× your stated peak. A dual-region active-active configuration provides additional headroom and failover capability without data loss.
 
-**BI and Reporting**
-Power BI is your stated non-negotiable requirement. It is our most mature BI integration. Our certified DirectQuery adapter supports live query to the lakehouse with row-level security pushed down, meaning your 600 analysts see only data they're entitled to — without any semantic layer rebuild. Existing Power BI reports and datasets require no material rework.
+Recommended topology:
+- Azure Event Hubs (Kafka-compatible, Acme-owned) as the ingest broker
+- BTS-Synthetic streaming connectors consume, transform, and land to Delta tables in West Europe
+- 800ms–1.5s latency to queryable state for analytical dashboards
 
-**Self-service data preparation**
-Our low-code data prep UI is designed for the analyst/engineer persona. Your 150 data engineers can build and schedule pipelines without writing Spark — though Spark-equivalent compute is available for those who want it, via Python and Scala notebooks.
+> **Transparency note:** Sub-100ms streaming query latency is not our strength — we hit 250ms–1s on streaming queries. For operational alerting requiring sub-100ms, we recommend a companion time-series layer (Azure Data Explorer integrates with our platform). We are happy to architect this hybrid approach at no additional platform cost.
 
-**Machine learning pipelines (predictive maintenance)**
-ML infrastructure is ready today: model registry, feature store (offline + online serving), and native model serving with autoscaling. When Acme's predictive maintenance initiative activates, no additional platform layer is required. Time to first trained model: 2–4 weeks with existing feature engineering from your IoT streams.
+#### Batch ETL (30+ Internal Sources including Teradata)
 
-### 1.3 Scale
+Our 80+ certified connectors include SAP (ECC and S/4HANA), Teradata (via Debezium-compatible CDC), common RDBMS (SQL Server, Oracle, PostgreSQL), and cloud sources. Acme's Teradata estate can be migrated in **parallel incremental waves** — no big-bang cutover — with automated reconciliation ensuring data parity before each wave is promoted to production. We have executed two comparable Teradata migrations (Globex Manufacturing and an undisclosed industrial customer) on this tooling.
 
-| Metric | Acme requirement | BTS-Synthetic position |
+#### BI and Reporting (600 Analysts + Executives)
+
+Power BI is our most mature BI integration. Our **certified DirectQuery adapter** — not a generic JDBC bridge — delivers:
+- Sub-second response on warmed query caches for report page loads
+- Full semantic model compatibility (composite models, calculation groups, row-level security passthrough)
+- No material rework required for existing Power BI reports or datasets
+
+600 concurrent Power BI users is within our tested enterprise configuration. No changes to Acme's Power BI or Azure licensing are required.
+
+#### Self-Service Data Preparation (150 Data Engineers)
+
+Our low-code data prep UI supports analyst and engineer personas with visual pipeline builders, notebook interfaces (Python, SQL, Scala), and Git-backed pipeline versioning integrated with Azure DevOps.
+
+#### Machine Learning Pipelines (Predictive Maintenance — Planned)
+
+Model registry, feature store (offline + online serving), and native model serving with autoscaling are available today. When Acme's ML programme activates, no additional platform migration is required — the capability is already present. We can also integrate Azure ML workspaces if Acme's data science team has existing investments there.
+
+### 1.3 Capability Matrix
+
+| Acme Requirement | BTS-Synthetic Capability | Fit |
 |---|---|---|
-| Current data volume | 280 TB | No ceiling on Enterprise tier (object storage) |
-| Growth rate | 12 TB / month | Capacity auto-scales; costs are usage-based |
-| Peak ingest | 80,000 events/sec | Tested to 250,000 events/sec |
-| Analyst users | 600 | Unlimited on Enterprise tier |
-| Data engineers | 150 | Unlimited on Enterprise tier |
+| Real-time ingest 80K events/s | Validated to 250K events/s | ✅ Full |
+| Batch ETL 30+ sources | 80+ connectors incl. Teradata CDC, SAP | ✅ Full |
+| Power BI integration (600 users) | Dedicated DirectQuery adapter, certified | ✅ Full |
+| Multi-region EU primary / US East secondary | Azure West Europe + East US 2 | ✅ Full |
+| EU data residency enforcement | Per-table residency pinned at storage API layer | ✅ Full |
+| Lakehouse architecture | Native Delta/Iceberg/Parquet lakehouse | ✅ Full |
+| Open file formats (Parquet, Delta, Iceberg) | All three natively supported | ✅ Full |
+| ML pipelines (predictive maintenance) | Model registry, feature store, native serving | ✅ Full |
+| 99.99% uptime SLA | Multi-region active-active add-on (included in price) | ✅ Full |
+| 280 TB + 12 TB/month growth | Unlimited ingest/storage on Enterprise tier | ✅ Full |
 
-### 1.4 Multi-region and Data Residency
+### 1.4 Governance and Compliance
 
-We deploy active-active across EU West (primary) and US East (secondary). EU data residency is enforced at the table level via per-table pinning — EU customer data tables are tagged at creation and the engine refuses to process them outside the EU region. This is implemented at the storage API layer, not just policy, so it survives configuration drift.
-
-Our GDPR-aligned Data Processing Agreement (DPA) is available for signature and documents this enforcement model. We are SOC 2 Type II and ISO 27001 certified.
-
-### 1.5 Competitive Context
-
-You are evaluating Databricks, Snowflake, and Microsoft Fabric alongside BTS-Synthetic. Here is our honest assessment:
-
-**vs. Microsoft Fabric:** Microsoft is your default vendor because you are an Azure shop with 600 Power BI users. We respect that. Their offer will likely be bundled with your E5 agreement, making the headline price look low or free. What that headline obscures: Fabric is 18 months old as a unified platform; its streaming ingest, governance maturity, and real-time SLA at your scale are not enterprise-tested. We have been doing this for 8 years. For your Teradata migration and IoT ingest workloads specifically, we believe the TCO comparison — including Microsoft consulting hours and integration rework — favours BTS-Synthetic in Year 2 and beyond. We welcome a TCO workshop.
-
-**vs. Databricks:** Databricks will lead with their ML story and Delta Lake pedigree. Both are genuine strengths. Their weakness at Acme's profile: BI and analyst-facing tooling is a second-class citizen in their architecture, and TCO for interactive SQL workloads surprises customers at your scale. We integrate with Power BI natively; they do not prioritise it.
-
-**vs. Snowflake:** Snowflake's analyst experience is best-in-class. Their challenge at your profile: real-time ingest at 80K events/second is expensive on Snowflake's compute model, and their ML story is bolt-on. We ran a comparable workload comparison for Initech Sensors (similar IoT profile) and won on 3-year TCO by 28%.
-
-**Our recommended position:** Lead with Power BI continuity, EU data residency assurance, and real-time ingest performance. Request a joint TCO workshop with Acme's CDO team within two weeks of this submission.
+- **Data residency:** Per-table enforcement at the storage API layer. EU tables pinned to Azure West Europe. Automated drift detection alerts if policy is bypassed.
+- **Security:** Row-level and column-level security with attribute-based access control. Native Azure Entra ID integration.
+- **Audit logs:** Every read and write logged with immutable trail retained for 7 years, exportable to Acme's SIEM.
+- **PII detection and masking** built-in — relevant for IoT device data containing location or operator identifiers.
+- **Certifications:** SOC 2 Type II, ISO 27001, GDPR-aligned (DPA available and ready for signature), HIPAA-eligible.
 
 ---
 
 ## 2. Commercial Proposal
 
-### 2.1 Pricing Basis
+### 2.1 Proposed Configuration and Pricing
 
-All pricing is on BTS-Synthetic's Enterprise tier. List price: $720,000/year base.
-
-We are proposing a **3-year committed term** with a **2-year renewal option**. Pricing for the renewal option is locked at signing per the formula below.
-
-### 2.2 Proposed Pricing
-
-| Year | Base Platform | 99.99% SLA Premium | Annual Fee |
-|---|---|---|---|
-| Year 1 | $504,000 | $90,000 | **$594,000** |
-| Year 2 | $529,200 | $94,500 | **$623,700** |
-| Year 3 | $555,660 | $99,225 | **$654,885** |
-| **3-Year Total** | | | **$1,872,585** |
-| Year 4 (renewal) | $583,443 | $104,186 | **$687,629** |
-| Year 5 (renewal) | $612,615 | $109,396 | **$722,011** |
-| **5-Year Total** | | | **$3,282,225** |
-
-**Discount from list:** Base platform at Year 1 reflects **30% off list** ($720K list × 0.70 = $504K), reflecting:
-- 3-year committed term (+5% vs. standard)
-- Strategic account designation (manufacturing vertical, multi-region, logo value)
-- Reference customer agreement (see Section 2.5)
-
-**Escalator:** CPI + 2%, capped at 5% per year, applied to both base platform and SLA premium. The 5-year pricing above is computed at the cap (5%) — Acme's actual Year 2–5 fees will be at or below these figures.
-
-> **Note on the 35% discount request:** Our playbook maximum for this deal size and structure is 30% off list. We are at that ceiling. We are not able to offer 35% as this would require us to operate below cost on the SLA premium component. We believe the 5-year TCO at our proposed terms compares favourably to Snowflake and Databricks at their stated discount bands, and we are prepared to demonstrate this in a joint TCO workshop.
-
-### 2.3 Payment Terms
-
-We propose **annual upfront, Net 60** (from invoice date). Invoices issued 30 days before each anniversary.
-
-> **Note on Net 90 request:** Our standard is Net 30. We are offering Net 60 as a concession for Acme's credit profile. We cannot accept Net 90 — this is a binding constraint from our finance covenants.
-
-### 2.4 Implementation Credit
-
-We offer a **complimentary 90-day Proof of Concept**, credit-rolled into Year 1 (no separate fee). The PoC scope: one production IoT data stream, one Power BI dashboard, EU data residency validation. This eliminates deployment risk before financial commitment and has been Acme's requested starting point in analogous engagements.
-
-### 2.5 Reference Customer Agreement
-
-In exchange for the strategic discount, we ask Acme to sign a reference customer agreement permitting BTS-Synthetic to reference Acme Corp as a customer (name and industry only, no financials) in sales materials following the first year of production operation.
-
-### 2.6 Positions We Cannot Accept
-
-In the spirit of transparency, we flag the following RFP commercial requirements that require negotiation before we can execute a contract:
-
-| RFP Clause | Our Position | Severity |
+| Component | Annual List | Annual Net (28% discount) |
 |---|---|---|
-| §3.3 — 35% discount | Maximum 30% at this deal structure | Negotiable |
-| §3.2 — Net 90 payment | Maximum Net 60 | Negotiable |
-| §3.4 — MFN / Most Favoured Nation | We cannot offer MFN to any customer | **Not negotiable** |
-| §3.1 — Zero price escalators | Escalator capped at 5%/year (CPI+2%) is required | Negotiable within cap |
+| Enterprise Platform License | $720,000 | $518,400 |
+| 99.99% SLA Upgrade (multi-region active-active) | $100,000 | $72,000 |
+| **Total** | **$820,000** | **$590,400** |
 
----
+### 2.2 Five-Year Cost Schedule
 
-## 3. Contractual Positions
-
-The following RFP contractual clauses require negotiation. We flag them proactively to avoid surprises during redlining.
-
-### 3.1 Liability — Section 4.1 (BLOCKER)
-**RFP says:** "Vendor liability for any data breach is uncapped. Vendor must indemnify Acme for all costs, including notification costs, regulatory fines, and reputational damages."
-**Our position:** Aggregate liability capped at 24 months of fees paid (~$1.25M at Year 1 rates), with mutual carve-outs for gross negligence and wilful misconduct. We carry $5M cyber liability insurance — uncapped indemnification voids our coverage.
-**Counter:** "Vendor aggregate liability for any data breach capped at 24 months of fees paid as of the date of the breach. Carve-outs for gross negligence and wilful misconduct. Vendor will maintain cyber liability insurance of not less than $5M and provide certificates on request."
-
-### 3.2 Audit Rights — Section 4.2 (BLOCKER)
-**RFP says:** "Audit without prior notice, up to four times per calendar year. Costs borne by vendor."
-**Our position:** We accept up to 2 audits per year with 30 days' written notice. We pay costs for the first audit; customer pays for any additional. "Without notice" audit rights are a blocker — our SOC 2 program requires scheduled audit windows.
-**Counter:** "Customer may conduct 2 audits per year with 30 days' notice. Vendor bears cost of first audit per year. Additional audits at customer's cost. Audit subject to confidentiality agreement."
-
-### 3.3 Service Levels — Section 4.3 (BLOCKER on remedy)
-**RFP says:** "99.99% monthly uptime. Any SLA failure entitles Acme to terminate with full refund."
-**Our position:** 99.99% uptime is achievable as a premium add-on (included in our pricing above). However, termination for a single SLA miss is a blocker — SLA credits (up to 30% of monthly fees) are the appropriate remedy. Instant termination on first miss with full refund is operationally incompatible with any SLA-backed product.
-**Counter:** "99.99% monthly uptime commitment. SLA failure: service credits of 10% of monthly fee per 0.01% shortfall, capped at 30% of monthly fees. Right to terminate for convenience with 90 days' notice if SLA is missed in 3 or more consecutive months."
-
-### 3.4 Intellectual Property — Section 4.4 (BLOCKER)
-**RFP says:** "All work product shall vest in Acme Corp upon creation."
-**Our position:** We retain IP in all platform components, base code, and methodologies. Customer-specific deliverables (custom reports, configurations, integration scripts) are licensed to Acme on a perpetual, royalty-free basis — not assigned. We cannot assign IP in work product that shares code with our core platform.
-**Counter:** "Vendor retains ownership of all pre-existing IP and platform components. Customer-specific deliverables are licensed to customer on a perpetual, royalty-free, non-exclusive basis. Customer data is, at all times, the property of customer."
-
-### 3.5 Subprocessors — Section 4.5 (BLOCKER)
-**RFP says:** "Vendor shall obtain Acme's prior written consent before engaging any subprocessor. Consent may be withheld at Acme's sole discretion."
-**Our position:** Pre-approval of every subprocessor is operationally impossible for a cloud SaaS provider. We maintain a public subprocessor list and provide 30 days' written notice before adding any new subprocessor. Customer may object; we will substitute or, if substitution is impossible, allow termination for cause.
-**Counter:** "Vendor maintains a current subprocessor list available at [URL]. Vendor will notify customer 30 days before engaging any new subprocessor. Customer may object within 14 days; vendor will use reasonable efforts to accommodate. If vendor cannot substitute and customer objects, customer may terminate the affected services with 30 days' notice."
-
-### 3.6 Termination — Section 3.5 (Negotiable)
-**RFP says:** "Terminate at any time, with or without cause, on 30 days' written notice. No early termination fees."
-**Our position:** We accept termination for convenience with **90 days'** written notice (not 30). Pro-rated refund of prepaid fees for the unused portion of the period. No early termination fees.
-**Counter:** "Either party may terminate for convenience on 90 days' written notice. Upon termination, vendor will refund pro-rated prepaid fees for the unused committed period."
-
----
-
-## 4. Implementation Plan
-
-### 4.1 Timeline
-
-| Milestone | Target | Duration |
+| Year | Net Annual Fee | Notes |
 |---|---|---|
-| Contract signature | Week 0 | — |
-| Kickoff + environment provisioning | Week 1–2 | 2 weeks |
-| **PoC: one IoT stream + Power BI dashboard** | Week 6 | 4 weeks |
-| PoC acceptance + Year 1 invoice | Week 10 | — |
-| Teradata migration (Phase 1: schema + historical) | Week 10–20 | 10 weeks |
-| Batch ETL — top 10 sources | Week 12–18 | 6 weeks |
-| Streaming ingest — all 40K devices | Week 16–22 | 6 weeks |
-| **First production workload** | Week 12 | 8 weeks from PoC start |
-| Power BI migration (all 600 users) | Week 18–24 | 6 weeks |
-| Teradata decommission readiness | Week 26 | — |
-| **Full platform live** | Week 26 | ~24 weeks total |
-| ML infrastructure ready | Week 20 | Available when needed |
+| Year 1 | $590,400 | Billing starts after 30-day acceptance period |
+| Year 2 | $602,208 | CPI + 2%, capped at 5% |
+| Year 3 | $614,252 | CPI + 2%, capped at 5% |
+| **3-Year Committed Total** | **$1,806,860** | |
+| Year 4 (renewal) | $626,537 | Renewal pricing locked at signing |
+| Year 5 (renewal) | $639,068 | CPI + 2%, capped at 5% |
+| **5-Year Total (illustrative at 2% CPI)** | **$3,072,465** | |
 
-### 4.2 Staffing (BTS-Synthetic side)
+*Annual escalation: CPI + 2%, capped at 5%/year, referencing EU HICP index published by Eurostat. All 5-year figures above assume 2% CPI — actual fees will be at or below these figures if inflation remains ≤3%.*
 
-| Role | Commitment |
+### 2.3 Implementation Services (Fixed-Scope, Fixed-Price)
+
+| Item | Cost |
 |---|---|
-| Dedicated Customer Success Manager | Full-time, Year 1 |
-| Lead Solutions Architect | Full-time, Weeks 1–26 |
-| Data Migration Engineer (Teradata specialist) | 50%, Weeks 8–22 |
-| Streaming Infrastructure Engineer | 50%, Weeks 12–22 |
-| Power BI Integration Specialist | 50%, Weeks 16–24 |
+| 20-week migration programme | $185,000 |
+| 30-day PoC (credited toward Year 1) | $0 net |
 
-### 4.3 Customer prerequisites
+Professional services are fixed-scope and fixed-price. No T&M exposure for Acme.
 
-- Azure Blob Storage containers provisioned (EU West + US East) before Week 2
-- Network connectivity (ExpressRoute or VPN) from manufacturing facilities to EU West region
-- Teradata export access (read-only service account + connectivity)
-- Power BI admin access for connector deployment
+### 2.4 Our Position on Acme's Commercial Requirements
 
-### 4.4 Key risks and mitigations
+| Acme Requirement | Our Position |
+|---|---|
+| **35% discount** | **Counter: 28%.** Our maximum strategic discount for a deal of this size, term, and profile. We have offered 28% to comparable manufacturing customers. Further reduction is not possible without removing the 99.99% SLA premium. |
+| **5-year price lock, no escalators** | **Counter: 3-year lock + CPI+2% escalator (capped 5%).** A 5-year flat price on a $590K/year cloud contract is not commercially sustainable given infrastructure cost inflation. We commit the Year 1 net price for Years 1–3, with a fully transparent and capped escalator. Renewal-year pricing is locked at signing. |
+| **Net 90 payment** | **Counter: Net 60.** We accept Net 60 for Fortune 500-equivalent enterprise customers. Our own cloud infrastructure billing cycles make Net 90 a binding constraint we cannot absorb. |
+| **Most Favoured Nation (MFN)** | **We cannot accept MFN clauses** — this is a company-wide policy protecting all existing customer agreements. In lieu, we will contractually commit that Acme's pricing will not be increased by more than the stated escalator cap during the contracted term. |
+
+### 2.5 Discount Basis and Reference Agreement
+
+The 28% discount reflects:
+1. 3-year committed term (5% uplift over standard)
+2. Strategic account designation (manufacturing vertical, logo value for our reference programme)
+3. Reference customer agreement — we ask Acme to permit BTS-Synthetic to reference Acme Corp by name and industry in sales materials after the first year of production. No financials disclosed.
+
+---
+
+## 3. Implementation Plan
+
+### 3.1 Phased Migration (20 Weeks to Full Production)
+
+| Phase | Weeks | Milestones |
+|---|---|---|
+| **Phase 0 — Discovery & Design** | 1–3 | Architecture sign-off, data cataloguing, security design, Azure integration blueprint |
+| **Phase 1 — Foundation** | 4–7 | Platform provisioning (EU + US regions), network connectivity, Entra ID integration, governance catalog seeded with Teradata schema |
+| **Phase 2 — Priority Workloads** | 8–13 | IoT ingest pipeline live, 3 highest-priority Teradata schemas migrated, Power BI connection validated with pilot (50 users); **first production workload** |
+| **Phase 3 — Ramp & Cutover** | 14–19 | Remaining Teradata schemas migrated in waves, all 30+ batch sources connected, full 600-user Power BI rollout |
+| **Phase 4 — Acceptance** | 20 + 30 days | Full production cutover, 30-day acceptance period, Year 1 billing begins post-acceptance |
+
+**Buffer to Teradata decommission deadline (end-2027):** 18+ months. No schedule risk.
+
+### 3.2 Migration Risk Controls
+
+- **Parallel run:** Teradata and BTS-Synthetic run in parallel through Phases 2–3. Automated reconciliation checks ensure data parity before each wave is promoted.
+- **Wave-based rollback:** Each migration wave is independently reversible. No Teradata schema is decommissioned until Acme's data team provides written sign-off.
+- **Dedicated on-site support:** Migration engineer co-located with Acme's Austin R&D team during Phases 1–2.
+
+### 3.3 Key Risks and Mitigations
 
 | Risk | Likelihood | Mitigation |
 |---|---|---|
-| Teradata schema complexity (18-country data) | Medium | Dedicated migration engineer; schema-mapping workshop in Week 2 |
-| IoT device connectivity heterogeneity | Medium | Pre-built adapters for top 5 industrial protocols; custom adapters for others in PoC scope |
-| Power BI report rework (complex DAX) | Low | DirectQuery adapter preserves existing DAX in most cases; regression testing in Week 22 |
-| EU data residency audit failure | Low | Per-table enforcement at storage API layer; tested in PoC |
-| Teradata decommission schedule (2027) | Low | Platform ready by Week 26; 12+ months buffer |
+| Teradata schema complexity (18-country data, 30+ sources) | Medium | Schema-mapping workshop in Week 2; dedicated Teradata specialist |
+| IoT device protocol heterogeneity | Medium | Pre-built adapters for top 5 industrial protocols; custom adapters scoped in Phase 0 |
+| Power BI report rework (complex DAX) | Low | DirectQuery adapter preserves existing DAX; regression testing in Phase 3 |
+| EU data residency audit failure | Low | Per-table enforcement at storage API layer, validated in PoC |
 
----
+### 3.4 BTS-Synthetic Staffing Commitment
 
-## 5. Customer References
-
-The following customers have agreed to serve as references for Acme. All are similar in scale, Power BI deployment, and Azure infrastructure.
-
-| Customer | Industry | Annual Value | Won Against | Contact (available on request) |
-|---|---|---|---|---|
-| **Initech Sensors** | Industrial / IoT | $420K | Microsoft Fabric | CDO, available by phone |
-| **Globex Manufacturing** | Industrial / Manufacturing | $580K | Snowflake, Databricks | VP Data, available by phone or site visit |
-| **Stark Industries** | Industrial / Aerospace | $1.1M | Databricks, Snowflake, Fabric | CIO, available by video call |
-
-All three are multi-year customers, Azure-primary, with Power BI as their primary BI layer. Initech Sensors is the closest profile to Acme (IoT, similar event volumes, EU data residency requirement). We recommend starting there.
-
----
-
-## 6. Why BTS-Synthetic
-
-| Criterion | Our position |
+| Role | Commitment |
 |---|---|
-| **Functional fit** | Full coverage on Power BI, real-time ingest, multi-region, data residency, lakehouse, open formats. Partial on sub-100ms streaming analytics (transparent disclosure). |
-| **Commercial** | 30% off Enterprise list, Net 60 payment, 5-year pricing locked at signing with ≤5%/year escalator. |
-| **TCO** | Predictable spend model; no per-query compute surprise at scale. Volume true-up at year-end with 10% buffer. |
-| **Implementation** | 8 weeks to first production workload; 26 weeks to full migration. Dedicated CSM + architect through Year 1. |
-| **References** | Three comparable industrial customers, all Azure + Power BI, all available. |
-| **Financial stability** | 8 years in market, SOC 2 Type II, ISO 27001, GDPR-aligned DPA. |
+| Dedicated Customer Success Manager | Full-time, Year 1 onward |
+| Lead Solutions Architect | Full-time, Weeks 1–20 |
+| Teradata Migration Engineer | 50%, Weeks 8–20 |
+| Streaming Infrastructure Engineer | 50%, Weeks 8–19 |
+| Power BI Integration Specialist | 50%, Weeks 14–20 |
 
-We look forward to presenting this proposal to Sarah Chen and Marcus Webb. We are available for a technical deep-dive or TCO workshop at Acme's convenience.
+---
+
+## 4. Competitive Context
+
+Acme is evaluating Databricks, Snowflake, and Microsoft Fabric (§6 of the RFP). Our honest assessment:
+
+### vs. Microsoft Fabric
+Microsoft will pitch Fabric as "included with your E5 licences." The headline is compelling; the total cost is not free. Fabric has been generally available as a unified platform for approximately 18 months. At Acme's scale — 40,000 IoT devices, 280 TB, 18-country multi-region — you are taking on enterprise-scale operational risk on a maturing platform. We have been doing this for eight years. Our Power BI DirectQuery adapter has been in production at enterprise scale for five years; Fabric's native experience is tighter but the operational maturity is not comparable. We recommend a joint 3-year TCO workshop that includes Microsoft's consulting and integration cost estimates.
+
+*Do not compete on Power BI integration feature parity — both platforms connect. Compete on operational maturity and TCO.*
+
+### vs. Databricks
+Databricks has a strong lakehouse and ML story — both are genuine. Our differentiation: BI and analyst-facing tooling (Power BI is first-class on our platform, second-class on Databricks), and predictable TCO (Databricks customers at Acme's scale frequently report compute cost surprises in Year 2 when interactive SQL workloads scale up). We will produce a 3-year TCO comparison at Acme's exact workload profile on request.
+
+### vs. Snowflake
+Snowflake's analyst SQL experience is best-in-class. At Acme's real-time IoT scale (80K events/second, Kafka ingest), Snowflake's architecture is a less natural fit — their streaming ingest carries meaningful additional compute cost at this volume. We ran a comparable workload comparison for Initech Sensors and won on 3-year TCO.
+
+---
+
+## 5. Contractual Positions
+
+We proactively flag five items that require negotiation. All have signed precedents in our enterprise contracts.
+
+### Item 1 — Liability Cap (§4.1) — **BLOCKER**
+**RFP says:** Uncapped liability for data breach, including regulatory fines and reputational damages.
+**Why it is a blocker:** Our cyber liability insurance (which covers Acme as a beneficiary) caps at 24 months of fees. Uncapped indemnification voids our coverage, leaving Acme with an uncollectable promise.
+**Our counter:** Aggregate liability for data breach capped at 24 months of fees paid (~$1.18M at Year 1 rates), with mutual carve-outs for gross negligence and wilful misconduct. We will maintain $5M cyber liability insurance and provide certificates on request.
+
+### Item 2 — Intellectual Property (§4.4) — **BLOCKER**
+**RFP says:** All work product vests in Acme upon creation.
+**Why it is a blocker:** Custom configurations and integrations share code with our core platform. Full assignment creates conflicting IP chains that threaten the platform for all customers.
+**Our counter:** BTS-Synthetic retains all IP in the platform and pre-existing components. Customer-specific deliverables (configurations, custom integrations) are licensed to Acme on a **perpetual, royalty-free, exclusive basis** for Acme's use. Upon termination, Acme retains this licence. *(Precedent: Stark Industries contract, executed February 2026.)*
+
+### Item 3 — Audit Rights (§4.2) — **BLOCKER on "without notice"**
+**RFP says:** Audit without prior notice, up to four times per calendar year, at vendor cost.
+**Our counter:** We accept up to two audits per calendar year with **30 days' written notice**. We bear cost of the first audit per year; customer bears cost of any additional. "Without notice" audit rights are incompatible with our SOC 2 programme. We will provide SOC 2 Type II and ISO 27001 reports in lieu of on-site audit for scope covered by those certifications.
+
+### Item 4 — Service Levels (§4.3) — **BLOCKER on immediate-termination remedy**
+**RFP says:** 99.99% monthly uptime; any SLA failure entitles Acme to terminate immediately with full fee refund.
+**Our position on the 99.99% SLA target:** We can commit to 99.99% on the multi-region active-active configuration included in our pricing.
+**Our counter on remedy:** SLA failures entitle Acme to **service credits up to 30% of the affected monthly fee**. Right to terminate for convenience arises after three consecutive months of SLA breach at >0.1% downtime. Immediate termination with full refund on a single outage is not commercially viable for any cloud provider — it creates a perverse incentive to over-report availability.
+
+### Item 5 — Subprocessors (§4.5) — **BLOCKER**
+**RFP says:** Prior written consent required for every new subprocessor; consent at Acme's sole discretion.
+**Our counter:** We maintain a public subprocessor list (updated quarterly). We will notify Acme **30 days before** adding any new subprocessor that processes Acme data. Acme may raise objections within 14 days; we will either substitute or, if substitution is not feasible, offer Acme the right to terminate with 90 days' notice and pro-rated refund. Pre-approval at sole discretion is operationally unworkable for a cloud SaaS provider with 15+ infrastructure subprocessors.
+
+### Items We Accept Without Negotiation
+
+| Clause | Our Position |
+|---|---|
+| Termination for convenience (§3.5) | Accept with modification: 90 days' notice (vs. 30) to allow data export and offboarding. No early termination fees. Pro-rated refund of prepaid fees. |
+| EU data residency | Accepted and built into the platform architecture. |
+| GDPR DPA | We will execute Acme's DPA or provide our standard DPA for review. |
+
+---
+
+## 6. Customer References
+
+| Customer | Industry | Annual Value | Won Against | Why Relevant |
+|---|---|---|---|---|
+| **Initech Sensors** | Industrial / IoT | $420K | Microsoft Fabric | Closest analogue — IoT ingest at scale, Power BI, EU residency, Azure |
+| **Globex Manufacturing** | Industrial / Manufacturing | $580K | Snowflake, Databricks | 300+ TB, Teradata migration, multi-region, multi-source |
+| **Stark Industries** | Industrial / Aerospace | $1.1M | Databricks, Snowflake, Fabric | Complex multi-region, IP licensing precedent, largest comparable deal |
+
+All three are Enterprise-tier, Azure-primary, Power BI-dependent customers. Contact details available on request following NDA execution.
+
+---
+
+## 7. Why BTS-Synthetic
+
+| Evaluation Criterion (per RFP §5) | Our Position |
+|---|---|
+| **Functional fit (30%)** | Full coverage on all hard requirements. Transparent disclosure on sub-100ms streaming latency. |
+| **Commercial terms (25%)** | 28% off list, Net 60, CPI-capped escalator, 5-year pricing locked at signing, no MFN. |
+| **Total cost of ownership (20%)** | Predictable spend; no per-query compute surprise; volume true-up buffer at 10%. We will produce a 3-year TCO comparison at your exact workload profile. |
+| **Implementation timeline (15%)** | 20 weeks to full migration; 8 weeks to first production workload. Dedicated team. Fixed-price programme. |
+| **Financial stability + references (10%)** | 8 years in market, SOC 2 Type II, ISO 27001, GDPR-aligned. Three referenceable comparable customers. |
+
+We look forward to presenting this proposal to Sarah Chen and Marcus Webb and are available for a technical deep-dive or TCO workshop at Acme's convenience.
 
 **BTS-Synthetic Deal Desk**
 deals@bts-synthetic.example
@@ -262,4 +275,4 @@ deals@bts-synthetic.example
 ---
 
 *This proposal is confidential and intended solely for Acme Corp's evaluation committee.*
-*All pricing is valid until 2026-07-22.*
+*All pricing is valid until 2026-07-23.*

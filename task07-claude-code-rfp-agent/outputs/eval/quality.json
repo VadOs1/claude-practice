@@ -4,24 +4,24 @@
     "scores": {
       "completeness": 3,
       "specificity": 4,
-      "actionability": 3,
-      "risk_depth": 4,
+      "actionability": 4,
+      "risk_depth": 3,
       "correctness": 4
     },
     "total": 18,
-    "rationale": "Solid technical depth with honest acknowledgment of streaming latency gaps and concrete past-win references (Initech, Globex with dollar amounts), but the output is visibly truncated so full section coverage is uncertain, and the risk dashboard \u2014 while functional with clause filtering \u2014 is slightly less polished than the swarm's SVG-gauge implementation."
+    "rationale": "Covers technical and commercial sections well with good concrete numbers and two customer references, but lacks an explicit competitive-positioning section and the risk dashboard appears structurally sound yet the proposal's contractual analysis is less surfaced than the other strategies."
   },
   {
     "strategy_key": "swarm",
     "scores": {
-      "completeness": 4,
-      "specificity": 4,
-      "actionability": 4,
-      "risk_depth": 5,
+      "completeness": 5,
+      "specificity": 5,
+      "actionability": 5,
+      "risk_depth": 4,
       "correctness": 4
     },
-    "total": 21,
-    "rationale": "Produces the most sophisticated risk dashboard (SVG arc gauge, severity badges, clause-level filtering, decision banner) and covers all major proposal sections with named buyer contacts and clear pricing/timeline, though specificity falls just short of dynamic's TCO-percentage-level detail."
+    "total": 23,
+    "rationale": "The multi-specialist swarm produces the most comprehensive output \u2014 explicit win theme, requirement-by-requirement fit table, named list price with exact discount math, three referenceable customers, and five named legal counter-positions \u2014 making it the most decision-ready response, though the risk dashboard's revenue-driver scoring could be more granular."
   },
   {
     "strategy_key": "dynamic",
@@ -29,10 +29,10 @@
       "completeness": 5,
       "specificity": 5,
       "actionability": 5,
-      "risk_depth": 3,
-      "correctness": 4
+      "risk_depth": 4,
+      "correctness": 5
     },
-    "total": 22,
-    "rationale": "Most comprehensive and decision-ready proposal \u2014 explicit requirements-mapping table, 5-year TCO comparisons with percentages against named competitors, two named reference wins, company credentialing, and the clearest go-live and migration deadline targets \u2014 but the risk-assessment HTML is the simplest of the three, lacking the SVG gauge and filtering sophistication of the other strategies."
+    "total": 24,
+    "rationale": "Adds a company-background section and 5-year TCO comparisons with quantified percentage advantages over named competitors, cites the most precise facts (3.1\u00d7 peak, $1.8B valuation, 340+ customers, 2 exabytes/month, Stark deal size), and the risk HTML is the most polished with an internal-only banner and expandable clause cards, making it the internally consistent and evidence-rich proposal with no detectable contradictions."
   }
 ]
