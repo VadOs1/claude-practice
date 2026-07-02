@@ -17,7 +17,7 @@ two things that share one set of `.claude/` agents and skills:
 ```bash
 # from task07-claude-code-rfp-agent/
 
-# Run the full evaluation (spends real tokens — 3 agent runs + 1 judge run)
+# Run the full evaluation (spends real tokens — 4 agent runs + 1 judge run)
 uv run python -m rfp_eval --rfp synthetic-data/rfp-acme-corp.md --out outputs
 open outputs/eval/index.html
 
@@ -105,7 +105,7 @@ strategies ─┬─▶ sdk_runner ─▶ metrics ─┐
    `sdk_runner.run_query` drives the `claude_agent_sdk.query()` to completion.
 4. Each run writes its artifacts (`proposal.docx`, `risk-assessment.html`) and a
    `run.json` under `outputs/runs/<strategy>/`. A crashed run is normalized to a
-   failed `RunResult(is_error=True)` so the other two still produce a report.
+   failed `RunResult(is_error=True)` so the other three still produce a report.
 5. `metrics.extract_metrics` turns each `ResultMessage` into `RunMetrics` (real
    `total_cost_usd` + token counts) → `outputs/eval/metrics.json`.
 6. `judge.read_artifacts` collects each run's outputs (HTML + docx→text via
@@ -198,7 +198,7 @@ project skill, coordinated by a system-prompted "Senior Partner" query:
   `asyncio.run(...)` — there is no `pytest-asyncio` dependency.
 - **TDD.** One test module per source module in `tests/`. Add a failing test
   before implementing; keep test output pristine (no warnings).
-- Run: `uv run pytest -q` (28 tests as of the last review).
+- Run: `uv run pytest -q` (35 tests as of the last review).
 
 ---
 
@@ -213,7 +213,7 @@ untracked — regenerate it with a run.
 
 ## Gotchas
 
-- **The live smoke run spends real tokens** (3 agent runs + 1 judge run, several
+- **The live smoke run spends real tokens** (4 agent runs + 1 judge run, several
   minutes). Use it to validate end-to-end; the test suite does not exercise it.
 - **A failed strategy still renders.** `run_evaluation` uses
   `return_exceptions=True`; a crashed run shows `is_error: true` and zeros rather

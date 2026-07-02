@@ -31,6 +31,6 @@ Run the RFP Agent SDK evaluation, then summarize the result.
 
 ## Notes
 
-- The three runs each take a few minutes and cost real tokens; they run unattended
+- The four runs each take a few minutes and cost real tokens; they run unattended
   (`permission_mode="bypassPermissions"`, scoped to this project via `cwd`).
 - Per-strategy artifacts land in `outputs/runs/<strategy>/`.

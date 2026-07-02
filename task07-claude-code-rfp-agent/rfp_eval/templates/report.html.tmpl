@@ -79,7 +79,7 @@ new Chart(document.getElementById('quality'), {
   type: 'radar',
   data: { labels: D.rubric_dims, datasets: D.strategies.map((s, i) => ({
     label: s.label, data: D.rubric_dims.map(d => s.quality[d]),
-    borderColor: PALETTE[i], backgroundColor: PALETTE[i] + '33' })) },
+    borderColor: PALETTE[i % PALETTE.length], backgroundColor: PALETTE[i % PALETTE.length] + '33' })) },
   options: { scales: { r: { min: 0, max: 5 } } }
 });
 

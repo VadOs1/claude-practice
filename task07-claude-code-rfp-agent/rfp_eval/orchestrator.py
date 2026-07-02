@@ -58,7 +58,7 @@ async def run_evaluation(
     # A single strategy raising (SDK/transport/CLI crash) must not discard the
     # other, already-completed (and expensive) runs. Normalize any exception
     # into a failed RunResult for that strategy so the report still renders
-    # with all three strategies represented.
+    # with all four strategies represented.
     results: list[tuple[Path, RunResult]] = []
     for key, res in zip(STRATEGY_KEYS, gathered):
         if isinstance(res, BaseException):
