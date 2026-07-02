@@ -9,7 +9,8 @@ JUDGE_TEXT = """```json
 [
  {"strategy":"single","scores":{"completeness":3,"specificity":3,"actionability":4,"risk_depth":2,"correctness":4},"rationale":"ok"},
  {"strategy":"swarm","scores":{"completeness":5,"specificity":4,"actionability":4,"risk_depth":5,"correctness":4},"rationale":"best"},
- {"strategy":"dynamic","scores":{"completeness":4,"specificity":4,"actionability":5,"risk_depth":3,"correctness":4},"rationale":"good"}
+ {"strategy":"dynamic","scores":{"completeness":4,"specificity":4,"actionability":5,"risk_depth":3,"correctness":4},"rationale":"good"},
+ {"strategy":"agent_teams","scores":{"completeness":4,"specificity":3,"actionability":4,"risk_depth":3,"correctness":4},"rationale":"solid team output"}
 ]
 ```"""
 
@@ -53,10 +54,12 @@ def test_run_evaluation_end_to_end(tmp_path):
     assert index.exists() and index.name == "index.html"
     html = index.read_text()
     assert "Agent Swarm" in html
+    assert "Agent Teams" in html
     metrics = json.loads((tmp_path / "outputs" / "eval" / "metrics.json").read_text())
     quality = json.loads((tmp_path / "outputs" / "eval" / "quality.json").read_text())
-    assert len(metrics) == 3 and len(quality) == 3
+    assert len(metrics) == 4 and len(quality) == 4
     assert (tmp_path / "outputs" / "runs" / "swarm" / "run.json").exists()
+    assert (tmp_path / "outputs" / "runs" / "agent_teams" / "run.json").exists()
 
 
 def test_run_evaluation_survives_one_strategy_crashing(tmp_path):
@@ -95,14 +98,16 @@ def test_run_evaluation_survives_one_strategy_crashing(tmp_path):
 
     metrics = json.loads((tmp_path / "outputs" / "eval" / "metrics.json").read_text())
     quality = json.loads((tmp_path / "outputs" / "eval" / "quality.json").read_text())
-    assert len(metrics) == 3 and len(quality) == 3
+    assert len(metrics) == 4 and len(quality) == 4
 
     by_key = {m["strategy_key"]: m for m in metrics}
-    assert set(by_key) == {"single", "swarm", "dynamic"}
+    assert set(by_key) == {"single", "swarm", "dynamic", "agent_teams"}
     assert by_key["dynamic"]["is_error"] is True
     assert by_key["single"]["is_error"] is False
     assert by_key["swarm"]["is_error"] is False
+    assert by_key["agent_teams"]["is_error"] is False
 
     assert (tmp_path / "outputs" / "runs" / "dynamic" / "run.json").exists()
     assert (tmp_path / "outputs" / "runs" / "single" / "run.json").exists()
     assert (tmp_path / "outputs" / "runs" / "swarm" / "run.json").exists()
+    assert (tmp_path / "outputs" / "runs" / "agent_teams" / "run.json").exists()
