@@ -4,12 +4,13 @@ from __future__ import annotations
 
 from pathlib import Path
 
-STRATEGY_KEYS: list[str] = ["single", "swarm", "dynamic"]
+STRATEGY_KEYS: list[str] = ["single", "swarm", "dynamic", "agent_teams"]
 
 LABELS: dict[str, str] = {
     "single": "Single Agent",
     "swarm": "Agent Swarm",
     "dynamic": "Dynamic Workflow",
+    "agent_teams": "Agent Teams",
 }
 
 COMMON_TASK = """\
@@ -39,6 +40,15 @@ _PREAMBLES = {
         "Use a DYNAMIC WORKFLOW: first draft an explicit multi-step plan for "
         "handling this RFP end to end, then execute that workflow step by step, "
         "adapting the plan as results come in."
+    ),
+    "agent_teams": (
+        "Use AGENT TEAMS for this RFP: spin up a team of agents where a "
+        "coordinator distributes tasks to specialized sub-agents, and those "
+        "agents pick up their work and proceed in parallel, communicating "
+        "with each other as needed. Build the team from the project's "
+        "specialist agents: deal-desk-orchestrator as the coordinator, plus "
+        "pricing, legal, technical-fit, competitive, and risk-assessment as "
+        "team members."
     ),
 }
 
