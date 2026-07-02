@@ -1,0 +1,59 @@
+{
+  "total_cost_usd": 1.8366508000000001,
+  "usage": {
+    "input_tokens": 19,
+    "cache_creation_input_tokens": 55911,
+    "cache_read_input_tokens": 837607,
+    "output_tokens": 44403,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 43868,
+      "ephemeral_5m_input_tokens": 12043
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 1,
+        "output_tokens": 415,
+        "cache_read_input_tokens": 91079,
+        "cache_creation_input_tokens": 319,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 319,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 779,
+      "outputTokens": 3368,
+      "cacheReadInputTokens": 47141,
+      "cacheCreationInputTokens": 13891,
+      "webSearchRequests": 0,
+      "costUSD": 0.039696850000000006,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-4-6": {
+      "inputTokens": 48,
+      "outputTokens": 56468,
+      "cacheReadInputTokens": 1034904,
+      "cacheCreationInputTokens": 122872,
+      "webSearchRequests": 0,
+      "costUSD": 1.79695395,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "num_turns": 16,
+  "duration_ms": 824645,
+  "is_error": false,
+  "result": "Both deliverables confirmed. \u2705\n\n---\n\n**\u2705 Swarm complete. Two files written:**\n\n- `outputs/runs/swarm/proposal.docx` \u2014 24 KB branded customer-facing proposal\n- `outputs/runs/swarm/risk-assessment.html` \u2014 33 KB interactive internal risk dashboard\n\n---\n\n**Swarm execution summary:**\n\n| Agent | Finding | Status |\n|---|---|---|\n| \ud83d\udcb0 **Pricing** | Open at $576K/yr (20% off $720K list); floor $540K (25% with ref agreement); hard NO on MFN and Net 90; CPI+2% escalator mandatory | \u2705 Done |\n| \u2696\ufe0f **Legal** | 5 BLOCKERS (uncapped liability, no-notice audit, any-miss SLA termination, IP assignment, subprocessor veto); 2 negotiable; 1 acceptable | \u2705 Done |\n| \ud83d\udd27 **Technical Fit** | Score: **HIGH** \u2014 all non-negotiables met; 99.99% SLA resolved via add-on; 24-week programme; Teradata connector is key differentiator | \u2705 Done |\n| \ud83c\udfaf **Competitive** | Most dangerous: Microsoft Fabric (home field + E5 \"free\" narrative). Lead with honest 5-year TCO. Win theme: predictable cost + migration maturity | \u2705 Done |\n| \ud83d\udccb **Risk Assessment** | Gross risk 18.0% \u2192 Net risk **7.75%** (after counters); Revenue score 100/100 \u2192 **Escalate to VP** (not No-Bid); dashboard is interactive with live clause toggles | \u2705 Done |"
+}

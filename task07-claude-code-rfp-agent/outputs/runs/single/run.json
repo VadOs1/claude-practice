@@ -1,0 +1,59 @@
+{
+  "total_cost_usd": 1.5543869500000003,
+  "usage": {
+    "input_tokens": 29,
+    "cache_creation_input_tokens": 64972,
+    "cache_read_input_tokens": 701684,
+    "output_tokens": 66522,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 45115,
+      "ephemeral_5m_input_tokens": 19857
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 1,
+        "output_tokens": 272,
+        "cache_read_input_tokens": 64621,
+        "cache_creation_input_tokens": 351,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 351,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 721,
+      "outputTokens": 18,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000811,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-4-6": {
+      "inputTokens": 29,
+      "outputTokens": 66522,
+      "cacheReadInputTokens": 701684,
+      "cacheCreationInputTokens": 64972,
+      "webSearchRequests": 0,
+      "costUSD": 1.5535759500000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "num_turns": 26,
+  "duration_ms": 1041603,
+  "is_error": false,
+  "result": "Both deliverables are written and non-zero:\n\n**`outputs/runs/single/proposal.docx`** (21 KB) \u2014 Customer-facing branded proposal covering: executive summary, technical capability matrix (full fit on all hard requirements), commercial proposal at 28% off list ($590,400/year) with 5-year pricing schedule and CPI-capped escalator, 20-week Teradata migration plan, competitive positioning against Databricks/Snowflake/Fabric, and five contractual counter-positions with business-plain-English rationale.\n\n**`outputs/runs/single/risk-assessment.html`** (20 KB) \u2014 Self-contained interactive internal dashboard with: gross risk score 18.0% \u2192 net risk 8.3% after negotiation positions, revenue attractiveness 100/100, decision banner \"\u26a0 ESCALATE TO VP \u2014 Resolve Blockers Before Committing\", animated SVG gauge, 12 clause-toggle cards (each showing severity badge, risk %, counter-position text, and financial consequence for all BLOCKERs), live recalculation on toggle, and \"Show Worst-Case / Show Proposed Position\" controls."
+}

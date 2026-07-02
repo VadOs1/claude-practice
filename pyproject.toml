@@ -6,7 +6,19 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "anthropic>=0.111.0",
+    "claude-agent-sdk>=0.2.110",
     "matplotlib>=3.11.0",
+    "pypandoc-binary>=1.17",
     "python-dotenv>=1.2.2",
     "tabulate>=0.10.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["task07-claude-code-rfp-agent/tests"]
+pythonpath = ["task07-claude-code-rfp-agent"]
+addopts = "-q"
