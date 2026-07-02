@@ -13,8 +13,8 @@ from .orchestrator import run_evaluation
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="rfp_eval",
-        description="Run the RFP through single / swarm / dynamic strategies on the "
-        "Claude Agent SDK and build a charted cost/quality report.",
+        description="Run the RFP through single / swarm / dynamic / agent-teams "
+        "strategies on the Claude Agent SDK and build a charted cost/quality report.",
     )
     parser.add_argument("--rfp", default="synthetic-data/rfp-acme-corp.md")
     parser.add_argument("--out", default="outputs")

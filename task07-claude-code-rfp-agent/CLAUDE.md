@@ -6,7 +6,7 @@ two things that share one set of `.claude/` agents and skills:
 1. **The RFP deal-desk agents/skills** (`.claude/`) — a Claude Code setup that
    turns an inbound RFP into a branded proposal (`.docx`) plus an internal risk
    dashboard (`.html`).
-2. **`rfp_eval/`** — a Claude Agent SDK harness that runs the RFP through three
+2. **`rfp_eval/`** — a Claude Agent SDK harness that runs the RFP through four
    strategies, measures real cost + quality, and renders a comparison report.
    This is Task A (comparison) and Task B (the SDK swarm) unified in one project.
 
@@ -36,13 +36,15 @@ All Python/pytest runs go through `uv run ...` (uv project, Python ≥3.14).
 
 ## What it does (one paragraph)
 
-The harness runs the Acme RFP through three Claude Code strategies —
-**single agent**, an Agent-SDK coordinator→specialists **swarm**, and a
-**dynamic workflow** — concurrently on the `claude-agent-sdk`. Each run's
-terminal `ResultMessage` reports *real* cost and token usage, so the comparison
-uses measured numbers, not estimates. An LLM judge scores each strategy's output
-artifacts against a fixed rubric, and the results are rendered into a
-self-contained Chart.js dashboard at `outputs/eval/index.html`.
+The harness runs the Acme RFP through four Claude Code strategies —
+**single agent**, an Agent-SDK coordinator→specialists **swarm**, an
+**agent teams** run (project specialist sub-agents coordinated via Claude
+Code's experimental Agent Teams mode), and a **dynamic workflow** —
+concurrently on the `claude-agent-sdk`. Each run's terminal `ResultMessage`
+reports *real* cost and token usage, so the comparison uses measured numbers,
+not estimates. An LLM judge scores each strategy's output artifacts against a
+fixed rubric, and the results are rendered into a self-contained Chart.js
+dashboard at `outputs/eval/index.html`.
 
 ---
 
@@ -96,7 +98,7 @@ strategies ─┬─▶ sdk_runner ─▶ metrics ─┐
 
 1. `__main__.main()` parses `--rfp`/`--out`/`--task-dir`/`--model` and calls
    `asyncio.run(run_evaluation(...))`.
-2. `run_evaluation` launches all three strategies **concurrently** with
+2. `run_evaluation` launches all four strategies **concurrently** with
    `asyncio.gather(..., return_exceptions=True)`. Each is one `_run_one(key)`.
 3. `_run_one` asks `strategies.build_call(key, ...)` for a `(prompt, options)`
    pair (the `swarm` key delegates to `swarm.build_swarm_call`), then

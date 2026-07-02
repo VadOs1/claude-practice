@@ -15,9 +15,11 @@ Run the RFP Agent SDK evaluation, then summarize the result.
    uv run python -m rfp_eval --rfp synthetic-data/rfp-acme-corp.md --out outputs $ARGUMENTS
    ```
 
-   This runs three Claude Agent SDK evaluations concurrently — single agent, the
-   coordinator→specialists swarm (Task B), and a dynamic workflow — captures real
-   cost + token usage from each run's `ResultMessage`, sends the outputs to an LLM
+   This runs four Claude Agent SDK evaluations concurrently — single agent,
+   the coordinator→specialists swarm (Task B), an agent-teams run (Claude
+   Code's experimental Agent Teams mode delegating to the project's
+   specialist sub-agents), and a dynamic workflow — captures real cost +
+   token usage from each run's `ResultMessage`, sends the outputs to an LLM
    judge, and writes `outputs/eval/index.html`.
 
 2. Read `outputs/eval/metrics.json` and `outputs/eval/quality.json` and give the
