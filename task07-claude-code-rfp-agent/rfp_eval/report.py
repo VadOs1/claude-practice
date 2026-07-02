@@ -14,8 +14,8 @@ DEFAULT_TEMPLATE = Path(__file__).parent / "templates" / "report.html.tmpl"
 _DATA_MARKER = "__REPORT_DATA__"
 
 
-def __import_dims__() -> list[str]:
-    """Expose rubric dims for callers/tests without importing judge directly."""
+def rubric_dims() -> list[str]:
+    """Return the rubric dimension keys."""
     return list(RUBRIC_DIMS)
 
 

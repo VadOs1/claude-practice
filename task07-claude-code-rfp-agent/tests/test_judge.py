@@ -43,6 +43,18 @@ def test_read_artifacts_reads_html_and_truncates(tmp_path):
     assert "RISK" in text and len(text) <= 100
 
 
+def test_read_artifacts_gives_proposal_a_fair_share(tmp_path):
+    # A large self-contained HTML dashboard (inline Chart.js/CSS) can easily
+    # exceed max_chars on its own; the proposal text must not be starved out.
+    (tmp_path / "risk-assessment.html").write_text("RISKMARKER" + ("H" * 20000))
+    (tmp_path / "proposal.md").write_text("PROPOSALMARKER" + ("P" * 20000))
+    max_chars = 400
+    text = judge.read_artifacts(tmp_path, max_chars=max_chars)
+    assert "RISKMARKER" in text
+    assert "PROPOSALMARKER" in text
+    assert len(text) <= max_chars
+
+
 def test_read_artifacts_missing(tmp_path):
     assert "no artifacts" in judge.read_artifacts(tmp_path / "nope").lower()
 

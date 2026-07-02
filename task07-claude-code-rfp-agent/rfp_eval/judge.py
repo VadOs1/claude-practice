@@ -38,26 +38,27 @@ def read_artifacts(out_dir: str | Path, *, max_chars: int = 12000) -> str:
     out_dir = Path(out_dir)
     if not out_dir.is_dir():
         return "(no artifacts found)"
-    chunks: list[str] = []
-    seen = False
+    found: list[tuple[str, str]] = []
     for name in _ARTIFACT_NAMES:
         p = out_dir / name
         if p.exists():
-            seen = True
-            chunks.append(f"--- {name} ---\n{p.read_text(errors='replace')}")
+            found.append((name, p.read_text(errors="replace")))
     docx = out_dir / "proposal.docx"
     if docx.exists():
         try:
             import pypandoc
 
-            seen = True
-            chunks.append(
-                f"--- proposal.docx ---\n{pypandoc.convert_file(str(docx), 'plain')}"
-            )
+            found.append(("proposal.docx", pypandoc.convert_file(str(docx), "plain")))
         except Exception:
             pass
-    if not seen:
+    if not found:
         return "(no artifacts found)"
+    # Give each artifact a fair share of the budget so a large artifact (e.g. a
+    # self-contained HTML dashboard) can't starve the others of any space.
+    per_artifact_budget = max(1, max_chars // len(found))
+    chunks = [
+        f"--- {name} ---\n{text[:per_artifact_budget]}" for name, text in found
+    ]
     return "\n\n".join(chunks)[:max_chars]
 
 

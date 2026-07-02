@@ -9,7 +9,7 @@ from pathlib import Path
 
 from . import judge, report
 from .metrics import extract_metrics, metrics_as_dict
-from .sdk_runner import run_query
+from .sdk_runner import RunResult, run_query
 from .strategies import STRATEGY_KEYS, build_call
 
 
@@ -40,7 +40,7 @@ async def run_evaluation(
     eval_root = out_root / "eval"
     eval_root.mkdir(parents=True, exist_ok=True)
 
-    results = await asyncio.gather(
+    gathered = await asyncio.gather(
         *(
             _run_one(
                 key,
@@ -51,8 +51,26 @@ async def run_evaluation(
                 query_factory=query_fn,
             )
             for key in STRATEGY_KEYS
-        )
+        ),
+        return_exceptions=True,
     )
+
+    # A single strategy raising (SDK/transport/CLI crash) must not discard the
+    # other, already-completed (and expensive) runs. Normalize any exception
+    # into a failed RunResult for that strategy so the report still renders
+    # with all three strategies represented.
+    results: list[tuple[Path, RunResult]] = []
+    for key, res in zip(STRATEGY_KEYS, gathered):
+        if isinstance(res, BaseException):
+            out_dir = runs_root / key
+            out_dir.mkdir(parents=True, exist_ok=True)
+            failed = RunResult(key=key, result_text="", raw={"is_error": True})
+            run_json = out_dir / "run.json"
+            if not run_json.exists():
+                run_json.write_text(json.dumps(failed.raw, indent=2))
+            results.append((out_dir, failed))
+        else:
+            results.append(res)
 
     metrics = [extract_metrics(r.key, r.raw) for _, r in results]
     (eval_root / "metrics.json").write_text(

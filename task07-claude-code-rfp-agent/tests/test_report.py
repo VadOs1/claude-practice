@@ -37,7 +37,7 @@ def test_build_report_data_merges_and_ranks():
 
 def test_build_report_data_zero_cost_no_div_error():
     m = [RunMetrics("single", 0.0, 0, 0, 0, 0, 0, 0, 0, True)]
-    s = [QualityScore("single", {d: 0 for d in report.__import_dims__()}, 0, "err")]
+    s = [QualityScore("single", {d: 0 for d in report.rubric_dims()}, 0, "err")]
     data = report.build_report_data(m, s)
     assert data["strategies"][0]["quality_per_dollar"] == 0.0
 
