@@ -18,6 +18,7 @@ def result_to_dict(result_msg) -> dict:
     return {
         "total_cost_usd": getattr(result_msg, "total_cost_usd", 0.0) or 0.0,
         "usage": getattr(result_msg, "usage", None) or {},
+        "model_usage": getattr(result_msg, "model_usage", None) or {},
         "num_turns": getattr(result_msg, "num_turns", 0) or 0,
         "duration_ms": getattr(result_msg, "duration_ms", 0) or 0,
         "is_error": bool(getattr(result_msg, "is_error", False)),

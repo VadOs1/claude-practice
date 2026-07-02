@@ -148,11 +148,26 @@ strategies ─┬─▶ sdk_runner ─▶ metrics ─┐
   (they use `types.SimpleNamespace`).
 
 - **SDK field names that must stay exact:** `ResultMessage.total_cost_usd`,
-  `.usage`, `.num_turns`, `.duration_ms`, `.is_error`, `.result`; usage token
-  keys `input_tokens` / `output_tokens` / `cache_read_input_tokens` /
-  `cache_creation_input_tokens`. `AgentDefinition(description, prompt, tools,
-  model, skills)`. `ClaudeAgentOptions(agents, setting_sources, cwd, model,
-  system_prompt, permission_mode, allowed_tools)`.
+  `.usage`, `.model_usage`, `.num_turns`, `.duration_ms`, `.is_error`,
+  `.result`; usage token keys `input_tokens` / `output_tokens` /
+  `cache_read_input_tokens` / `cache_creation_input_tokens`. `AgentDefinition(
+  description, prompt, tools, model, skills)`. `ClaudeAgentOptions(agents,
+  setting_sources, cwd, model, system_prompt, permission_mode, allowed_tools)`.
+
+- **Token totals are computed from `model_usage`, not the top-level `usage`
+  dict, whenever `model_usage` is present.** `ResultMessage.usage` only
+  reflects the top-level query's own turns; it does not include tokens spent
+  by subagents dispatched via the Task tool (e.g. the swarm strategy's
+  coordinator + specialists). `ResultMessage.model_usage` is a `{model_name:
+  {inputTokens, outputTokens, cacheReadInputTokens, cacheCreationInputTokens,
+  costUSD}}` map (camelCase — passed through unmodified from the CLI) that
+  aggregates every model invoked during the call, including subagents.
+  `metrics.extract_metrics` sums across `model_usage.values()` when non-empty,
+  falling back to `usage` only when `model_usage` is absent (older cached
+  `run.json` files, or fakes in tests). Cost (`total_cost_usd`) was already
+  correct across subagents; only the token breakdown needed this fix — without
+  it, multi-agent strategies look artificially cheap on tokens on the
+  dashboard despite driving up real cost.
 
 ---
 

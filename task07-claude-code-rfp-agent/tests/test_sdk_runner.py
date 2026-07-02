@@ -13,6 +13,15 @@ def _fake_result():
             "cache_read_input_tokens": 150000,
             "cache_creation_input_tokens": 30000,
         },
+        model_usage={
+            "claude-opus": {
+                "costUSD": 0.42,
+                "inputTokens": 1200,
+                "outputTokens": 8000,
+                "cacheReadInputTokens": 150000,
+                "cacheCreationInputTokens": 30000,
+            },
+        },
         num_turns=6,
         duration_ms=42000,
         is_error=False,
@@ -31,6 +40,18 @@ def test_result_to_dict_normalizes():
     assert d["usage"]["output_tokens"] == 8000
     assert d["num_turns"] == 6
     assert d["is_error"] is False
+
+
+def test_result_to_dict_captures_model_usage():
+    d = sdk_runner.result_to_dict(_fake_result())
+    assert d["model_usage"]["claude-opus"]["outputTokens"] == 8000
+
+
+def test_result_to_dict_model_usage_defaults_to_empty_dict():
+    fr = _fake_result()
+    del fr.model_usage
+    d = sdk_runner.result_to_dict(fr)
+    assert d["model_usage"] == {}
 
 
 def test_result_to_dict_none():
