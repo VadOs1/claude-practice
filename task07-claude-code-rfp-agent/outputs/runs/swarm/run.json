@@ -1,0 +1,37 @@
+{
+  "total_cost_usd": 1.20713065,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 2258,
+    "cache_read_input_tokens": 81189,
+    "output_tokens": 706,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2258,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 1,
+        "output_tokens": 531,
+        "cache_read_input_tokens": 41575,
+        "cache_creation_input_tokens": 297,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 297
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "num_turns": 2,
+  "duration_ms": 20127,
+  "is_error": false,
+  "result": "Both deliverables confirmed. Here's the full swarm run summary:\n\n---\n\n## \u2705 Swarm Run Complete\n\n**Deliverables written to `outputs/runs/swarm/`:**\n- `proposal.docx` \u2014 20 KB customer-facing branded proposal\n- `risk-assessment.html` \u2014 40 KB interactive internal risk dashboard\n\n---\n\n### How the swarm ran\n\n**Phase 1 \u2014 Four specialists in parallel:**\n\n| Specialist | Finding |\n|---|---|\n| \ud83d\udcb0 **Pricing** | Open at **22% off** ($561,600/yr); hard ceiling 25%. Acme's 35% demand refused. MFN is a walk-away. Net 90 \u2192 counter Net 60. 5-yr price lock \u2192 counter 3-yr fixed + capped escalator on renewal. |\n| \u2696\ufe0f **Legal** | **5 BLOCKERS** (\u00a74.1\u20134.5): uncapped liability, unannounced audits, 99.99% SLA + instant termination, all-IP vest, subprocessor veto. 2 NEGOTIABLE (MFN, 30-day termination notice). |\n| \ud83d\udd27 **Technical Fit** | **HIGH** \u2014 all functional requirements met; 3\u00d7 headroom on IoT ingest; 99.99% SLA requires $95K/yr active-active add-on. No outright capability gaps. |\n| \ud83c\udfaf **Competitive** | **Most dangerous: Microsoft Fabric** (Azure incumbent, E5 bundle, native Power BI). Win themes: proven scale/stability vs. Fabric's 18-month maturity, true TCO model vs. Databricks compute ramp, multi-cloud optionality. |\n\n**Phase 2 \u2014 Proposal synthesis:** All four findings integrated into a 7-section branded proposal (Executive Summary \u2192 Technical \u2192 Commercial \u2192 Contractual Positions \u2192 Implementation \u2192 References \u2192 Win Themes).\n\n**Phase 3 \u2014 Risk dashboard:** Three-step framework produced **net risk 8.0%** (gross 18.0% before counter-positions), revenue opportunity 100/100 \u2192 **decision: ESCALATE TO VP**. Interactive HTML with live clause toggles, arc gauge, and revenue upside breakdown."
+}

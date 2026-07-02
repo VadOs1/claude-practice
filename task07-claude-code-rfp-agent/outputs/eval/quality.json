@@ -1,0 +1,38 @@
+[
+  {
+    "strategy_key": "single",
+    "scores": {
+      "completeness": 3,
+      "specificity": 4,
+      "actionability": 3,
+      "risk_depth": 4,
+      "correctness": 4
+    },
+    "total": 18,
+    "rationale": "Solid technical depth with honest acknowledgment of streaming latency gaps and concrete past-win references (Initech, Globex with dollar amounts), but the output is visibly truncated so full section coverage is uncertain, and the risk dashboard \u2014 while functional with clause filtering \u2014 is slightly less polished than the swarm's SVG-gauge implementation."
+  },
+  {
+    "strategy_key": "swarm",
+    "scores": {
+      "completeness": 4,
+      "specificity": 4,
+      "actionability": 4,
+      "risk_depth": 5,
+      "correctness": 4
+    },
+    "total": 21,
+    "rationale": "Produces the most sophisticated risk dashboard (SVG arc gauge, severity badges, clause-level filtering, decision banner) and covers all major proposal sections with named buyer contacts and clear pricing/timeline, though specificity falls just short of dynamic's TCO-percentage-level detail."
+  },
+  {
+    "strategy_key": "dynamic",
+    "scores": {
+      "completeness": 5,
+      "specificity": 5,
+      "actionability": 5,
+      "risk_depth": 3,
+      "correctness": 4
+    },
+    "total": 22,
+    "rationale": "Most comprehensive and decision-ready proposal \u2014 explicit requirements-mapping table, 5-year TCO comparisons with percentages against named competitors, two named reference wins, company credentialing, and the clearest go-live and migration deadline targets \u2014 but the risk-assessment HTML is the simplest of the three, lacking the SVG gauge and filtering sophistication of the other strategies."
+  }
+]

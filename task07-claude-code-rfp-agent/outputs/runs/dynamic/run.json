@@ -1,0 +1,37 @@
+{
+  "total_cost_usd": 0.6855567,
+  "usage": {
+    "input_tokens": 24,
+    "cache_creation_input_tokens": 38903,
+    "cache_read_input_tokens": 389809,
+    "output_tokens": 22287,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 38903,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 1,
+        "output_tokens": 311,
+        "cache_read_input_tokens": 47185,
+        "cache_creation_input_tokens": 242,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 242
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "num_turns": 20,
+  "duration_ms": 397509,
+  "is_error": false,
+  "result": "### Step 8 \u2014 Confirmation \u2705\n\nBoth deliverables are written and verified:\n\n```\noutputs/runs/dynamic/proposal.docx        21 KB  \u2014 customer-facing branded proposal\noutputs/runs/dynamic/risk-assessment.html 25 KB  \u2014 internal interactive risk dashboard\n```\n\n---\n\n**Dynamic workflow summary \u2014 what was adapted as results came in:**\n\n| Step | Finding | Adaptation |\n|---|---|---|\n| Intake | 5 legal BLOCKERs, 35% discount demand above playbook max | Plan expanded to cover all 12 distinct risk clauses individually |\n| Pricing | Max strategic discount 30%; comparable Stark deal at 28% | Proposed 25% (strategic band for ~$820K list, defensible on TCO) |\n| Legal | IP assignment: Stark precedent of licence-back existed | Cited Stark deal directly in both proposal and risk dashboard |\n| Competitive | Fabric \"free with E5\" is the highest-threat narrative | Added detailed TCO table with Fabric Year 1\u20133 breakdown |\n| Risk calc | Gross 18% \u2192 net 2.75% after all counters | Dashboard decision = **PROCEED** (green, standard redlines) |\n| Revenue score | Perfect 100/100 | No concessions needed \u2014 all six revenue signals present |"
+}
