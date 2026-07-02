@@ -1,5 +1,3 @@
-import pytest
-
 from rfp_eval import strategies as s
 
 
@@ -34,6 +32,10 @@ def test_build_call_dynamic_prompt():
     assert "dynamic workflow" in prompt.lower()
 
 
-def test_build_call_swarm_rejected_here():
-    with pytest.raises(ValueError):
-        s.build_call("swarm", task_dir="/task", rfp_path="rfp.md", out_dir="/o")
+def test_build_call_swarm_delegates_to_swarm_module():
+    prompt, options = s.build_call(
+        "swarm", task_dir="/task", rfp_path="rfp.md", out_dir="/task/outputs/runs/swarm"
+    )
+    assert "coordinator" in prompt.lower() or "swarm" in prompt.lower()
+    assert options.agents is not None
+    assert "pricing" in options.agents

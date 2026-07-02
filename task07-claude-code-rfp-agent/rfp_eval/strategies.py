@@ -56,9 +56,15 @@ def build_call(
     out_dir: str | Path,
     model: str | None = None,
 ):
-    """Return (prompt, ClaudeAgentOptions) for a non-swarm strategy."""
+    """Return (prompt, ClaudeAgentOptions) for the given strategy."""
+    if key == "swarm":
+        from . import swarm
+
+        return swarm.build_swarm_call(
+            task_dir=task_dir, rfp_path=rfp_path, out_dir=out_dir, model=model
+        )
     if key not in _PREAMBLES:
-        raise ValueError(f"build_call handles single/dynamic only, not {key!r}")
+        raise ValueError(f"unknown strategy key {key!r}")
     from claude_agent_sdk import ClaudeAgentOptions
 
     prompt = render_prompt(_PREAMBLES[key], rfp_path, out_dir)
