@@ -198,7 +198,7 @@ project skill, coordinated by a system-prompted "Senior Partner" query:
   `asyncio.run(...)` — there is no `pytest-asyncio` dependency.
 - **TDD.** One test module per source module in `tests/`. Add a failing test
   before implementing; keep test output pristine (no warnings).
-- Run: `uv run pytest -q` (35 tests as of the last review).
+- Run: `uv run pytest -q` (37 tests as of the last review).
 
 ---
 

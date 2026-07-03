@@ -64,10 +64,9 @@ async def run_evaluation(
         if isinstance(res, BaseException):
             out_dir = runs_root / key
             out_dir.mkdir(parents=True, exist_ok=True)
-            failed = RunResult(key=key, result_text="", raw={"is_error": True})
-            run_json = out_dir / "run.json"
-            if not run_json.exists():
-                run_json.write_text(json.dumps(failed.raw, indent=2))
+            error = f"{type(res).__name__}: {res}"
+            failed = RunResult(key=key, result_text="", raw={"is_error": True, "error": error})
+            (out_dir / "run.json").write_text(json.dumps(failed.raw, indent=2))
             results.append((out_dir, failed))
         else:
             results.append(res)
