@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 541898,
+  "duration_api_ms": 589678,
+  "ttft_ms": 3393,
+  "ttft_stream_ms": 1200,
+  "time_to_request_ms": 31,
+  "num_turns": 4,
+  "result": "Both deliverables were produced successfully via the deal-desk-orchestrator's agent team:\n\n**1. Customer-facing proposal** — `outputs/run-2-agent-teams/acme-corp-proposal.docx` (+ source `.md`)\nSynthesized from four specialists run in parallel (foreground): Pricing, Legal, Technical Fit, and Competitive Intel.\n\n- **Pricing**: 18-20% discount (vs. their 35% ask), Net 45 counter to Net 90, hold firm on MFN/fixed pricing/termination terms\n- **Legal**: 5 blockers flagged (uncapped liability, no-notice audits, 99.99% SLA w/ immediate termination, full IP assignment, subprocessor veto) — all with workable counters\n- **Technical Fit**: HIGH, only gap is the 99.99% SLA ask (exceeds our 99.95% standard tier)\n- **Competitive**: Microsoft Fabric is the top threat; win on proven SLA performance + 5-yr TCO transparency, not price-matching\n\n**2. Internal risk dashboard** — `outputs/run-2-agent-teams/acme-corp-risk-dashboard.html`\nBuilt by the Risk Assessment Specialist from the synthesized findings: net 9% risk / 100 revenue-opportunity score, recommending escalation to VP given the stacked legal blockers vs. strong technical/commercial upside, with the §4.3 SLA+termination combination flagged as the single riskiest clause.\n\nBoth files are confirmed present on disk. The empty `cost-eval.json` was left untouched as instructed.",
+  "stop_reason": "end_turn",
+  "session_id": "b08bac0f-9d20-424f-865e-a968e62d0880",
+  "total_cost_usd": 1.8550500500000007,
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 16830,
+    "cache_read_input_tokens": 105927,
+    "output_tokens": 2171,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 16830,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 547,
+        "cache_read_input_tokens": 32207,
+        "cache_creation_input_tokens": 363,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 363
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 1944,
+      "outputTokens": 51721,
+      "cacheReadInputTokens": 1114242,
+      "cacheCreationInputTokens": 180808,
+      "webSearchRequests": 0,
+      "costUSD": 1.8318171000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 18,
+      "outputTokens": 2038,
+      "cacheReadInputTokens": 6912,
+      "cacheCreationInputTokens": 9867,
+      "webSearchRequests": 0,
+      "costUSD": 0.02323295,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "db97e3ab-8f8d-48f4-b88d-f7a6900ce876"
+}
