@@ -2,8 +2,14 @@
 #
 # Runs the 4 rfp-0X-* commands headlessly via `claude -p` and captures total
 # cost + token usage for each — including every subagent/Task-tool call the
-# orchestrator spins up, since Claude Code rolls subagent usage into the same
-# top-level result (see `modelUsage` in the JSON output).
+# orchestrator spins up.
+#
+# NOTE: the top-level `total_cost_usd` field in Claude Code's JSON output only
+# covers the orchestrator's own session — it does NOT include cost incurred by
+# spawned subagents. `modelUsage` is the field that rolls up token usage (and
+# per-model `costUSD`) across the orchestrator + every subagent, so that's what
+# this script sums to get the true total cost of a run. For subagent-spawning
+# strategies (rfp-02/03/04) that total can be several times `total_cost_usd`.
 #
 # Cost/metrics JSON files are saved alongside each command's own outputs
 # (the .docx/.html each command writes under outputs/run-N-*/), so everything
@@ -81,7 +87,8 @@ for cmd in "${COMMANDS[@]}"; do
 
   jq '{
     command: $cmd,
-    total_cost_usd,
+    cost_usd: ([.modelUsage[]] | map(.costUSD) | add // 0),
+    orchestrator_cost_usd: .total_cost_usd,
     num_turns,
     duration_ms,
     tokens: (
@@ -96,8 +103,9 @@ for cmd in "${COMMANDS[@]}"; do
     per_model: .modelUsage
   }' --arg cmd "$cmd" "$raw_file" > "$metrics_file"
 
-  cost=$(jq -r '.total_cost_usd' "$metrics_file")
-  echo "  total_cost_usd: \$${cost}  ->  ${metrics_file}"
+  cost=$(jq -r '.cost_usd' "$metrics_file")
+  orch_cost=$(jq -r '.orchestrator_cost_usd' "$metrics_file")
+  echo "  cost_usd (all agents): \$${cost}  (orchestrator-only: \$${orch_cost})  ->  ${metrics_file}"
   echo
 done
 
@@ -107,6 +115,6 @@ printf "%-24s %10s %12s %12s %14s %14s\n" \
 for cmd in "${COMMANDS[@]}"; do
   m="outputs/$(run_dir_for "$cmd")/cost-eval.metrics.json"
   [[ -f "$m" ]] || continue
-  jq -r '[.command, (.total_cost_usd|tostring), (.tokens.input_tokens|tostring), (.tokens.output_tokens|tostring), (.tokens.cache_creation_input_tokens|tostring), (.tokens.cache_read_input_tokens|tostring)] | @tsv' "$m" \
+  jq -r '[.command, (.cost_usd|tostring), (.tokens.input_tokens|tostring), (.tokens.output_tokens|tostring), (.tokens.cache_creation_input_tokens|tostring), (.tokens.cache_read_input_tokens|tostring)] | @tsv' "$m" \
     | awk -F'\t' '{printf "%-24s %10s %12s %12s %14s %14s\n", $1, $2, $3, $4, $5, $6}'
 done
