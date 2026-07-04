@@ -11,13 +11,17 @@ Produce:
 2. An internal risk assessment (.html) — a self-contained interactive risk vs.
    revenue dashboard, for internal use only.
 
-Use the `deal-desk-orchestrator` agent to run this deal. It must NOT perform the
-pricing, legal, technical-fit, competitive, or risk-assessment analysis itself —
-it must delegate each of those to its specialist subagents (Pricing Specialist,
-Legal Reviewer, Technical Fit Specialist, Competitive Intel Analyst, Risk
-Assessment Specialist) and synthesize their responses.
+Use the `deal-desk-orchestrator` agent to run this deal. This requires spinning
+up an agent team: the orchestrator acts as coordinator and distributes tasks,
+the specialist agents (Pricing Specialist, Legal Reviewer, Technical Fit
+Specialist, Competitive Intel Analyst, Risk Assessment Specialist) pick up
+their assigned work and proceed independently, and agents can communicate with
+each other as needed. The orchestrator must NOT perform the pricing, legal,
+technical-fit, competitive, or risk-assessment analysis itself — it must
+delegate each of those to its specialist subagents and synthesize their
+responses.
 
 Use `synthetic-data/past-wins.json` and `synthetic-data/product-overview.md` as
 reference material where relevant.
 
-Save both outputs under `outputs/run-2-subagents/`.
+Save both outputs under `outputs/run-3-agent-teams/`.
