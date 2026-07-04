@@ -24,4 +24,4 @@ responses.
 Use `synthetic-data/past-wins.json` and `synthetic-data/product-overview.md` as
 reference material where relevant.
 
-Save both outputs under `outputs/run-3-agent-teams/`.
+Save both outputs under `outputs/run-2-agent-teams/`.
