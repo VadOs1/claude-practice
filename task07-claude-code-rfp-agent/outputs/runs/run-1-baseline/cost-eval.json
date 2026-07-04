@@ -1,0 +1,62 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 428802,
+  "duration_api_ms": 409320,
+  "ttft_ms": 14571,
+  "ttft_stream_ms": 1852,
+  "time_to_request_ms": 32,
+  "num_turns": 39,
+  "result": "Both deliverables are done and verified. In `outputs/runs/run-1-baseline/`:\n\n- **`proposal.docx`** — customer-facing response covering executive summary, understanding of Acme's needs, why BTS-Synthetic fits (including honest gaps and competitive positioning vs. Databricks/Snowflake/Fabric), commercial proposal (27% discount on $820K list, capped 5-year pricing, Net 60), contract approach (clause-by-clause alignment vs. counter-position), 24-week implementation plan, and risks/mitigations.\n- **`risk-assessment.html`** — self-contained interactive dashboard (verified in-browser via Playwright): 12 RFP clauses scored against the risk framework, gross risk 18% → net risk 8.00% after counter-positions, revenue score 100/100, decision **\"Escalate to VP — must resolve blockers\"**. Toggles, gauge, and worst-case/proposed-position buttons all recalculate correctly.\n\nOne thing worth flagging: I found and fixed a scoring gap mid-way — the RFP's uncapped-liability clause (§4.1) actually maps to *two* distinct risk patterns (liability cap **and** indemnification cap), and I'd initially only scored one. Net risk moved from 6.75% to 8.00% once corrected; the VP-escalation decision didn't change, but it's a good reminder to double check RFP clauses against every pattern row, not just the most obvious match.",
+  "stop_reason": "end_turn",
+  "session_id": "8f56597d-ce77-4d7b-84fc-394e93d69b56",
+  "total_cost_usd": 1.9323078,
+  "usage": {
+    "input_tokens": 57,
+    "cache_creation_input_tokens": 132928,
+    "cache_read_input_tokens": 1997646,
+    "output_tokens": 35685,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 132928,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 491,
+        "cache_read_input_tokens": 90418,
+        "cache_creation_input_tokens": 561,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 561
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 57,
+      "outputTokens": 35685,
+      "cacheReadInputTokens": 1997646,
+      "cacheCreationInputTokens": 132928,
+      "webSearchRequests": 0,
+      "costUSD": 1.9323078,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6943ef0c-bd4f-4170-8b0e-9756308ffa93"
+}

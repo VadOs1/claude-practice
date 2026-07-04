@@ -1,0 +1,25 @@
+{
+  "command": "rfp-01-baseline",
+  "cost_usd": 1.9323078,
+  "orchestrator_cost_usd": 1.9323078,
+  "num_turns": 39,
+  "duration_ms": 428802,
+  "tokens": {
+    "input_tokens": 57,
+    "output_tokens": 35685,
+    "cache_creation_input_tokens": 132928,
+    "cache_read_input_tokens": 1997646
+  },
+  "per_model": {
+    "claude-sonnet-5": {
+      "inputTokens": 57,
+      "outputTokens": 35685,
+      "cacheReadInputTokens": 1997646,
+      "cacheCreationInputTokens": 132928,
+      "webSearchRequests": 0,
+      "costUSD": 1.9323078,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  }
+}
