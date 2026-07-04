@@ -21,3 +21,7 @@ Use `synthetic-data/past-wins.json` and `synthetic-data/product-overview.md` as
 reference material where relevant.
 
 Save both outputs under `outputs/run-3-agent-teams/`.
+
+After the deal is complete, have the orchestrator persist memory (per its
+agent definition's memory-saving step) and remind each specialist it
+consulted to save their own memory too.
