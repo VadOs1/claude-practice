@@ -12,7 +12,7 @@
 # strategies (rfp-02/03/04) that total can be several times `total_cost_usd`.
 #
 # Cost/metrics JSON files are saved alongside each command's own outputs
-# (the .docx/.html each command writes under runs/run-N-*/), so everything
+# (the .docx/.html each command writes under output/runs/run-N-*/), so everything
 # for a given run lives in one folder.
 #
 # Usage:
@@ -68,7 +68,7 @@ for cmd in "${COMMANDS[@]}"; do
     exit 1
   fi
 
-  out_dir="runs/$(run_dir_for "$cmd")"
+  out_dir="output/runs/$(run_dir_for "$cmd")"
   mkdir -p "$out_dir"
 
   raw_file="${out_dir}/cost-eval.json"
@@ -108,7 +108,7 @@ echo "=== Summary ==="
 printf "%-24s %10s %12s %12s %14s %14s\n" \
   "command" "cost_usd" "input_tok" "output_tok" "cache_creat" "cache_read"
 for cmd in "${COMMANDS[@]}"; do
-  m="runs/$(run_dir_for "$cmd")/cost-eval.metrics.json"
+  m="output/runs/$(run_dir_for "$cmd")/cost-eval.metrics.json"
   [[ -f "$m" ]] || continue
   jq -r '[.command, (.cost_usd|tostring), (.tokens.input_tokens|tostring), (.tokens.output_tokens|tostring), (.tokens.cache_creation_input_tokens|tostring), (.tokens.cache_read_input_tokens|tostring)] | @tsv' "$m" \
     | awk -F'\t' '{printf "%-24s %10s %12s %12s %14s %14s\n", $1, $2, $3, $4, $5, $6}'
