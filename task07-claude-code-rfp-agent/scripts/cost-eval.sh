@@ -31,7 +31,7 @@ run_dir_for() {
   case "$1" in
     rfp-01-baseline) echo "run-1-baseline" ;;
     rfp-02-agent-teams) echo "run-2-agent-teams" ;;
-    rfp-02-dynamic-workflow) echo "run-3-dynamic-workflow" ;;
+    rfp-03-dynamic-workflow) echo "run-3-dynamic-workflow" ;;
     *) echo "cost/$1" ;;
   esac
 }
