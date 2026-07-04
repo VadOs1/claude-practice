@@ -16,8 +16,8 @@
 # for a given run lives in one folder.
 #
 # Usage:
-#   scripts/cost-eval.sh                 # run all 4 strategies
-#   scripts/cost-eval.sh rfp-02-subagents # run just one
+#   scripts/cost-eval.sh                 # run all 3 strategies
+#   scripts/cost-eval.sh rfp-02-agent-teams # run just one
 #
 # Requires: claude CLI, jq
 # Must be run from the task07-claude-code-rfp-agent/ directory (relative
@@ -27,9 +27,6 @@ set -euo pipefail
 
 PERMISSION_MODE="${PERMISSION_MODE:-bypassPermissions}"
 
-# Maps command name -> its outputs/run-N-* dir. Kept as a function (rather
-# than an associative array) for compatibility with bash 3.2, which macOS
-# still ships as /bin/bash and has no `declare -A` support.
 run_dir_for() {
   case "$1" in
     rfp-01-baseline) echo "run-1-baseline" ;;
@@ -42,9 +39,8 @@ run_dir_for() {
 
 COMMANDS=(
   rfp-01-baseline
-  rfp-02-subagents
-  rfp-03-agent-teams
-  rfp-04-dynamic-workflow
+  rfp-02-agent-teams
+  rfp-03-dynamic-workflow
 )
 
 if [[ $# -gt 0 ]]; then
