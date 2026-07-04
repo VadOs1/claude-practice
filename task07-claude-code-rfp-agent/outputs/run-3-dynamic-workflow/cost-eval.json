@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 629049,
+  "duration_api_ms": 709707,
+  "ttft_ms": 3855,
+  "ttft_stream_ms": 3424,
+  "time_to_request_ms": 34,
+  "num_turns": 45,
+  "result": "Both deliverables are complete in `outputs/run-3-dynamic-workflow/`:\n\n**1. `acme-corp-proposal.docx`** (+ source `.md`) — customer-facing proposal with all six required sections. Notably, the \"Contract Approach\" section directly rebuts six blocker-level RFP terms (uncapped liability, no-notice audits, immediate-termination SLA clause, full IP assignment, subprocessor veto, MFN) with specific counter-positions, and the commercial section is honest that our 30% strategic discount ceiling doesn't reach the RFP's 35% floor — framed as a gap to close via term/reference/volume levers rather than papered over.\n\n**2. `acme-corp-risk-dashboard.html`** — self-contained interactive dashboard (verified: no external CSS/JS refs). Net risk **8.0%** (down from 18.0% gross across 12 extracted clauses), revenue opportunity **100/100**, decision **ESCALATE TO VP**.\n\n**Dynamic workflow decisions made along the way:**\n- Triaged all five specialists as genuinely necessary given this RFP's density of legal, commercial, technical, and competitive signals (not a default \"run everyone\" — each was justified against specific RFP clauses).\n- Added a reconciliation phase between the parallel specialist round and drafting, which caught two things a fixed pipeline would have missed: the Legal Reviewer scored MFN as merely \"negotiable,\" but the pricing playbook treats it as a hard blocker — I overrode toward the stricter position, and the risk dashboard reflects MFN as flatly rejected. The 35%-vs-30% discount gap was also flagged explicitly as unresolved rather than silently split down the middle.\n- Passed the *actual* proposal positions (not just raw specialist opinions) into the risk assessment, so the dashboard's \"countered/rejected\" toggles match what the customer document really says.\n\nOne thing worth your attention: the deal lands in \"Escalate to VP\" territory specifically because of the unresolved discount floor and the SLA gap — both are named explicitly in the proposal's risk section rather than hidden, which is the intended behavior but worth knowing before this goes external.",
+  "stop_reason": "end_turn",
+  "session_id": "2d350cf6-2371-460a-95f4-20eef19707cb",
+  "total_cost_usd": 2.4512719,
+  "usage": {
+    "input_tokens": 48,
+    "cache_creation_input_tokens": 108848,
+    "cache_read_input_tokens": 1340351,
+    "output_tokens": 26560,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 108848,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 846,
+        "cache_read_input_tokens": 84202,
+        "cache_creation_input_tokens": 200,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 200
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 94,
+      "outputTokens": 61612,
+      "cacheReadInputTokens": 1893856,
+      "cacheCreationInputTokens": 180297,
+      "webSearchRequests": 0,
+      "costUSD": 2.41364055,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 42,
+      "outputTokens": 4188,
+      "cacheReadInputTokens": 33381,
+      "cacheCreationInputTokens": 10649,
+      "webSearchRequests": 0,
+      "costUSD": 0.03763135,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2fcc7aa3-762d-402f-98f0-49d01e656fb7"
+}
