@@ -77,7 +77,7 @@ for cmd in "${COMMANDS[@]}"; do
   claude -p "/${cmd}" \
     --output-format json \
     --permission-mode "$PERMISSION_MODE" \
-    > "$raw_file"
+    | jq '.' > "$raw_file"
 
   jq '{
     command: $cmd,
