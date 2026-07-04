@@ -1,5 +1,5 @@
 ---
-description: Process the sample RFP via the deal-desk-orchestrator, forcing it to delegate to its specialist subagents
+description: Process the sample RFP via the deal-desk-orchestrator using an agent team
 ---
 
 Process the RFP at `synthetic-data/rfp-acme-corp.md` for BTS-Synthetic.
@@ -11,15 +11,13 @@ Produce:
 2. An internal risk assessment (.html) — a self-contained interactive risk vs.
    revenue dashboard, for internal use only.
 
-Use the `deal-desk-orchestrator` agent to run this deal. This requires spinning
-up an agent team: the orchestrator acts as coordinator and distributes tasks,
-the specialist agents (Pricing Specialist, Legal Reviewer, Technical Fit
-Specialist, Competitive Intel Analyst, Risk Assessment Specialist) pick up
-their assigned work and proceed independently, and agents can communicate with
-each other as needed. The orchestrator must NOT perform the pricing, legal,
-technical-fit, competitive, or risk-assessment analysis itself — it must
-delegate each of those to its specialist subagents and synthesize their
-responses.
+Use the `deal-desk-orchestrator` agent to run this deal via agent team. The
+orchestrator spawns five specialist teammates (Pricing Specialist, Legal
+Reviewer, Technical Fit Specialist, Competitive Intel Analyst, Risk Assessment
+Specialist), assigns each their scope, and synthesizes their findings. The
+orchestrator must NOT perform the pricing, legal, technical-fit, competitive,
+or risk-assessment analysis itself — delegate each to its specialist and
+integrate their responses into the proposal and dashboard.
 
 Use `synthetic-data/past-wins.json` and `synthetic-data/product-overview.md` as
 reference material where relevant.
