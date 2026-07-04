@@ -1,0 +1,62 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 342272,
+  "duration_api_ms": 331429,
+  "ttft_ms": 2654,
+  "ttft_stream_ms": 1144,
+  "time_to_request_ms": 35,
+  "num_turns": 52,
+  "result": "Both deliverables are done and verified in `outputs/run-1-baseline/`:\n\n1. **proposal.docx** — customer-facing response covering exec summary, understanding of Acme's needs, why-us/competitive positioning (vs. Databricks/Snowflake/Fabric), commercial proposal (28% discount counter to the demanded 35%, Net 60 counter to Net 90), a contract-approach table with side-by-side RFP-ask vs. our-counter for each of the six problematic clauses, and risks/mitigations.\n2. **risk-assessment.html** — self-contained interactive dashboard (verified in a real browser via Playwright): 12 risk clauses drawn straight from the RFP, net risk 8.0% / gross 18.0% if all accepted, revenue score 100/100, decision banner correctly reads **\"Escalate to VP.\"** Toggle checkboxes, worst-case/reset buttons, and the gauge/summary math all recompute correctly.\n\nKey finding worth flagging: even after our proposed counters, net risk sits at 8% (moderate band) with four remaining BLOCKER-severity items (uncapped liability, IP assignment, SLA-triggered termination, uncapped regulatory indemnification) reduced but not eliminated — so per the framework this deal needs VP sign-off before it can proceed, despite a strong 100/100 revenue score.",
+  "stop_reason": "end_turn",
+  "session_id": "8519e9cb-4b5f-43c6-8cb0-5a0f9294135e",
+  "total_cost_usd": 1.4017699500000003,
+  "usage": {
+    "input_tokens": 59,
+    "cache_creation_input_tokens": 92361,
+    "cache_read_input_tokens": 1893584,
+    "output_tokens": 30602,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 12504,
+      "ephemeral_5m_input_tokens": 79857
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 459,
+        "cache_read_input_tokens": 83022,
+        "cache_creation_input_tokens": 428,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 428,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 59,
+      "outputTokens": 30602,
+      "cacheReadInputTokens": 1893584,
+      "cacheCreationInputTokens": 92361,
+      "webSearchRequests": 0,
+      "costUSD": 1.4017699500000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "28a68594-a306-44b4-8c08-8cba6d525591"
+}
