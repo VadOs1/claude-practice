@@ -1,23 +1,20 @@
 ---
-description: Process the sample RFP using a Dynamic Workflow strategy
+description: Process the ACME Corp RFP using Dynamic Workflow orchestration
 ---
 
-Process the RFP at `synthetic-data/rfp-acme-corp.md` for BTS-Synthetic.
+Use a workflow to process the RFP at `synthetic-data/rfp-acme-corp.md`.
 
-Produce:
-1. A customer-facing proposal response (.docx) covering: executive summary, our
-   understanding of the customer's need, why we're the right fit, commercial
-   proposal, contract approach, and risks/mitigations.
-2. An internal risk assessment (.html) — a self-contained interactive risk vs.
-   revenue dashboard, for internal use only.
+Orchestrate specialists to produce:
+1. A customer-facing proposal response (.docx): executive summary, our
+   understanding of need, fit, commercial proposal, contract approach,
+   risks/mitigations.
+2. An internal risk assessment (.html): interactive risk vs. revenue
+   dashboard.
 
-Run this using a Dynamic Workflow: use the `deal-desk-orchestrator` agent and
-let it dynamically plan and adjust which specialist agents (Pricing, Legal,
-Technical Fit, Competitive Intel, Risk Assessment) to invoke, in what order,
-based on what it discovers in the RFP — rather than a fixed, predetermined
-delegation sequence.
+The workflow should dynamically decide which verification phases and agents
+are needed based on RFP content. Reference `synthetic-data/past-wins.json`
+and `synthetic-data/product-overview.md` as needed.
 
-Use `synthetic-data/past-wins.json` and `synthetic-data/product-overview.md` as
-reference material where relevant.
+Save outputs to `outputs/run-3-dynamic-workflow/`.
 
-Save both outputs under `outputs/run-3-dynamic-workflow/`.
+Use ultracode.
