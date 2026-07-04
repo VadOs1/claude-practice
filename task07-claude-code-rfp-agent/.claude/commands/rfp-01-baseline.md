@@ -14,4 +14,4 @@ Produce:
 Use `synthetic-data/past-wins.json` and `synthetic-data/product-overview.md` as
 reference material where relevant.
 
-Save both outputs under `outputs/run-1-baseline/`.
+Save both outputs under `runs/run-1-baseline/`.
