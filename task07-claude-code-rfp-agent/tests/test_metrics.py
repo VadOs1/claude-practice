@@ -38,14 +38,15 @@ def test_extract_metrics_defaults_on_empty():
 
 
 def test_extract_metrics_sums_model_usage_across_subagents():
-    # A coordinator + subagent swarm: the top-level `usage` dict only reflects
-    # the coordinator's own turns, but `model_usage` aggregates every model
-    # invoked during the query (including subagents dispatched via the Task
-    # tool). Token totals must come from model_usage when it's present, or a
-    # multi-agent strategy looks artificially cheap on tokens despite driving
-    # up total_cost_usd.
+    # A coordinator + subagent swarm: the top-level `usage` dict AND the
+    # top-level `total_cost_usd` only reflect the coordinator's own turns —
+    # neither includes subagents dispatched via the Task tool. `model_usage`
+    # aggregates every model invoked during the call, including subagents, for
+    # both tokens and cost. Deliberately set `total_cost_usd` below the true
+    # summed cost so this test only passes if cost_usd is actually summed from
+    # model_usage rather than passed through from the top-level field.
     raw = {
-        "total_cost_usd": 1.2,
+        "total_cost_usd": 0.3,
         "usage": {
             "input_tokens": 4,
             "output_tokens": 706,
@@ -78,7 +79,8 @@ def test_extract_metrics_sums_model_usage_across_subagents():
     assert m.cache_read_tokens == 181189
     assert m.cache_creation_tokens == 7258
     assert m.total_tokens == 209657
-    # cost still comes from the authoritative total_cost_usd field
+    # cost is summed across model_usage (0.3 + 0.9), not the stale top-level
+    # total_cost_usd (0.3) which excludes the subagent's cost
     assert m.cost_usd == 1.2
 
 
