@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 788368,
+  "duration_api_ms": 997407,
+  "ttft_ms": 11863,
+  "ttft_stream_ms": 7394,
+  "time_to_request_ms": 31,
+  "num_turns": 41,
+  "result": "Both deliverables are in place at `outputs/runs/run-3-dynamic-workflow/`.\n\n**Dynamic workflow that ran:**\n1. **Triage** (me, reading the RFP directly) flagged four live risk dimensions: an SLA target above our standard tier, a discount ask above any past win, a legal clause stack unusually dense with blockers, and three named competitors.\n2. **Wave 1 (parallel)** — Technical Fit, Competitive, Legal, Pricing specialists all dispatched, since triage confirmed all four were materially in play.\n3. **Wave 2 (conditional escalation)** — triggered because Legal came back with 6/8 blocker-severity clauses *and* Pricing's own analysis said don't approach Acme's 35% ask. This wouldn't fire on a cleaner RFP; here it did, and it changed the outcome: gross risk computed at 18% against a 10% no-bid threshold, walk-away line set at 28% (not 35%), and the recommendation is **Escalate to VP**, not a routine proceed.\n4. **Wave 3** — Risk Assessment specialist built the interactive dashboard (`risk-assessment.html`) defaulting to the *proposed/countered* position (8% net risk, Escalate to VP banner) with toggles back to the 18% worst case.\n5. **Synthesis** — I wrote `proposal.docx`/`.md` around our real negotiating position (24% anchor, Net 60, licensed IP, tiered SLA credits) rather than Acme's stated demands, since the escalation memo made clear those demands aren't ones we'd actually accept.\n\nNote: `cost-eval.json` in that folder is a pre-existing empty stub (likely from the `rfp_eval` harness), untouched by this run.",
+  "stop_reason": "end_turn",
+  "session_id": "3ea26d23-3463-42cd-b33c-2855fe35568b",
+  "total_cost_usd": 2.93653075,
+  "usage": {
+    "input_tokens": 42,
+    "cache_creation_input_tokens": 93737,
+    "cache_read_input_tokens": 1249438,
+    "output_tokens": 22751,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 93737,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 595,
+        "cache_read_input_tokens": 87068,
+        "cache_creation_input_tokens": 498,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 498
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 90,
+      "outputTokens": 84867,
+      "cacheReadInputTokens": 1627854,
+      "cacheCreationInputTokens": 242493,
+      "webSearchRequests": 0,
+      "costUSD": 2.8818882,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 42,
+      "outputTokens": 5749,
+      "cacheReadInputTokens": 48418,
+      "cacheCreationInputTokens": 16811,
+      "webSearchRequests": 0,
+      "costUSD": 0.05464255,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "c1aca4ba-6342-4a39-844c-521c29940fc6"
+}

@@ -1,0 +1,35 @@
+{
+  "command": "rfp-03-dynamic-workflow",
+  "cost_usd": 2.93653075,
+  "orchestrator_cost_usd": 2.93653075,
+  "num_turns": 41,
+  "duration_ms": 788368,
+  "tokens": {
+    "input_tokens": 132,
+    "output_tokens": 90616,
+    "cache_creation_input_tokens": 259304,
+    "cache_read_input_tokens": 1676272
+  },
+  "per_model": {
+    "claude-sonnet-5": {
+      "inputTokens": 90,
+      "outputTokens": 84867,
+      "cacheReadInputTokens": 1627854,
+      "cacheCreationInputTokens": 242493,
+      "webSearchRequests": 0,
+      "costUSD": 2.8818882,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 42,
+      "outputTokens": 5749,
+      "cacheReadInputTokens": 48418,
+      "cacheCreationInputTokens": 16811,
+      "webSearchRequests": 0,
+      "costUSD": 0.05464255,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  }
+}
