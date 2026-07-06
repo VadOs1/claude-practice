@@ -1,0 +1,2 @@
+- [Project workflow](project_workflow.md) — run-NN output folders, specialist roster, no branded docx template exists yet
+- [Specialist conflict handling](specialist_conflict_handling.md) — defer to Legal/Technical Fit over Competitive Intel on factual SLA/capability conflicts; only escalate to specialist if it changes deal viability
