@@ -9,7 +9,8 @@ Run the RFP Agent SDK evaluation, then summarize the result.
 ## Steps
 
 1. From the `task07-claude-code-rfp-agent` directory, run the harness (pass any
-   extra flags from `$ARGUMENTS`):
+   extra flags from `$ARGUMENTS`). Defaults to `--model claude-sonnet-5` when no
+   `--model` flag is given:
 
    ```bash
    uv run python -m rfp_eval --rfp synthetic-data/rfp-acme-corp.md --out outputs $ARGUMENTS

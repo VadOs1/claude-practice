@@ -19,7 +19,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rfp", default="synthetic-data/rfp-acme-corp.md")
     parser.add_argument("--out", default="outputs")
     parser.add_argument("--task-dir", default=".")
-    parser.add_argument("--model", default=None)
+    parser.add_argument("--model", default="claude-sonnet-5")
     args = parser.parse_args(argv)
 
     index = asyncio.run(
