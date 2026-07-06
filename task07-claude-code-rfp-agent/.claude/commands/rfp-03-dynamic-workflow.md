@@ -15,6 +15,14 @@ The workflow should dynamically decide which verification phases and agents
 are needed based on RFP content. Reference `synthetic-data/past-wins.json`
 and `synthetic-data/product-overview.md` as needed.
 
-Save outputs to `outputs/runs/run-03-dynamic-workflow/`.
+## Expected artifacts
+
+Save all outputs under `outputs/runs/run-03-dynamic-workflow/`, producing
+exactly these three files (`<customer>` and `<date>` reflect the customer
+name and today's date):
+
+- `outputs/runs/run-03-dynamic-workflow/proposal-<customer>-<date>.docx`
+- `outputs/runs/run-03-dynamic-workflow/proposal-<customer>-<date>.md`
+- `outputs/runs/run-03-dynamic-workflow/risk-assessment-<customer>-<date>.html`
 
 Use ultracode.
