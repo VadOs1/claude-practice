@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Internal Risk Assessment — Acme Corp (BTS-Synthetic Deal Desk)</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --blocker: #7f1d1d;
+    --accent: #3b82f6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0 0 60px 0;
+  }
+  header {
+    padding: 28px 32px 20px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { margin: 0 0 4px 0; font-size: 1.5rem; }
+  header .sub { color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px; }
+  .badge-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+  }
+  #decisionBanner {
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-align: center;
+    margin: 18px 32px 0 32px;
+    border: 1px solid var(--border);
+  }
+  main { padding: 24px 32px; }
+  .top-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 900px) { .top-grid { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .panel h2 { margin-top: 0; font-size: 1rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+  #gaugeValue { font-size: 2.2rem; font-weight: 800; text-align: center; margin-top: -8px; }
+  #gaugeLabel { text-align: center; color: #94a3b8; font-size: 0.85rem; }
+  .needle {
+    transform-origin: 150px 150px;
+    transition: transform 0.4s ease;
+  }
+  .rev-bar-track {
+    background: #0b1220;
+    border-radius: 8px;
+    height: 28px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-top: 12px;
+  }
+  .rev-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1d4ed8, #3b82f6, #22c55e);
+    transition: width 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding-right: 8px;
+  }
+  .controls { margin: 4px 0 24px 0; display: flex; gap: 12px; }
+  button.ctrl {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  button.ctrl.secondary { background: #334155; }
+  button.ctrl:hover { filter: brightness(1.15); }
+  h2.section-title { font-size: 1.1rem; margin: 32px 0 12px 0; }
+  .clause-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .clause-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .clause-card.blocker { border-color: var(--blocker); }
+  .clause-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .clause-name { font-weight: 700; font-size: 0.95rem; }
+  .risk-contrib { font-size: 0.85rem; color: #94a3b8; }
+  .sev-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .sev-BLOCKER { background: var(--blocker); color: #fecaca; }
+  .sev-HIGH { background: #7c2d12; color: #fed7aa; }
+  .sev-MEDIUM { background: #78350f; color: #fde68a; }
+  .sev-LOW { background: #334155; color: #cbd5e1; }
+  .toggle-row { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+  .toggle-row input { width: 18px; height: 18px; cursor: pointer; }
+  details { font-size: 0.85rem; color: #cbd5e1; }
+  details summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+  details .counter-text { margin-top: 8px; line-height: 1.4; }
+  .consequence { margin-top: 6px; font-style: italic; color: #fca5a5; font-size: 0.8rem; }
+  table.summary {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+  }
+  table.summary th, table.summary td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  table.summary th { color: #94a3b8; font-weight: 600; }
+  footer {
+    margin-top: 40px;
+    padding: 20px 32px;
+    border-top: 1px solid var(--border);
+    color: #64748b;
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Acme Corp — Enterprise Data Platform RFP</h1>
+  <div class="sub">Internal deal-desk risk assessment · BTS-Synthetic · Generated 2026-05-23</div>
+  <div class="badge-row">
+    <span id="overallBadge" class="badge">-- RISK</span>
+    <span style="color:#94a3b8; font-size:0.85rem;">RFP issued 2026-05-12 · Response due 2026-05-26 · Award expected 2026-06-30</span>
+  </div>
+</header>
+
+<div id="decisionBanner">--</div>
+
+<main>
+
+  <div class="controls">
+    <button class="ctrl" id="btnWorstCase">Show worst-case (all accepted)</button>
+    <button class="ctrl secondary" id="btnProposed">Show proposed position</button>
+  </div>
+
+  <div class="top-grid">
+    <div class="panel">
+      <h2>Net Risk Gauge</h2>
+      <svg viewBox="0 0 300 170" width="100%" height="170">
+        <!-- background arc segments: green 0-5%, amber 5-10%, red 10-15% over 180deg from (30,150) to (270,150) -->
+        <path d="M 30 150 A 120 120 0 0 1 90.7 44.3" fill="none" stroke="#22c55e" stroke-width="18" stroke-linecap="round"/>
+        <path d="M 90.7 44.3 A 120 120 0 0 1 209.3 44.3" fill="none" stroke="#f59e0b" stroke-width="18" stroke-linecap="round"/>
+        <path d="M 209.3 44.3 A 120 120 0 0 1 270 150" fill="none" stroke="#ef4444" stroke-width="18" stroke-linecap="round"/>
+        <line id="needle" class="needle" x1="150" y1="150" x2="150" y2="40" stroke="#e2e8f0" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="150" cy="150" r="8" fill="#e2e8f0"/>
+      </svg>
+      <div id="gaugeValue">--%</div>
+      <div id="gaugeLabel">Net risk (0–15% scale) · Gross (worst-case) risk: <span id="grossLabel">--%</span></div>
+    </div>
+
+    <div class="panel">
+      <h2>Revenue Attractiveness</h2>
+      <div class="rev-bar-track">
+        <div class="rev-bar-fill" id="revBar" style="width:0%">0/100</div>
+      </div>
+      <ul style="font-size:0.85rem; color:#cbd5e1; margin-top:16px; padding-left:18px;">
+        <li>Enterprise tier, 3+ year term (+30)</li>
+        <li>Deal value &gt; $500K/year (+20)</li>
+        <li>Named reference customer potential (+15)</li>
+        <li>Target vertical — industrial / IoT (+15)</li>
+        <li>Deep Azure / Microsoft stack alignment (+10)</li>
+        <li>Competitive displacement — Databricks/Snowflake/Fabric (+10)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Risk Register — Clause Toggle Cards</h2>
+  <div class="clause-grid" id="clauseGrid"></div>
+
+  <h2 class="section-title">Summary</h2>
+  <table class="summary">
+    <thead>
+      <tr><th>Clauses accepted as-is (risk carried)</th><th>Clauses negotiated / rejected (risk saved)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="carriedSum">0.0%</td>
+        <td id="savedSum">0.0%</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="summary">
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Gross risk (all clauses accepted as drafted)</td><td>18.0%</td></tr>
+      <tr><td>Net risk (BTS-Synthetic's proposed counter-positions)</td><td id="netRow">8.0%</td></tr>
+      <tr><td>Revenue attractiveness score</td><td>100 / 100</td></tr>
+      <tr><td>Decision threshold applied</td><td>5–10% net risk &amp; ≥70 revenue score → Escalate to VP</td></tr>
+    </tbody>
+  </table>
+
+</main>
+
+<footer>
+  This is an internal risk assessment. Do not share with the customer.<br>
+  Generated 2026-05-23 by BTS-Synthetic Deal Desk (single-agent RFP run).
+</footer>
+
+<script>
+const clauses = [
+  {
+    id: "discount",
+    name: "Discount demanded > 25% off list (35% requested)",
+    category: "Commercial",
+    severity: "HIGH",
+    baseRisk: 1.5,
+    effectiveRisk: 0.75,
+    defaultChecked: false,
+    rfpText: "“The successful vendor must offer no less than 35% off published list pricing.” (RFP §3.3)",
+    counter: "We are approving a 30% strategic discount — our board-approved ceiling for this deal size — rather than 35%, on the strength of the 3-year term, target-vertical reference value, and competitive displacement.",
+    consequence: null
+  },
+  {
+    id: "escalator",
+    name: "Price freeze for full 5-year horizon, no escalators",
+    category: "Commercial",
+    severity: "HIGH",
+    baseRisk: 1.5,
+    effectiveRisk: 0.75,
+    defaultChecked: false,
+    rfpText: "“Pricing for the full 5-year horizon must be fixed at the time of contract signature, with no escalators.” (RFP §3.1)",
+    counter: "We accept a fixed price across the 5-year horizon in exchange for a standard year-end volume true-up with a 10% buffer, protecting both sides against unpriced step-changes in usage.",
+    consequence: null
+  },
+  {
+    id: "net90",
+    name: "Payment terms Net 90",
+    category: "Commercial",
+    severity: "MEDIUM",
+    baseRisk: 0.5,
+    effectiveRisk: 0.25,
+    defaultChecked: false,
+    rfpText: "“Annual fees billed in advance, due Net 90.” (RFP §3.2)",
+    counter: "We propose Net 60, which we extend to Fortune-500-scale customers with strong credit — a bracket Acme qualifies for at ~$1.4B revenue.",
+    consequence: null
+  },
+  {
+    id: "mfn",
+    name: "Most-Favoured-Nation pricing warranty",
+    category: "Commercial",
+    severity: "BLOCKER",
+    baseRisk: 2.0,
+    effectiveRisk: 0,
+    defaultChecked: false,
+    rfpText: "“The vendor must warrant that pricing offered to Acme is no less favourable than pricing offered to any comparable customer for the duration of the contract.” (RFP §3.4)",
+    counter: "Rejected outright. We do not offer MFN terms to any customer at any deal size — this is a firm, company-wide policy, not specific to Acme.",
+    consequence: "MFN pricing warranties expose us to unbounded discount creep across our entire customer base and are commercially unworkable at any scale."
+  },
+  {
+    id: "liability",
+    name: "Uncapped vendor liability for data breach",
+    category: "Legal",
+    severity: "BLOCKER",
+    baseRisk: 3.0,
+    effectiveRisk: 1.5,
+    defaultChecked: false,
+    rfpText: "“Vendor liability for any data breach is uncapped. Vendor must indemnify Acme for all costs, including notification costs, regulatory fines, and reputational damages.” (RFP §4.1)",
+    counter: "We propose liability capped at 24 months of fees paid, with mutual carve-outs for gross negligence and IP infringement.",
+    consequence: "Uncapped breach liability voids our cyber insurance policy ceiling of 24 months of fees — we would be self-insuring an unbounded exposure."
+  },
+  {
+    id: "ip",
+    name: "All work product vests in Acme upon creation",
+    category: "Legal",
+    severity: "BLOCKER",
+    baseRisk: 1.5,
+    effectiveRisk: 0.75,
+    defaultChecked: false,
+    rfpText: "“All work product, including any custom development, configurations, and integrations created in the course of this engagement, shall vest in Acme Corp upon creation.” (RFP §4.4)",
+    counter: "We propose our standard model: Acme's data remains Acme's; custom configurations/integrations are licensed to Acme (perpetual licence-back of derivatives), not assigned — the same structure we used with a comparable large industrial account.",
+    consequence: "Full IP assignment would give away ownership of engineering work we reuse across our platform and other customers."
+  },
+  {
+    id: "termination",
+    name: "Termination for convenience on 30 days' notice, no fees",
+    category: "Legal",
+    severity: "MEDIUM",
+    baseRisk: 0.5,
+    effectiveRisk: 0.25,
+    defaultChecked: false,
+    rfpText: "“Acme reserves the right to terminate the contract at any time, with or without cause, on 30 days' written notice. No early termination fees or penalties.” (RFP §3.5)",
+    counter: "We propose mutual termination for convenience on 90 days' notice (60 days as a negotiated midpoint), with fees refunded pro-rata for the unused period.",
+    consequence: null
+  },
+  {
+    id: "sla-termination",
+    name: "Immediate termination right on any SLA miss, full refund",
+    category: "Legal",
+    severity: "BLOCKER",
+    baseRisk: 2.0,
+    effectiveRisk: 1.0,
+    defaultChecked: false,
+    rfpText: "“SLA failures of any duration shall entitle Acme to terminate the contract immediately, with full refund of fees paid in the affected month.” (RFP §4.3)",
+    counter: "We propose service credits (up to 30% of the affected month's fees) as the sole remedy for an SLA miss, with termination rights reserved for repeated or material breach rather than any single miss.",
+    consequence: "A single-miss termination-and-full-refund right turns any transient incident into total revenue loss for the period, regardless of severity."
+  },
+  {
+    id: "subprocessors",
+    name: "Customer veto over all subprocessors, sole discretion",
+    category: "Legal",
+    severity: "HIGH",
+    baseRisk: 1.5,
+    effectiveRisk: 0.75,
+    defaultChecked: false,
+    rfpText: "“Vendor shall obtain Acme's prior written consent before engaging any subprocessor for any part of the services. Consent may be withheld at Acme's sole discretion.” (RFP §4.5)",
+    counter: "We propose our standard 30-day advance notice with a right to object; if Acme objects we substitute the subprocessor or, failing that, Acme may terminate the affected service without penalty.",
+    consequence: null
+  },
+  {
+    id: "audits",
+    name: "Unannounced audits, up to 4x/year, vendor pays",
+    category: "Legal",
+    severity: "HIGH",
+    baseRisk: 1.0,
+    effectiveRisk: 0.5,
+    defaultChecked: false,
+    rfpText: "“Acme reserves the right to audit vendor's controls, facilities, and personnel without prior notice, up to four times per calendar year. Audit costs shall be borne by the vendor.” (RFP §4.2)",
+    counter: "We propose one audit per year included, with 30 days' notice; additional audits available at Acme's cost with the same notice period.",
+    consequence: null
+  },
+  {
+    id: "sla-level",
+    name: "99.99% monthly uptime demanded",
+    category: "Legal",
+    severity: "MEDIUM",
+    baseRisk: 0.5,
+    effectiveRisk: 0.25,
+    defaultChecked: false,
+    rfpText: "“Vendor must commit to 99.99% monthly uptime.” (RFP §4.3)",
+    counter: "We propose our standard 99.95% Enterprise SLA, with 99.99% available as a separately priced multi-region active-active add-on (~$80K–$120K/year) rather than silently baked into base price.",
+    consequence: null
+  },
+  {
+    id: "indemnity",
+    name: "Uncapped indemnification for regulatory fines",
+    category: "Legal",
+    severity: "BLOCKER",
+    baseRisk: 2.5,
+    effectiveRisk: 1.25,
+    defaultChecked: false,
+    rfpText: "“Vendor must indemnify Acme for all costs, including notification costs, regulatory fines, and reputational damages.” (RFP §4.1)",
+    counter: "Folded into the same 24-months-of-fees liability cap above, with carve-outs for gross negligence and IP infringement.",
+    consequence: "Uncapped indemnification for third-party regulatory fines is uninsurable and would be carried entirely on our own balance sheet."
+  }
+];
+
+const REVENUE_SCORE = 100;
+const GAUGE_MAX = 15; // percent, per spec 0-15% arc
+
+function sevClass(sev) { return "sev-" + sev; }
+
+function renderCards() {
+  const grid = document.getElementById("clauseGrid");
+  grid.innerHTML = "";
+  clauses.forEach(c => {
+    const card = document.createElement("div");
+    card.className = "clause-card" + (c.severity === "BLOCKER" ? " blocker" : "");
+    card.innerHTML = `
+      <div class="clause-top">
+        <div>
+          <div class="clause-name">${c.name}</div>
+          <div class="risk-contrib">Base risk contribution: +${c.baseRisk.toFixed(1)}%</div>
+        </div>
+        <span class="sev-badge ${sevClass(c.severity)}">${c.severity}</span>
+      </div>
+      <label class="toggle-row">
+        <input type="checkbox" data-id="${c.id}" ${c.checked ? "checked" : ""}>
+        Accepted in proposal as drafted?
+      </label>
+      <details>
+        <summary>RFP language &amp; our counter-position</summary>
+        <div class="counter-text">
+          <strong>RFP says:</strong> ${c.rfpText}<br><br>
+          <strong>Our counter:</strong> ${c.counter}
+          ${c.consequence ? `<div class="consequence">Why it matters: ${c.consequence}</div>` : ""}
+        </div>
+      </details>
+    `;
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.addEventListener("change", (e) => {
+      const clause = clauses.find(c => c.id === e.target.dataset.id);
+      clause.checked = e.target.checked;
+      update();
+    });
+  });
+}
+
+function computeNetRisk() {
+  return clauses.reduce((sum, c) => sum + (c.checked ? c.baseRisk : c.effectiveRisk), 0);
+}
+
+function computeGrossRisk() {
+  return clauses.reduce((sum, c) => sum + c.baseRisk, 0);
+}
+
+function computeCarried() {
+  return clauses.filter(c => c.checked).reduce((s, c) => s + c.baseRisk, 0);
+}
+
+function computeSaved() {
+  return clauses.filter(c => !c.checked).reduce((s, c) => s + (c.baseRisk - c.effectiveRisk), 0);
+}
+
+function badgeAndDecision(netRisk) {
+  let badgeColor, badgeText, bannerText, bannerColor;
+  if (netRisk <= 5) {
+    badgeColor = "var(--green)"; badgeText = "LOW RISK";
+  } else if (netRisk <= 10) {
+    badgeColor = "var(--amber)"; badgeText = "MODERATE RISK";
+  } else {
+    badgeColor = "var(--red)"; badgeText = "HIGH RISK";
+  }
+
+  if (netRisk <= 5) {
+    bannerText = "PROCEED — standard redlines"; bannerColor = "var(--green)";
+  } else if (netRisk <= 10 && REVENUE_SCORE >= 70) {
+    bannerText = "ESCALATE TO VP — must resolve blockers before signature"; bannerColor = "var(--amber)";
+  } else if (netRisk <= 10) {
+    bannerText = "NO-BID OR MAJOR REDLINE"; bannerColor = "var(--amber)";
+  } else {
+    bannerText = "NO-BID"; bannerColor = "var(--red)";
+  }
+  return { badgeColor, badgeText, bannerText, bannerColor };
+}
+
+function update() {
+  const net = computeNetRisk();
+  const gross = computeGrossRisk();
+
+  document.getElementById("gaugeValue").textContent = net.toFixed(1) + "%";
+  document.getElementById("grossLabel").textContent = gross.toFixed(1) + "%";
+
+  const { badgeColor, badgeText, bannerText, bannerColor } = badgeAndDecision(net);
+  const badge = document.getElementById("overallBadge");
+  badge.textContent = badgeText + " — " + net.toFixed(1) + "% net";
+  badge.style.background = badgeColor;
+  badge.style.color = "#0f172a";
+
+  const banner = document.getElementById("decisionBanner");
+  banner.textContent = bannerText;
+  banner.style.background = bannerColor;
+  banner.style.color = "#0f172a";
+
+  // needle: 0% -> points left (-90deg), 15%+ -> points right (+90deg)
+  const clamped = Math.max(0, Math.min(GAUGE_MAX, net));
+  const rotation = -90 + (clamped / GAUGE_MAX) * 180;
+  document.getElementById("needle").setAttribute("transform", `rotate(${rotation} 150 150)`);
+
+  document.getElementById("revBar").style.width = REVENUE_SCORE + "%";
+  document.getElementById("revBar").textContent = REVENUE_SCORE + "/100";
+
+  document.getElementById("carriedSum").textContent = computeCarried().toFixed(1) + "%";
+  document.getElementById("savedSum").textContent = computeSaved().toFixed(1) + "%";
+  document.getElementById("netRow").textContent = net.toFixed(1) + "%";
+}
+
+function resetToProposed() {
+  clauses.forEach(c => c.checked = c.defaultChecked);
+  renderCards();
+  update();
+}
+
+document.getElementById("btnWorstCase").addEventListener("click", () => {
+  clauses.forEach(c => c.checked = true);
+  renderCards();
+  update();
+});
+document.getElementById("btnProposed").addEventListener("click", resetToProposed);
+
+// init
+clauses.forEach(c => c.checked = c.defaultChecked);
+renderCards();
+update();
+</script>
+
+</body>
+</html>

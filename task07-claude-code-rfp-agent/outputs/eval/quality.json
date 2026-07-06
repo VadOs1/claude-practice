@@ -1,0 +1,38 @@
+[
+  {
+    "strategy_key": "single",
+    "scores": {
+      "completeness": 4,
+      "specificity": 4,
+      "actionability": 4,
+      "risk_depth": 4,
+      "correctness": 4
+    },
+    "total": 20,
+    "rationale": "Solid exec summary, fit table, and flagged contract terms with counter-positions promised, but understanding/contract sections are folded into the summary rather than distinct."
+  },
+  {
+    "strategy_key": "swarm",
+    "scores": {
+      "completeness": 5,
+      "specificity": 5,
+      "actionability": 4,
+      "risk_depth": 4,
+      "correctness": 3
+    },
+    "total": 21,
+    "rationale": "Most explicitly structured (dedicated Understanding/Fit/Commercial sections) with sharp competitor-by-competitor reasoning, but the proposal is dated 2026-07-05, over a month after the stated RFP response deadline of 2026-05-26, an internal inconsistency."
+  },
+  {
+    "strategy_key": "dynamic",
+    "scores": {
+      "completeness": 5,
+      "specificity": 5,
+      "actionability": 4,
+      "risk_depth": 4,
+      "correctness": 4
+    },
+    "total": 22,
+    "rationale": "Numbered, comprehensive sections with a detailed 10-row requirements table and explicit, consistent commercial-terms gap analysis (dated before the response deadline, internally coherent)."
+  }
+]
