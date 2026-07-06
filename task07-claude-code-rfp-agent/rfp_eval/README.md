@@ -7,10 +7,10 @@ One Claude Agent SDK project covering Task A (strategy comparison) and Task B
 
 ```bash
 # from task07-claude-code-rfp-agent/
-uv run python -m rfp_eval --rfp synthetic-data/rfp-acme-corp.md --out outputs
+uv run python -m rfp_eval --rfp synthetic-data/rfp-acme-corp.md --model claude-sonnet-5
 ```
 
-Or via the slash command: `/rfp-eval`.
+`--model` defaults to `claude-sonnet-5` if omitted.
 
 ## What it does
 
