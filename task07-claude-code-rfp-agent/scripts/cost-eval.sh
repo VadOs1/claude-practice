@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
 #
-# Runs the 4 rfp-0X-* commands headlessly via `claude -p` and captures total
-# cost + token usage for each — including every subagent/Task-tool call the
-# orchestrator spins up.
-#
-# NOTE: the top-level `total_cost_usd` field in Claude Code's JSON output only
-# covers the orchestrator's own session — it does NOT include cost incurred by
-# spawned subagents. `modelUsage` is the field that rolls up token usage (and
-# per-model `costUSD`) across the orchestrator + every subagent, so that's what
-# this script sums to get the true total cost of a run. For subagent-spawning
-# strategies (rfp-02/03/04) that total can be several times `total_cost_usd`.
-#
-# Cost/metrics JSON files are saved alongside each command's own outputs
-# (the .docx/.html each command writes under outputs/runs/run-N-*/), so everything
-# for a given run lives in one folder.
-#
 # Usage:
 #   scripts/cost-eval.sh                 # run all 3 strategies
 #   scripts/cost-eval.sh rfp-02-agent-teams # run just one
