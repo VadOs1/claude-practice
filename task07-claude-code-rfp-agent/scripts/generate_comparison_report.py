@@ -32,6 +32,7 @@ RISK_CATEGORIES = {
     "subprocessor": "Operational",
     "audit": "Operational",
     "slalevel": "Operational",
+    "sla": "Operational",
 }
 
 RUBRIC_DIMS = ["Financial", "Legal", "Operational"]
