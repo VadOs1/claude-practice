@@ -9,19 +9,19 @@
       "correctness": 4
     },
     "total": 17,
-    "rationale": "Solid technical fit table and references but proposal is truncated before commercial/contract/risk sections are fully visible and lacks the deeper deal-tension framing seen in other runs."
+    "rationale": "Solid technical fit and competitive analysis with concrete numbers, but lacks the explicit commercial discount recommendation and risk/revenue tension framing seen in the other two."
   },
   {
     "strategy_key": "run-02-agent-teams",
     "scores": {
       "completeness": 4,
       "specificity": 5,
-      "actionability": 4,
+      "actionability": 5,
       "risk_depth": 4,
       "correctness": 4
     },
-    "total": 21,
-    "rationale": "Adds concrete discount math (28-30% vs 35% ask, Initech precedent) and a VP-escalation banner plus strength/exposure tension panel in the dashboard, giving strong specificity and actionable negotiation levers."
+    "total": 22,
+    "rationale": "Adds a concrete, negotiable discount recommendation (28-30% vs. 35% floor) and a dashboard with an explicit strength/exposure tension panel, making it more decision-ready than the baseline."
   },
   {
     "strategy_key": "run-03-dynamic-workflow",
@@ -29,10 +29,10 @@
       "completeness": 5,
       "specificity": 5,
       "actionability": 5,
-      "risk_depth": 4,
+      "risk_depth": 5,
       "correctness": 4
     },
-    "total": 23,
-    "rationale": "Most complete single document (explicit recommendation, fit table with conditional items, named contract blockers with rationale) and a risk dashboard with deal-facts context, making it the most decision-ready output."
+    "total": 24,
+    "rationale": "Most complete and specific, with an explicit recommendation, per-clause contractual counter-positions, phased ML scoping, and a risk dashboard with deal facts and net-risk framing."
   }
 ]
