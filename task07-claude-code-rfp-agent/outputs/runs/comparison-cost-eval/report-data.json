@@ -1,12 +1,14 @@
 {
   "rfp": "Acme Corp \u2014 Enterprise Data Platform",
-  "generated_at": "2026-07-07T00:57:08.482214+00:00",
+  "generated_at": "2026-07-07T01:21:37.479032+00:00",
   "rubric_dims": [
-    "Financial",
-    "Legal",
-    "Operational"
+    "completeness",
+    "specificity",
+    "actionability",
+    "risk_depth",
+    "correctness"
   ],
-  "winner_quality": "run-01-baseline",
+  "winner_quality": "run-03-dynamic-workflow",
   "winner_value": "run-01-baseline",
   "strategies": [
     {
@@ -21,13 +23,15 @@
       "num_turns": 21,
       "duration_ms": 278921,
       "quality": {
-        "Financial": 3.41,
-        "Legal": 2.5,
-        "Operational": 2.5,
-        "total": 8.41
+        "completeness": 4,
+        "specificity": 4,
+        "actionability": 3,
+        "risk_depth": 3,
+        "correctness": 4,
+        "total": 18,
+        "rationale": "Solid technical fit and competitive sections with concrete numbers, but the risk dashboard is generic and no explicit final recommendation/commercial detail is visible."
       },
-      "quality_per_dollar": 9.76,
-      "net_risk_pct": 8.0
+      "quality_per_dollar": 20.88
     },
     {
       "strategy_key": "run-02-agent-teams",
@@ -41,13 +45,15 @@
       "num_turns": 5,
       "duration_ms": 753140,
       "quality": {
-        "Financial": 3.41,
-        "Legal": 2.5,
-        "Operational": 2.27,
-        "total": 8.18
+        "completeness": 4,
+        "specificity": 5,
+        "actionability": 4,
+        "risk_depth": 5,
+        "correctness": 4,
+        "total": 22,
+        "rationale": "Adds a detailed, numbers-grounded commercial proposal and a richer risk dashboard (VP escalation banner, strength/exposure tension panels, benchmark gauge) versus the baseline."
       },
-      "quality_per_dollar": 4.47,
-      "net_risk_pct": 8.25
+      "quality_per_dollar": 12.02
     },
     {
       "strategy_key": "run-03-dynamic-workflow",
@@ -61,13 +67,15 @@
       "num_turns": 56,
       "duration_ms": 541187,
       "quality": {
-        "Financial": 3.41,
-        "Legal": 2.5,
-        "Operational": 2.5,
-        "total": 8.41
+        "completeness": 5,
+        "specificity": 5,
+        "actionability": 5,
+        "risk_depth": 4,
+        "correctness": 4,
+        "total": 23,
+        "rationale": "Most complete and actionable output with an explicit recommendation, nuanced per-requirement fit ratings, and clause-level contract detail, backed by a risk dashboard with deal-specific facts."
       },
-      "quality_per_dollar": 3.84,
-      "net_risk_pct": 8.0
+      "quality_per_dollar": 10.5
     }
   ]
 }

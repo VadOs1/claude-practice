@@ -6,7 +6,7 @@
 #   scripts/cost-eval.sh --report-only   # skip running strategies; just (re)build the
 #                                         # comparison report from existing run-01/02/03 outputs
 #
-# Requires: claude CLI, jq (not required for --report-only), python3
+# Requires: claude CLI, jq (claude only needed the first time --report-only judges quality; cached afterward), python3
 # Must be run from the task07-claude-code-rfp-agent/ directory (relative
 # paths in the commands assume it).
 
@@ -56,6 +56,11 @@ generate_comparison_report() {
     echo "error: python3 not found on PATH (required for report generation)" >&2
     return 1
   fi
+  if [[ ! -f "${COMPARISON_OUT_DIR}/quality.json" ]] && ! command -v claude >/dev/null 2>&1; then
+    echo "error: claude CLI not found on PATH (required to judge quality — no cached ${COMPARISON_OUT_DIR}/quality.json found)" >&2
+    return 1
+  fi
+  python3 scripts/judge_quality.py || return 1
   python3 scripts/generate_comparison_report.py "${COMPARISON_OUT_DIR}/report.html"
 }
 
