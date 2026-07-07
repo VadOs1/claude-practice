@@ -1,0 +1,73 @@
+{
+  "rfp": "Acme Corp \u2014 Enterprise Data Platform",
+  "generated_at": "2026-07-07T00:54:26.704872+00:00",
+  "rubric_dims": [
+    "Financial",
+    "Legal",
+    "Operational"
+  ],
+  "winner_quality": "run-01-baseline",
+  "winner_value": "run-01-baseline",
+  "strategies": [
+    {
+      "strategy_key": "run-01-baseline",
+      "label": "Baseline",
+      "cost_usd": 0.861995,
+      "input_tokens": 545,
+      "output_tokens": 26839,
+      "cache_read_tokens": 514670,
+      "cache_creation_tokens": 50760,
+      "total_tokens": 592814,
+      "num_turns": 21,
+      "duration_ms": 278921,
+      "quality": {
+        "Financial": 3.41,
+        "Legal": 2.5,
+        "Operational": 2.5,
+        "total": 8.41
+      },
+      "quality_per_dollar": 9.76,
+      "net_risk_pct": 8.0
+    },
+    {
+      "strategy_key": "run-02-agent-teams",
+      "label": "Agent Teams",
+      "cost_usd": 1.8304539500000003,
+      "input_tokens": 5869,
+      "output_tokens": 54322,
+      "cache_read_tokens": 966108,
+      "cache_creation_tokens": 191165,
+      "total_tokens": 1217464,
+      "num_turns": 5,
+      "duration_ms": 753140,
+      "quality": {
+        "Financial": 3.41,
+        "Legal": 2.5,
+        "Operational": 2.27,
+        "total": 8.18
+      },
+      "quality_per_dollar": 4.47,
+      "net_risk_pct": 8.25
+    },
+    {
+      "strategy_key": "run-03-dynamic-workflow",
+      "label": "Dynamic Workflow",
+      "cost_usd": 2.1902690000000016,
+      "input_tokens": 3802,
+      "output_tokens": 62717,
+      "cache_read_tokens": 1292922,
+      "cache_creation_tokens": 184539,
+      "total_tokens": 1543980,
+      "num_turns": 56,
+      "duration_ms": 541187,
+      "quality": {
+        "Financial": 3.41,
+        "Legal": 2.5,
+        "Operational": 2.5,
+        "total": 8.41
+      },
+      "quality_per_dollar": 3.84,
+      "net_risk_pct": 8.0
+    }
+  ]
+}
