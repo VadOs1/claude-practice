@@ -46,7 +46,7 @@
 <script>
 const REPORT_DATA = {
   "rfp": "Acme Corp \u2014 Enterprise Data Platform",
-  "generated_at": "2026-07-07T00:54:26.704872+00:00",
+  "generated_at": "2026-07-07T00:57:08.482214+00:00",
   "rubric_dims": [
     "Financial",
     "Legal",
@@ -157,7 +157,7 @@ new Chart(document.getElementById('quality'), {
 
 new Chart(document.getElementById('value'), {
   type: 'bar',
-  data: { labels, datasets: [{ label: 'Quality / $',
+  data: { labels, datasets: [{ label: 'Risk safety / $',
     data: D.strategies.map(s => s.quality_per_dollar), backgroundColor: PALETTE }] },
   options: { plugins: { legend: { display: false } } }
 });
