@@ -1,2 +1,3 @@
 - [Project workflow](project_workflow.md) — run-NN output folders, specialist roster, no branded docx template exists yet
 - [Specialist conflict handling](specialist_conflict_handling.md) — defer to Legal/Technical Fit over Competitive Intel on factual SLA/capability conflicts; only escalate to specialist if it changes deal viability
+- [Risk-assessment design system 404](risk_assessment_design_system.md) — the brief's design-system URL 404s; specialist falls back to its own skill spec, this is expected not a defect

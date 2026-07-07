@@ -1,129 +1,108 @@
-# Proposal: Enterprise Data Platform for Acme Corp
+# BTS-Synthetic — Response to Acme Corp RFP: Enterprise Data Platform
 
-**Prepared by:** BTS-Synthetic
-**Prepared for:** Acme Corp Procurement Office — Sarah Chen (VP Procurement), Marcus Webb (Chief Data Officer)
+**Prepared for:** Sarah Chen, VP Procurement; Marcus Webb, Chief Data Officer
+**Prepared by:** BTS-Synthetic Deal Desk
 **Date:** 2026-07-06
-**In response to:** RFP issued 2026-05-12, Enterprise Data Platform
+**RFP reference:** Enterprise Data Platform, issued 2026-05-12
+
+## 1. Executive summary
+
+Acme Corp is replacing a patchwork of on-premises Teradata warehouses and ad-hoc cloud analytics with a single enterprise data platform that must handle real-time IoT ingest at scale, serve 600 Power BI users natively, and operate across EU and US regions under EU data residency rules — all on a fixed 5-year price.
+
+BTS-Synthetic is a strong technical match for this scope: our lakehouse architecture natively supports Parquet, Delta, and Iceberg; our Power BI integration (a dedicated DirectQuery adapter) is our most mature BI integration; and our streaming ingest is tested to 250K events/second — well above Acme's 80,000 events/second peak. We have a directly comparable win with **Initech Sensors**, an industrial IoT customer of similar profile, where we beat a Microsoft Fabric "free with E5" bid on real-time ingest performance and governance maturity.
+
+Where we differ from the RFP as issued is commercial and contractual, not technical. A small number of terms — an uncapped liability/indemnification clause, no-notice audit rights, an SLA structure that ties any outage to immediate contract termination, full IP vesting, and a 35% minimum discount with a most-favoured-nation warranty — sit outside terms we or (to our knowledge) any enterprise vendor can respons­ibly accept as written. We address each with a specific counter-position below (Section 6) so Acme's evaluation team can assess our overall offer on a like-for-like basis with other bidders.
+
+**Recommendation:** proceed to negotiation. Functional fit is high, the commercial gap is closable within our standard strategic-deal authority, and the contractual gaps are the kind we resolve routinely with enterprise customers of Acme's scale.
+
+## 2. Our understanding of your need
+
+- **Scale & workloads:** ~280 TB current volume growing ~12 TB/month, real-time ingest from ~40,000 IoT devices (peak 80,000 events/sec), batch ETL from 30+ sources, BI/reporting for ~600 analysts and executives, self-service prep for ~150 data engineers, and a planned (not yet active) ML program for predictive maintenance.
+- **Architecture constraints:** Microsoft/Azure-centric environment today, legacy on-premises Teradata warehouses being decommissioned through 2027, lakehouse architecture and open file formats (Parquet, Delta, Iceberg) preferred for portability.
+- **Geography:** primary EU, secondary US East, with a hard requirement that EU customer data remain in the EU.
+- **Non-negotiable:** native Power BI integration for the existing 600-user base.
+- **Commercial framing:** a 3-year initial term with a 2-year renewal option, 5-year pricing fixed at signature, minimum 35% off list, Net 90 payment, and a most-favoured-nation pricing warranty.
+- **Contractual framing:** uncapped breach liability, unannounced audit rights up to 4x/year at vendor cost, a 99.99% SLA tied to immediate termination on any miss, full IP vesting, and subprocessor engagement gated on Acme's sole-discretion consent.
+- **Competitive context:** Acme is also evaluating Databricks, Snowflake, Microsoft Fabric, and a regional vendor — evaluation is weighted 30% functional fit, 25% commercial terms, 20% five-year TCO, 15% implementation timeline/risk, 10% vendor stability/references.
+
+## 3. Why we're the right fit
+
+| Requirement | Fit | Notes |
+|---|---|---|
+| Lakehouse + open formats (Parquet, Delta, Iceberg) | **High** | Native support for all three; core architecture is a lakehouse by design. |
+| Native Power BI integration (600 users) | **High** | Our most mature BI integration, with a dedicated DirectQuery adapter — this is the single strongest match in the RFP. |
+| Real-time ingest, 40K devices / 80K events/sec peak | **High** | Streaming tested to 250K events/sec single-region; ~3x headroom over Acme's peak before multi-region distribution. |
+| Multi-region (EU primary / US East secondary) + EU residency | **High** | Native multi-region deployment with per-table residency pinning — EU tables can be enforced to stay in EU regions at the data level, not just the deployment level. |
+| Batch ETL, 30+ sources | **High** | 80+ connectors out of the box. |
+| Legacy Teradata decommission by 2027 | **High** | Typical full legacy-warehouse migration timeline is 16 weeks — comfortably inside Acme's runway. |
+| Self-service prep, 150 engineers | **High** | Low-code prep UI purpose-built for this persona. |
+| ML pipelines for predictive maintenance (planned) | **Medium-High** | Model registry, feature store, and autoscaling model serving are all in place today; recommend scoping this as an explicit Phase 2 milestone rather than day-one scope, since Acme's own program is not yet active. |
+| 99.99% monthly uptime | **Conditional** | See Section 5 (Contract approach) — technically achievable via a multi-region active-active add-on, but the remedy structure attached to it in the RFP needs to change. |
+
+**Overall technical fit: High.** No requirement in the RFP is outside our platform's capability; the only open item is the commercial structure around the highest SLA tier.
+
+### Competitive position
+
+Acme is also evaluating Databricks, Snowflake, and Microsoft Fabric. Given Acme's deep Azure/Power BI footprint, Fabric is the most immediate competitive threat; Databricks and Snowflake compete more on data-engineering depth and analyst SQL experience respectively. We are not the incumbent on any of these fronts, so we lead with the arguments that hold up under scrutiny rather than compete point-for-point on turf we don't own:
+
+- **Vs. Microsoft Fabric:** Fabric's Power BI integration is native and its E5-bundled pricing looks free on paper. We don't contest that. We instead put a transparent 5-year TCO on the table — including the migration, governance, and consulting costs that "free with E5" doesn't show — and lead with open-format portability: Acme keeps its data in Parquet/Delta/Iceberg, not locked to a single cloud's proprietary runtime. This is the same argument that won Initech Sensors against a comparable Fabric bid.
+- **Vs. Databricks:** strong on data engineering and Delta Lake, less strong on interactive BI performance for 600 analyst users and on cost predictability at scale. We lead with responsive BI on open formats plus a fixed, predictable 5-year cost model against Databricks' usage-based compute ramp.
+- **Vs. Snowflake:** excellent SQL/analyst experience, but built around a SQL-warehouse model rather than combined real-time IoT ingest, batch ETL, and unstructured data. We lead with workload breadth — one platform for streaming, batch, and BI — rather than three tools stitched together.
+
+## 4. Commercial proposal
+
+Acme's evaluation weights functional fit at 30% and total 5-year TCO at 20% — together, more than half the score rests on capability and true cost rather than headline discount. We've priced accordingly.
+
+| Term | RFP ask | Our proposal |
+|---|---|---|
+| List price basis | — | Enterprise tier configured for Acme's scope (280TB, multi-region active-active for EU/US residency, 600 BI seats, 150 engineer seats): ~$900K–$950K annual list |
+| Discount | ≥35% off list | **22–25% at signature**, with a path to **28–30%** (VP-approved strategic ceiling) if Acme commits to a public reference and the full 3+2 year structure |
+| Term | 3-year initial + 2-year renewal, 5-year price fixed at signature, no escalators | Accepted, **conditional on final discount landing at or below ~28–30%**. Outside that band, we fix pricing for the 3-year initial term and apply a capped escalator (CPI+2%, max 5%/yr) on the 2-year renewal only, which itself remains a mutual (not unilateral) option |
+| Payment | Annual in advance, Net 90 | Annual in advance accepted; **counter Net 60** (matches our closest comparable win, Initech Sensors, and Acme's investment-grade profile) |
+| MFN pricing warranty | Pricing no less favourable than any comparable customer, for contract duration | **Not offered as a continuous warranty** — our discount structure reflects deal-specific scope and competitive context (see past deals ranging 10%–28% by profile), and a blanket MFN would force retroactive repricing against unrelated deals. We propose an annual benchmark review at renewal instead |
+
+**Proof point:** our closest comparable deal, Initech Sensors (industrial IoT, similar scale), closed at 15% off list against a Microsoft Fabric "free with E5" bid, won on real-time ingest performance and governance maturity — the same combination Acme is evaluating. Our largest strategic discount to date, 28% (Stark Industries), came with a full 5-year fixed price and no escalator, which is the template we're proposing here if Acme's final discount lands in that range.
+
+We want to be candid about one boundary: at a 35% discount with an MFN warranty, this deal would price below every comparable win in our history, including deals we ultimately walked away from rather than match (see: a 2025 opportunity where a competitor discounted to 40% to win a purely price-driven deal — we let that one go rather than erode our standard structure). We don't expect that outcome here, since Acme's own evaluation criteria weight capability and TCO over headline discount, but we want the trade-off visible up front rather than discovered at contract redlines.
+
+## 5. Implementation plan
+
+| Phase | Milestone | Timing |
+|---|---|---|
+| Phase 0 | Contract execution, kickoff, architecture validation for EU/US multi-region residency design | Weeks 1–2 |
+| Phase 1 | First production workload live (batch ETL + BI for a pilot analyst group), core lakehouse stood up on Azure | By week 8 |
+| Phase 2 | Full real-time IoT ingest onboarded (40K devices, ramping to 80K events/sec peak), remaining 30+ batch sources migrated | By week 16 |
+| Phase 3 | Full cutover from Teradata, all 600 BI users and 150 data engineers onboarded, governance/audit logging validated | By week 20–24 |
+| Phase 4 | Predictive maintenance ML pipeline stood up (model registry, feature store, serving) once Acme's ML program is active | Post-cutover, scoped jointly |
+
+This timeline is inside Acme's stated 2027 Teradata decommission target with meaningful buffer, and aligns to the RFP's award date of 2026-06-30 (noting the response and award dates in the original RFP have since passed as of this proposal's preparation; timeline above is anchored to contract execution date, whenever that occurs).
+
+## 6. Contract approach
+
+Five terms in the RFP's Section 4 are outside standard enterprise contract terms for us (and, in our experience, for any vendor able to responsibly underwrite them). We flag these clearly rather than accept silently or bury them in redlines:
+
+| RFP term | Our position | Counter-proposal |
+|---|---|---|
+| **Uncapped liability + full indemnification** for any breach, including regulatory fines and reputational damages (4.1) | Not acceptable as written — voids standard cyber insurance coverage, and reputational/regulatory-fine indemnification is uninsurable | Liability capped at 24 months of fees paid, carve-outs for IP infringement and gross negligence; indemnification covers direct breach-response costs (notification, forensics, credit monitoring), excluding regulatory fines and reputational damages |
+| **Audit rights** without notice, up to 4x/year, vendor pays (4.2) | Not acceptable as written — operationally unworkable at scale | One audit/year, 30 days' notice, under NDA; up to 2 additional audits/year available at Acme's cost |
+| **99.99% SLA, any-duration failure triggers immediate termination + full monthly refund** (4.3) | 99.99% is achievable via a multi-region active-active architecture (which our EU/US residency design already points toward), at a $80K–$120K/year premium — but tying it to instant termination on any blip, regardless of cause or duration, is not a workable remedy structure | Standard commitment: 99.95% monthly uptime with tiered service credits (up to 30% of monthly fees) as sole remedy; termination reserved for chronic failure (3+ consecutive months missed). 99.99% available as a priced add-on with the same credit-based remedy, not termination-on-first-incident |
+| **Full IP vesting** of all custom development, configurations, and integrations to Acme (4.4) | Not acceptable as written | Acme retains full rights to its own data; custom reports, dashboards, and configurations built for Acme are licensed to Acme perpetually, royalty-free, for internal use. BTS-Synthetic retains ownership of the underlying platform, connectors, and reusable IP |
+| **Subprocessor engagement** requires Acme's prior consent, withholdable at sole discretion (4.5) | Not acceptable as written — no vendor can operate at scale under unilateral third-party veto over infrastructure choices | Public subprocessor list with 30 days' advance notice of any addition; Acme may object within that window, and we will propose a substitute or Acme may terminate the affected service without penalty |
+| **Termination for convenience**, 30 days' notice, no fee (3.5) | Directionally acceptable — we do offer termination for convenience | 90 days' written notice (60 days if 90 is a hard blocker), pro-rated refund of prepaid, unused fees; no early-termination fee, consistent with the RFP's intent |
+
+None of these are unusual asks from an enterprise customer, and all five are things we resolve routinely in contracts of this size — we raise them now, ahead of a redline cycle, so evaluation can proceed on a complete and accurate picture of our terms.
+
+## 7. Risks and mitigations
+
+| Risk | Mitigation |
+|---|---|
+| RFP's discount floor (35%) and MFN warranty exceed our standard and strategic pricing authority | Open at 22–25%, hold a 28–30% ceiling backed by a 5-year TCO case and a reference-customer agreement; be prepared to walk rather than match an unsustainable discount, consistent with our own pricing discipline on past deals |
+| SLA remedy structure (any-duration failure → immediate termination + full refund) creates disproportionate risk relative to the $80K–$120K/year cost of the 99.99% architecture | Counter with credit-based remedies and a chronic-failure termination threshold (Section 6); do not price the 99.99% add-on until the remedy structure is resolved |
+| Uncapped liability, unannounced audits, and full IP vesting represent unbounded operational/financial exposure if accepted as-is | Standard counter-positions in Section 6, escalated to legal sign-off before contract execution; none of these are unusual asks to negotiate with an enterprise customer at Acme's scale |
+| 5-year fixed price with 12 TB/month growth could outpace the discount math by years 3–5 (~280TB → 1,000TB+ over the term) | Volume true-up mechanism with a defined buffer, revisited at each renewal; escalator on the 2-year renewal option if final discount falls outside the 28–30% strategic band |
+| Microsoft Fabric's embedded position (Azure tenant, E5 bundling, native Power BI) is a real competitive risk given Acme's Microsoft-centric environment | Lead with transparent 5-year TCO (including Fabric's hidden migration/consulting costs) and open-format portability, the same combination that won the comparable Initech Sensors deal against a similar Fabric bid |
+| Net 90 payment terms and unilateral 2-year renewal option shift cash-flow and commitment risk toward us | Counter Net 60; confirm renewal requires mutual agreement, not Acme's unilateral exercise |
 
 ---
 
-## Executive Summary
-
-- **Strong functional fit.** BTS-Synthetic's lakehouse platform natively covers Acme's full workload mix — 40,000-device real-time IoT ingest, 30+ source batch ETL, self-service prep, and BI/reporting — with Power BI as our most mature, purpose-built integration (dedicated DirectQuery adapter), matching your single non-negotiable requirement.
-- **A platform built to retire Teradata cleanly**, not a bet on unproven architecture: EU/US multi-region deployment with per-table EU data residency enforcement, open formats (Parquet, Delta, Iceberg) for long-term portability, and a phased migration that puts your first production workload live in 8 weeks.
-- **A commercial and contractual position designed for a multi-year partnership**, not a single transaction — we propose meaningful, TCO-justified pricing, and counter-positions on liability, audit, and SLA terms that keep this agreement bankable for both sides over the full 5-year horizon.
-
----
-
-## Our Understanding of Your Needs
-
-Acme Corp is retiring a patchwork of on-premises Teradata warehouses and ad-hoc cloud analytics in favor of a single enterprise data platform, to be substantially complete by 2027. As a global industrial IoT/sensor manufacturer (~$1.4B revenue, 7,200 employees, manufacturing in Mexico, Vietnam, and Romania, R&D in Austin and Munich), your platform must simultaneously serve:
-
-- **Real-time ingest** from ~40,000 fielded IoT devices, peaking at 80,000 events/second
-- **Batch ETL** from 30+ internal systems
-- **BI and reporting** for ~600 analysts and executives, built around Power BI
-- **Self-service data preparation** for ~150 data engineers
-- **Predictive-maintenance ML pipelines**, planned but not yet active
-
-At ~280TB today and growing ~12TB/month, this is an enterprise-scale, multi-region program with a hard EU data-residency constraint and a lakehouse/open-format architecture preference. We understand the platform decision will be evaluated on functional fit (30%), commercial terms (25%), 5-year TCO (20%), implementation timeline/risk (15%), and vendor stability/references (10%) — and that Databricks, Snowflake, and Microsoft Fabric are also under evaluation.
-
----
-
-## Why BTS-Synthetic Is the Right Fit
-
-**Fully met today, with no gaps:**
-
-- Lakehouse architecture with native Delta, Iceberg, and Parquet support — a direct match for your portability requirement
-- Batch ETL: 80+ pre-built connectors, well beyond your 30+ source count
-- **Power BI**: our most mature BI integration, with a dedicated DirectQuery adapter — this is the capability advantage neither Databricks nor Snowflake can match natively, and where even Microsoft Fabric's home-turf advantage is really an incumbency story, not a technical one
-- EU data residency via per-table residency pinning, and multi-region deployment (EU primary, US East secondary) — both natively supported, not custom work
-- BI/reporting scale for 600 analysts, and self-service prep for 150 data engineers via our low-code UI plus Python/R/Scala notebooks
-- ML foundation for predictive maintenance (model registry, feature store, native model serving) already in place ahead of your planned rollout
-
-**Two areas we want to be transparent about, and how we address them:**
-
-1. **Peak real-time ingest at multi-region scale.** We are proven well past your 80,000 events/second peak (tested to 250K events/sec), but that benchmark is on a single-region deployment. Given your EU-residency constraint applied at ingest across a globally distributed device fleet, we propose a joint architecture validation exercise during onboarding to confirm multi-region ingest performance against your actual device topology before go-live, rather than asking you to take it on faith.
-2. **99.99% uptime.** Our standard Enterprise tier is 99.95%. We can meet 99.99% through our multi-region active-active add-on, and we address the commercial mechanics of this directly in the Commercial Proposal and Risks sections below — we would rather be upfront about this now than have it surface as a surprise during contracting.
-
-**Positioning against the field:** Databricks is a strong technical competitor for compute-heavy ML workloads, but its Spark-based compute model tends to produce TCO surprises at your data volume and growth rate, and it has no native Power BI integration. Microsoft Fabric has the incumbency advantage of your existing Azure/E5 relationship and native Power BI support, but it is a young platform (in market ~18 months) for a workload this business-critical, and real-time ingest at your peak scale is not its demonstrated strength. Snowflake is the most mature analyst experience of the three, but it is fundamentally batch-oriented, treats ML as a bolt-on, and is typically the most expensive option at your scale. We recommend Acme evaluate all vendors on a single basis: **a 5-year total cost of ownership model run against your actual workload profile**, not list-price or single-capability comparisons — this is where we believe we differentiate most clearly.
-
----
-
-## Commercial Proposal
-
-**Pricing.** Based on your scale (280TB, 40K devices, 600 BI users, 150 engineers) and unlimited-ingest needs, this places Acme in our Enterprise tier at **$720,000/year list price**.
-
-We propose an **initial discount of 20% off list ($576,000/year)**, fixed and flat across the full 5-year horizon (3-year initial term + 2-year renewal) with **no escalators**, as requested — total 5-year contract value of **$2.88M**. In recognition of the scale and strategic nature of this partnership, we can extend to **25% off list ($540,000/year, $2.70M over 5 years)** in exchange for a customer-reference and case-study agreement, consistent with how we've structured comparable industrial/IoT engagements at similar scale.
-
-We are not in a position to commit to a 35% discount floor as a contractual precondition. Rather than compete on headline discount alone, we ask Acme to evaluate this proposal on a like-for-like 5-year TCO basis: our experience in comparable industrial IoT engagements is that platforms with higher advertised discounts have consistently cost more once compute overrun, storage growth, and migration risk are priced in over a multi-year term. We are glad to build that TCO model jointly with your team as part of evaluation.
-
-**Term and payment.** We accept the 3-year initial term with 2-year renewal option, and will hold full 5-year pricing fixed at signature as requested. On payment terms, we propose **Net 60** (rather than Net 90), annual in advance — or, if the underlying need is cash-flow smoothing rather than the specific term, we're open to quarterly billing at the same effective annual pricing.
-
-**On the Most Favoured Nation clause:** we are not able to offer an ongoing warranty that pricing will never be more favorable elsewhere — this is not a term we extend to any customer, as it constrains our ability to price flexibly across our full customer base over a multi-year term. In its place, we offer the fixed, non-escalating discount commitment above as Acme's pricing guarantee for the life of the contract.
-
-**What we're offering in addition:**
-- A custom Master Services Agreement reflecting the terms below
-- A 30-day acceptance testing period following go-live of each production workload
-- Year-end volume true-up with a 10% buffer, reflecting your ~12TB/month growth trajectory (note: Enterprise tier ingest is not volume-capped, so this is a capacity-planning term rather than a pricing lever)
-- Pro-rated refund on termination for convenience (see Contract Approach)
-
----
-
-## Contract Approach
-
-We reviewed the RFP's contractual terms (Section 4) against our standard positions. Most of the RFP's requirements are ones we meet as-is or can accept directly — data residency and multi-region terms match our standard exactly. On a handful of clauses, we're proposing counter-positions rather than silent acceptance, because they fall outside terms we can respons­ibly insure or operationalize:
-
-| Area | Your Request | Our Proposed Position |
-| --- | --- | --- |
-| **Liability & indemnification** | Uncapped liability; full indemnification incl. reputational damages | Cap at 24 months of fees paid, with uncapped carve-outs for gross negligence and IP infringement; indemnification for direct breach-notification costs and regulatory fines |
-| **Audit rights** | No-notice audits, up to 4x/year, vendor bears all costs | Annual audit with 30 days' written notice; additional audits (up to 2/year) available at Acme's cost; findings kept confidential |
-| **SLA target & remedy** | 99.99% uptime; any SLA miss triggers immediate termination + full month refund | 99.95% standard (99.99% available via active-active add-on, see Risks); service credits as primary remedy, capped at 30% of monthly fees; termination right after sustained failure (3 consecutive months) with cure period |
-| **IP ownership** | All custom work product vests in Acme on creation | Customer-specific configurations/integrations licensed to Acme perpetually, royalty-free, for internal use; underlying platform IP remains ours — protects reusable components while giving you full usage rights |
-| **Subprocessors** | Prior written consent required for every subprocessor, at Acme's sole discretion | Published subprocessor list with 30 days' advance notice of additions; Acme may object on reasonable grounds, with substitution or termination if unresolved |
-| **Termination for convenience** | 30 days' notice, no fees | Accepted, with the clarification that refunds on early termination are pro-rated for services already rendered |
-| **MFN pricing warranty** | Pricing must be no less favorable than any comparable customer | Declined as an ongoing warranty (see Commercial Proposal); replaced with our fixed 5-year discount commitment |
-
-We believe every counter-position above is standard commercial practice and does not reduce the substance of what you're asking for — it makes the agreement one both sides can actually operate and insure over a 5-year term. We're glad to walk through the rationale for any of these live with your legal team.
-
----
-
-## Implementation Plan
-
-Given Acme's scale (multi-region, multi-source, full Teradata retirement), we propose a phased migration:
-
-| Phase | Timeline | Milestone |
-| --- | --- | --- |
-| Phase 1 | Weeks 1–8 | First production workload live (highest-value BI/reporting use case) |
-| Phase 2 | Weeks 9–16 | Core Teradata migration substantially complete; batch ETL from primary sources cut over |
-| Phase 3 | Weeks 17–24 | Full multi-region rollout complete: remaining sources, real-time IoT ingest at full scale, self-service prep rollout to all 150 engineers |
-| Ongoing | Month 6+ | Predictive-maintenance ML pipeline enablement (aligned to your "planned, not active" timeline) |
-
-A joint multi-region ingest architecture validation (see Fit section) is scheduled early in Phase 1, before any go-live commitment on real-time SLA.
-
----
-
-## Customer References
-
-The following reference customers reflect comparable scale, industry, and/or platform profile to Acme's engagement:
-
-1. **Globex Manufacturing** — Industrial/Manufacturing, Enterprise tier, 3-year term. Selected us over Databricks/Snowflake on a 3-year TCO comparison run against their actual (heavy unstructured) workload profile.
-2. **Initech Sensors** — Industrial/IoT, Enterprise tier. The closest comparable to Acme's profile: won against Microsoft Fabric on real-time ingest performance and governance maturity.
-3. **Wayne Manufacturing** — Industrial, Enterprise tier, began with a 90-day proof-of-concept and has since signed a formal reference-customer agreement.
-
-Full reference contacts available on request.
-
----
-
-## Risks and Mitigations
-
-| Risk | Impact | Mitigation |
-| --- | --- | --- |
-| **Multi-region real-time ingest at peak scale is unvalidated** for your specific EU/US topology, though we are proven well past your throughput requirement in single-region deployments | Could affect go-live confidence for the real-time IoT workload | Joint architecture validation exercise in Phase 1, before any SLA commitment on the real-time path |
-| **99.99% uptime exceeds our standard tier (99.95%)** | Gap between your ask and our out-of-box SLA | Multi-region active-active add-on available to close the gap; alternatively, we propose a 99.95% target with credit-based remedies (see Contract Approach) rather than an unattainable guarantee paired with a zero-tolerance termination trigger |
-| **5-year fixed pricing with no escalator, against rising infrastructure costs and ~12TB/month volume growth** | Long-term margin pressure on our side; if unmanaged, risk of service-quality trade-offs over the contract life | We've sized this into our proposed discount band rather than asking for a mid-term repricing right — no action needed from Acme, but it's why we can't also stack a further discount on top of the fixed-pricing ask |
-| **Aggressive default contractual terms** (uncapped liability, no-notice audits, immediate-termination SLA, full IP vesting, MFN) as issued in the RFP | If accepted as-is, these terms are not ones we — or likely any vendor — could respons­ibly sign and still deliver a stable, adequately-resourced engagement over 5 years | Counter-positions proposed in Contract Approach, each designed to preserve your substantive protections while keeping the agreement operable and insurable |
-| **Competitive field is price-aggressive** (multiple vendors bidding, one likely willing to discount steeply) | Risk that evaluation defaults to headline discount rather than TCO | We're proposing a joint 5-year TCO model as part of evaluation, so the comparison reflects delivered cost, not list-price optics |
-
----
-
-*This proposal is submitted in response to Acme Corp's RFP dated 2026-05-12. We look forward to discussing next steps with your team.*
+*This proposal reflects BTS-Synthetic's standard commercial and legal positions for enterprise deals of this scale and is intended to open, not close, negotiation on the items in Section 6. A completed Capability Matrix accompanies this response under separate cover.*

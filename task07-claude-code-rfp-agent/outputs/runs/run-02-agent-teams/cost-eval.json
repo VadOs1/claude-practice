@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 753140,
+  "duration_api_ms": 808409,
+  "ttft_ms": 5460,
+  "ttft_stream_ms": 1800,
+  "time_to_request_ms": 102,
+  "num_turns": 5,
+  "result": "All three expected files are present and valid:\n\n- `proposal-acme-corp-2026-07-06.md` (12 KB)\n- `proposal-acme-corp-2026-07-06.docx` (valid Word 2007+ doc, 16.7 KB)\n- `risk-assessment-acme-corp-2026-07-06.html` (26 KB)\n\nThe deal-desk-orchestrator ran all four first-round specialists (pricing, legal, technical_fit, competitive) in parallel and foreground, then followed with risk_assessment in a second round, synthesizing everything into the proposal itself rather than doing any analysis directly. Key findings: pricing recommends 28-30% discount (needs VP sign-off vs. customer's 35% ask), legal flagged 5 high-severity blocker clauses, technical fit is high with one SLA gap (99.95% vs requested 99.99%), and competitive intel flags Microsoft Fabric as the top threat. The risk dashboard's own verdict is \"Escalate to VP.\"\n\nNote: `cost-eval.json` in that folder is an empty untracked file left over from prior state — unrelated to this run, flagging in case you want to clean it up.",
+  "stop_reason": "end_turn",
+  "session_id": "7418ea6d-1e6b-49c0-92a8-b07c3d649ffd",
+  "total_cost_usd": 1.83045395,
+  "usage": {
+    "input_tokens": 10,
+    "cache_creation_input_tokens": 16844,
+    "cache_read_input_tokens": 133619,
+    "output_tokens": 2322,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 16844,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 391,
+        "cache_read_input_tokens": 32225,
+        "cache_creation_input_tokens": 472,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 472
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 1911,
+      "cacheReadInputTokens": 7061,
+      "cacheCreationInputTokens": 9990,
+      "webSearchRequests": 0,
+      "costUSD": 0.023291599999999996,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 5326,
+      "outputTokens": 52411,
+      "cacheReadInputTokens": 959047,
+      "cacheCreationInputTokens": 181175,
+      "webSearchRequests": 0,
+      "costUSD": 1.8071623500000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6c9fcaee-9615-4021-9498-135f343087d2"
+}

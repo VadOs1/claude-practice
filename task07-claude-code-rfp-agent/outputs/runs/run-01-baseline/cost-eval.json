@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 278921,
+  "duration_api_ms": 289369,
+  "ttft_ms": 6393,
+  "ttft_stream_ms": 2839,
+  "time_to_request_ms": 192,
+  "num_turns": 21,
+  "result": "Confirms gross risk 18.0% and net risk 8.0% match the dashboard, landing in the 5–10% band with a revenue score of 100 → **Escalate to VP** decision, which the HTML correctly displays by default.\n\nAll three baseline deliverables are complete in `outputs/runs/run-01-baseline/`:\n\n- **`proposal-acme-corp-2026-07-06.md`** / **`.docx`** — customer-facing proposal (exec summary, understanding, why-us with competitive positioning vs. Databricks/Snowflake/Fabric, commercial terms, contract approach, risks/mitigations table)\n- **`risk-assessment-acme-corp-2026-07-06.html`** — self-contained interactive dashboard: net risk 8.0% (amber, \"Escalate to VP\"), revenue score 100/100, 12 toggleable clause cards with worst-case/proposed-position buttons\n\nOne flag from earlier: the working tree already had run-02 and run-03 output deletions plus an empty untracked `cost-eval.json` in run-01, none of which I made — let me know if you want those restored (`git restore outputs/runs/run-02-agent-teams outputs/runs/run-03-dynamic-workflow`).",
+  "stop_reason": "end_turn",
+  "session_id": "50ee35b8-fb2e-4936-95a2-a605eed3ae95",
+  "total_cost_usd": 0.8619949999999998,
+  "usage": {
+    "input_tokens": 22,
+    "cache_creation_input_tokens": 50760,
+    "cache_read_input_tokens": 514670,
+    "output_tokens": 26825,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 50760,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 412,
+        "cache_read_input_tokens": 66308,
+        "cache_creation_input_tokens": 305,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 305
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 22,
+      "outputTokens": 26825,
+      "cacheReadInputTokens": 514670,
+      "cacheCreationInputTokens": 50760,
+      "webSearchRequests": 0,
+      "costUSD": 0.861402,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 523,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000593,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "5a640f0d-6b32-4d9b-87da-c12f24848cb3"
+}

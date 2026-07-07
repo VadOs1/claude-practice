@@ -1,0 +1,35 @@
+{
+  "command": "rfp-02-agent-teams",
+  "cost_usd": 1.8304539500000003,
+  "orchestrator_cost_usd": 1.83045395,
+  "num_turns": 5,
+  "duration_ms": 753140,
+  "tokens": {
+    "input_tokens": 5869,
+    "output_tokens": 54322,
+    "cache_creation_input_tokens": 191165,
+    "cache_read_input_tokens": 966108
+  },
+  "per_model": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 1911,
+      "cacheReadInputTokens": 7061,
+      "cacheCreationInputTokens": 9990,
+      "webSearchRequests": 0,
+      "costUSD": 0.023291599999999996,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-sonnet-5": {
+      "inputTokens": 5326,
+      "outputTokens": 52411,
+      "cacheReadInputTokens": 959047,
+      "cacheCreationInputTokens": 181175,
+      "webSearchRequests": 0,
+      "costUSD": 1.8071623500000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "command": "rfp-01-baseline",
+  "cost_usd": 0.861995,
+  "orchestrator_cost_usd": 0.8619949999999998,
+  "num_turns": 21,
+  "duration_ms": 278921,
+  "tokens": {
+    "input_tokens": 545,
+    "output_tokens": 26839,
+    "cache_creation_input_tokens": 50760,
+    "cache_read_input_tokens": 514670
+  },
+  "per_model": {
+    "claude-sonnet-5": {
+      "inputTokens": 22,
+      "outputTokens": 26825,
+      "cacheReadInputTokens": 514670,
+      "cacheCreationInputTokens": 50760,
+      "webSearchRequests": 0,
+      "costUSD": 0.861402,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    },
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 523,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000593,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  }
+}
