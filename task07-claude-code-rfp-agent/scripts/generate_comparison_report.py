@@ -66,6 +66,8 @@ def build_report_data():
         cost = metrics["cost_usd"]
 
         sc = quality_by_key.get(s["key"])
+        if sc is None:
+            print(f"warning: no quality score found for {s['key']!r} in {QUALITY_CACHE}", file=sys.stderr)
         quality = dict(sc["scores"]) if sc else {d: 0 for d in RUBRIC_DIMS}
         quality["total"] = sc["total"] if sc else 0
         quality["rationale"] = sc["rationale"] if sc else ""

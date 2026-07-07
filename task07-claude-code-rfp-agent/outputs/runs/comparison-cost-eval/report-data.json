@@ -1,6 +1,6 @@
 {
   "rfp": "Acme Corp \u2014 Enterprise Data Platform",
-  "generated_at": "2026-07-07T01:21:37.479032+00:00",
+  "generated_at": "2026-07-07T01:28:31.259350+00:00",
   "rubric_dims": [
     "completeness",
     "specificity",
@@ -23,15 +23,15 @@
       "num_turns": 21,
       "duration_ms": 278921,
       "quality": {
-        "completeness": 4,
+        "completeness": 3,
         "specificity": 4,
         "actionability": 3,
         "risk_depth": 3,
         "correctness": 4,
-        "total": 18,
-        "rationale": "Solid technical fit and competitive sections with concrete numbers, but the risk dashboard is generic and no explicit final recommendation/commercial detail is visible."
+        "total": 17,
+        "rationale": "Solid technical fit table and references but proposal is truncated before commercial/contract/risk sections are fully visible and lacks the deeper deal-tension framing seen in other runs."
       },
-      "quality_per_dollar": 20.88
+      "quality_per_dollar": 19.72
     },
     {
       "strategy_key": "run-02-agent-teams",
@@ -48,12 +48,12 @@
         "completeness": 4,
         "specificity": 5,
         "actionability": 4,
-        "risk_depth": 5,
+        "risk_depth": 4,
         "correctness": 4,
-        "total": 22,
-        "rationale": "Adds a detailed, numbers-grounded commercial proposal and a richer risk dashboard (VP escalation banner, strength/exposure tension panels, benchmark gauge) versus the baseline."
+        "total": 21,
+        "rationale": "Adds concrete discount math (28-30% vs 35% ask, Initech precedent) and a VP-escalation banner plus strength/exposure tension panel in the dashboard, giving strong specificity and actionable negotiation levers."
       },
-      "quality_per_dollar": 12.02
+      "quality_per_dollar": 11.47
     },
     {
       "strategy_key": "run-03-dynamic-workflow",
@@ -73,7 +73,7 @@
         "risk_depth": 4,
         "correctness": 4,
         "total": 23,
-        "rationale": "Most complete and actionable output with an explicit recommendation, nuanced per-requirement fit ratings, and clause-level contract detail, backed by a risk dashboard with deal-specific facts."
+        "rationale": "Most complete single document (explicit recommendation, fit table with conditional items, named contract blockers with rationale) and a risk dashboard with deal-facts context, making it the most decision-ready output."
       },
       "quality_per_dollar": 10.5
     }

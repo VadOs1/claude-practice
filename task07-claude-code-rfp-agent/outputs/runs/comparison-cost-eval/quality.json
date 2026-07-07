@@ -2,14 +2,14 @@
   {
     "strategy_key": "run-01-baseline",
     "scores": {
-      "completeness": 4,
+      "completeness": 3,
       "specificity": 4,
       "actionability": 3,
       "risk_depth": 3,
       "correctness": 4
     },
-    "total": 18,
-    "rationale": "Solid technical fit and competitive sections with concrete numbers, but the risk dashboard is generic and no explicit final recommendation/commercial detail is visible."
+    "total": 17,
+    "rationale": "Solid technical fit table and references but proposal is truncated before commercial/contract/risk sections are fully visible and lacks the deeper deal-tension framing seen in other runs."
   },
   {
     "strategy_key": "run-02-agent-teams",
@@ -17,11 +17,11 @@
       "completeness": 4,
       "specificity": 5,
       "actionability": 4,
-      "risk_depth": 5,
+      "risk_depth": 4,
       "correctness": 4
     },
-    "total": 22,
-    "rationale": "Adds a detailed, numbers-grounded commercial proposal and a richer risk dashboard (VP escalation banner, strength/exposure tension panels, benchmark gauge) versus the baseline."
+    "total": 21,
+    "rationale": "Adds concrete discount math (28-30% vs 35% ask, Initech precedent) and a VP-escalation banner plus strength/exposure tension panel in the dashboard, giving strong specificity and actionable negotiation levers."
   },
   {
     "strategy_key": "run-03-dynamic-workflow",
@@ -33,6 +33,6 @@
       "correctness": 4
     },
     "total": 23,
-    "rationale": "Most complete and actionable output with an explicit recommendation, nuanced per-requirement fit ratings, and clause-level contract detail, backed by a risk dashboard with deal-specific facts."
+    "rationale": "Most complete single document (explicit recommendation, fit table with conditional items, named contract blockers with rationale) and a risk dashboard with deal-facts context, making it the most decision-ready output."
   }
 ]

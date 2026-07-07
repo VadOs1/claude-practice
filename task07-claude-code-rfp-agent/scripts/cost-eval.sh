@@ -52,6 +52,7 @@ check_report_inputs_ready() {
 }
 
 generate_comparison_report() {
+  local force_judge="${1:-}"
   if ! command -v python3 >/dev/null 2>&1; then
     echo "error: python3 not found on PATH (required for report generation)" >&2
     return 1
@@ -60,7 +61,11 @@ generate_comparison_report() {
     echo "error: claude CLI not found on PATH (required to judge quality — no cached ${COMPARISON_OUT_DIR}/quality.json found)" >&2
     return 1
   fi
-  python3 scripts/judge_quality.py || return 1
+  if [[ "$force_judge" == "force" ]]; then
+    python3 scripts/judge_quality.py --force || return 1
+  else
+    python3 scripts/judge_quality.py || return 1
+  fi
   python3 scripts/generate_comparison_report.py "${COMPARISON_OUT_DIR}/report.html"
 }
 
@@ -155,7 +160,7 @@ done
 echo
 if check_report_inputs_ready; then
   echo "=== Comparison report ==="
-  generate_comparison_report
+  generate_comparison_report force
 else
   echo "note: skipping comparison report — not all 3 strategy runs have outputs yet" >&2
 fi

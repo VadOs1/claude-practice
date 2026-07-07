@@ -90,11 +90,15 @@ def parse_judge_output(text: str) -> list:
 
 
 def invoke_judge(prompt: str, model: str = "sonnet") -> str:
-    result = subprocess.run(
-        ["claude", "-p", prompt, "--model", model, "--output-format", "json",
-         "--permission-mode", "bypassPermissions"],
-        capture_output=True, text=True, check=True,
-    )
+    try:
+        result = subprocess.run(
+            ["claude", "-p", prompt, "--model", model, "--output-format", "json",
+             "--permission-mode", "bypassPermissions"],
+            capture_output=True, text=True, check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print(e.stderr, file=sys.stderr)
+        raise
     envelope = json.loads(result.stdout)
     return envelope["result"]
 
