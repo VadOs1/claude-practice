@@ -73,14 +73,20 @@ async def run_strategy(strategy: Strategy, repo_root: Path, permission_mode: str
 
 Calls `claude_agent_sdk.query()` with:
 - `prompt=strategy.prompt`
-- `options=ClaudeAgentOptions(cwd=repo_root, setting_sources=["project"], permission_mode=permission_mode)`
+- `options=ClaudeAgentOptions(cwd=repo_root, permission_mode=permission_mode)`
 
-`setting_sources=["project"]` is what makes the SDK session discover this
-repo's `.claude/agents/*.md`, `.claude/skills/*`, and `.claude/settings.json`
-(which sets `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`) exactly the way the
-`claude` CLI does when run from this directory — so the agent-teams and
-dynamic-workflow strategies still delegate to `deal-desk-orchestrator` and
-its five specialists, unmodified.
+`setting_sources` is deliberately left at its default (`None`), which the
+SDK docs state loads all sources ("user", "project", "local") — this
+matches the CLI's own default when run from this directory, so the SDK
+session discovers this repo's `.claude/agents/*.md`, `.claude/skills/*`,
+and `.claude/settings.json` (which sets
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`) exactly the way `claude -p`
+already does — the agent-teams and dynamic-workflow strategies still
+delegate to `deal-desk-orchestrator` and its five specialists, unmodified.
+Explicitly passing `setting_sources=["project"]` was considered but
+rejected: it would *narrow* discovery relative to the CLI default
+(dropping user/local settings), which is the opposite of "exactly the
+same logic."
 
 Drains the async message stream, keeping the final `ResultMessage`
 (the SDK's analogue of the CLI's single JSON object). Raises if the stream
@@ -247,4 +253,4 @@ repeatedly without risk of clobbering prior results.
   the SDK, writing to its own parallel output tree.
 - Not changing the underlying RFP strategies, agent definitions
   (`.claude/agents/*.md`), or skills (`.claude/skills/*`) — those are
-  reused as-is via `setting_sources=["project"]`.
+  reused as-is via the SDK's default `setting_sources` discovery.
