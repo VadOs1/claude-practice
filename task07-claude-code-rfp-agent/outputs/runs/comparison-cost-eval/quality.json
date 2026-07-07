@@ -1,0 +1,38 @@
+[
+  {
+    "strategy_key": "run-01-baseline",
+    "scores": {
+      "completeness": 4,
+      "specificity": 4,
+      "actionability": 3,
+      "risk_depth": 3,
+      "correctness": 4
+    },
+    "total": 18,
+    "rationale": "Solid technical fit and competitive sections with concrete numbers, but the risk dashboard is generic and no explicit final recommendation/commercial detail is visible."
+  },
+  {
+    "strategy_key": "run-02-agent-teams",
+    "scores": {
+      "completeness": 4,
+      "specificity": 5,
+      "actionability": 4,
+      "risk_depth": 5,
+      "correctness": 4
+    },
+    "total": 22,
+    "rationale": "Adds a detailed, numbers-grounded commercial proposal and a richer risk dashboard (VP escalation banner, strength/exposure tension panels, benchmark gauge) versus the baseline."
+  },
+  {
+    "strategy_key": "run-03-dynamic-workflow",
+    "scores": {
+      "completeness": 5,
+      "specificity": 5,
+      "actionability": 5,
+      "risk_depth": 4,
+      "correctness": 4
+    },
+    "total": 23,
+    "rationale": "Most complete and actionable output with an explicit recommendation, nuanced per-requirement fit ratings, and clause-level contract detail, backed by a risk dashboard with deal-specific facts."
+  }
+]
