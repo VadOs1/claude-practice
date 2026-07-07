@@ -65,6 +65,15 @@ Porting the prompt text (not re-deriving it) is intentional: the whole
 point of the comparison is that the *strategy* is held constant and only
 the invocation mechanism (CLI vs. SDK) changes.
 
+One deliberate substitution: each source `.md` instructs Claude to save
+artifacts under `outputs/runs/run-0N-.../` (the CLI reference runs'
+path). Ported verbatim, an SDK-run agent — which has real `Write`/`Bash`
+tool access via `cwd=repo_root` — would overwrite those already-committed
+reference files. Every occurrence of `outputs/runs/run-0N-...` in the
+ported prompt text is rewritten to `outputs/runs-sdk/run-0N-...` before
+being stored in `Strategy.prompt`, consistent with the "Output location"
+section below. This is the only text change from the source `.md` files.
+
 ### `sdk_eval/runner.py`
 
 ```python
