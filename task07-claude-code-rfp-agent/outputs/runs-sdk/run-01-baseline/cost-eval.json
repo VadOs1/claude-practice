@@ -1,0 +1,59 @@
+{
+  "subtype": "success",
+  "duration_ms": 402704,
+  "duration_api_ms": 401361,
+  "is_error": false,
+  "num_turns": 26,
+  "session_id": "85c6725b-3352-4e68-8e04-70bd318025f5",
+  "stop_reason": "end_turn",
+  "total_cost_usd": 1.3034265,
+  "usage": {
+    "input_tokens": 6479,
+    "cache_creation_input_tokens": 73019,
+    "cache_read_input_tokens": 879635,
+    "output_tokens": 38799,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 73019,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 930,
+        "cache_read_input_tokens": 72826,
+        "cache_creation_input_tokens": 193,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 193
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "result": "All three expected artifacts are in place at `outputs/runs-sdk/run-01-baseline/`. Summary of what I produced:\n\n**1. Customer-facing proposal** (`proposal-acme-corp-2026-07-08.md` + `.docx`)\n- Executive summary, understanding of Acme's needs, functional-fit table mapped against `product-overview.md`, honest disclosure of our real weak spots (streaming query latency, 280TB warm-cache validation)\n- Competitive positioning vs. Databricks/Snowflake/Microsoft Fabric (all three named in the RFP) using the battlecard angles\n- Three reference customers pulled from `past-wins.json` (Initech Sensors, Globex Manufacturing, Wayne Manufacturing) matched to Acme's industrial/IoT profile\n- Commercial proposal: Enterprise tier at 25% strategic discount (policy max for this deal size \u2014 transparently short of Acme's 35% floor, with a TCO-led rationale rather than a stretched number), full 5-year pricing table, Net 60 counter to Net 90, and a clear MFN decline\n- Contract approach: liability cap, IP license-back (Stark Industries precedent), audit cadence, SLA/termination remedy, subprocessor notice-and-object \u2014 all reframed in business language, no internal risk labels\n- Risks & mitigations covering both delivery risk and the commercial/legal gaps still open\n\n**2. Internal risk dashboard** (`risk-assessment-acme-corp-2026-07-08.html`)\n- Self-contained, no external dependencies, dark theme per the palette spec\n- 12 clauses scored against the risk-assessment framework: gross exposure **18.0%**, net exposure under our proposed redlines **8.0%**\n- Revenue score **100/100** (hits every signal: Enterprise 3+yr, >$500K/yr, reference potential, target vertical, Azure alignment, competitive displacement)\n- Decision logic resolves to **\"Escalate to VP \u2014 must resolve blockers before award\"** (5\u201310% band + revenue \u226570), matching the framework's thresholds\n- Interactive: SVG gauge with animated needle, revenue bar, per-clause Accepted/Countered/Rejected toggles that recalculate everything live, \"show worst-case\" / \"show proposed position\" buttons, and a live-updating accepted-vs-saved summary table\n- Verified numerically (gross/net math checked in Node) and structurally (docx zip integrity, HTML tag balance)\n\nOne thing worth flagging: the slash-command template I invoked internally said to save to `outputs/runs/...`, but I followed your explicit instruction to use `outputs/runs-sdk/run-01-baseline/` instead, since that was stated directly in your request.",
+  "structured_output": null,
+  "model_usage": {
+    "claude-sonnet-5": {
+      "inputTokens": 6479,
+      "outputTokens": 38799,
+      "cacheReadInputTokens": 879635,
+      "cacheCreationInputTokens": 73019,
+      "webSearchRequests": 0,
+      "costUSD": 1.3034265,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "deferred_tool_use": null,
+  "errors": null,
+  "api_error_status": null,
+  "uuid": "63702496-595f-4f05-837a-d1d0350c7faf"
+}
