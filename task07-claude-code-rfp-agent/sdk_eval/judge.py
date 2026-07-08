@@ -77,7 +77,7 @@ async def judge_quality(
 ) -> list:
     artifacts = {s.key: read_artifacts(runs_dir / s.dir_name) for s in strategies}
     prompt = build_judge_prompt(artifacts)
-    result = await run_prompt(prompt, repo_root, permission_mode)
+    result = await run_prompt(prompt, repo_root, permission_mode, model="sonnet")
     if result.result is None:
         raise RuntimeError("judge query returned no result text")
     return parse_judge_output(result.result)

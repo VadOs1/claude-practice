@@ -25,11 +25,13 @@ async def _collect_result(messages: AsyncIterator) -> ResultMessage:
     return result
 
 
-async def run_prompt(prompt: str, repo_root: Path, permission_mode: str) -> ResultMessage:
+async def run_prompt(
+    prompt: str, repo_root: Path, permission_mode: str, model: str | None = None
+) -> ResultMessage:
     # setting_sources is left at its SDK default (None = load user + project +
     # local settings) to match the claude CLI's own default discovery of
     # .claude/agents/*.md and .claude/skills/* when run from repo_root.
-    options = ClaudeAgentOptions(cwd=str(repo_root), permission_mode=permission_mode)
+    options = ClaudeAgentOptions(cwd=str(repo_root), permission_mode=permission_mode, model=model)
     return await _collect_result(query(prompt=prompt, options=options))
 
 

@@ -1,8 +1,10 @@
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 from claude_agent_sdk import ResultMessage
 
-from sdk_eval.runner import _collect_result
+from sdk_eval.runner import _collect_result, run_prompt
 
 
 async def fake_stream(items):
@@ -39,6 +41,32 @@ class CollectResultTests(unittest.IsolatedAsyncioTestCase):
         result = make_result(is_error=True, errors=["boom"], result="failed")
         with self.assertRaisesRegex(RuntimeError, "errored"):
             await _collect_result(fake_stream([result]))
+
+
+class RunPromptModelTests(unittest.IsolatedAsyncioTestCase):
+    async def test_threads_model_through_to_options(self):
+        captured_options = {}
+
+        def fake_query(*, prompt, options):
+            captured_options["options"] = options
+            return fake_stream([make_result()])
+
+        with patch("sdk_eval.runner.query", side_effect=fake_query):
+            await run_prompt("hi", Path("."), "default", model="sonnet")
+
+        self.assertEqual(captured_options["options"].model, "sonnet")
+
+    async def test_defaults_to_no_model(self):
+        captured_options = {}
+
+        def fake_query(*, prompt, options):
+            captured_options["options"] = options
+            return fake_stream([make_result()])
+
+        with patch("sdk_eval.runner.query", side_effect=fake_query):
+            await run_prompt("hi", Path("."), "default")
+
+        self.assertIsNone(captured_options["options"].model)
 
 
 if __name__ == "__main__":
